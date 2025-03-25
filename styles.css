@@ -1,0 +1,78 @@
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    background-color: #e0f7fa;
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    background: #0288d1;
+    color: white;
+    padding: 20px;
+    position: relative;
+}
+
+h1 {
+    margin: 0;
+}
+
+/* Estilos del menu*/
+.menu {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+}
+
+.menu-icon {
+    font-size: 50px;
+    cursor: pointer;
+}
+
+.menu-list {
+    list-style: none;
+    background: white;
+    position: absolute;
+    top: 40px;
+    left: 0;
+    width: 200px;
+    border-radius: 5px;
+    box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
+    display: none;
+    padding: 0;
+}
+
+.menu-list li {
+    border-bottom: 1px solid #ccc;
+}
+
+.menu-list li a {
+    display: block;
+    padding: 10px;
+    text-decoration: none;
+    color: #0288d1;
+}
+
+.menu-list li:hover {
+    background: #29b6f6;
+}
+
+/* Video */
+.video-container iframe {
+    width: 70%;
+    height: 365px;
+    border: none;
+    margin-top: 10px;
+}
+
+/* Recursos */
+.recursos {
+    margin: 20px;
+}
+
+footer {
+    background: #0288d1;
+    color: white;
+    padding: 10px;
+    margin-top: 20px;
+}
