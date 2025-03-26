@@ -1,14 +1,15 @@
 <!DOCTYPE html>
 <html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Aprendiendo a Ahorrar Agua</title>
-    <link rel="stylesheet" href="styles.css">
-</head>
-<body>
 
-    <header>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Aprendiendo a Ahorrar Agua</title>
+        <link rel="stylesheet" href="styles.css">
+    </head>
+
+<div class="wrapper">
+    <header class="page-header">
         <h1>Aprendiendo a Ahorrar Agua</h1>
         <p>Recursos educativos para niños de 6 a 10 años</p>
         
@@ -22,41 +23,43 @@
             </ul>
         </div>
     </header>
-    
-    <!-- <section class="videos">
-        <h2>Videos Educativos</h2>
-        <div class="video-container">
-            <iframe width="560" height="315" src="https://www.youtube.com/embed/MYR-EY6sP_4?autoplay=1&controls=0&disablekb=1&loop=1&modestbranding=1" frameborder="0" allowfullscreen></iframe>
-    </section> -->
 
-    <section class="videos">
-        <h2>Videos Educativos</h2>
-        <div class="video-slider-container">
-            <button class="prev" onclick="moveSlide(-1)">&#10094;</button>
-            <div class="video-frame">
-                <div class="video-container">
-                <div><iframe width="560" height="315" src="https://www.youtube.com/embed/MYR-EY6sP_4?autoplay=1&controls=0&disablekb=1&loop=1&modestbranding=1" frameborder="0" allowfullscreen></iframe></div>
-                <div><iframe width="560" height="315" src="https://www.youtube.com/embed/MYR-EY6sP_4?autoplay=1&controls=0&disablekb=1&loop=1&modestbranding=1" frameborder="0" allowfullscreen></iframe></div>
-                <div><iframe width="560" height="315" src="https://www.youtube.com/embed/MYR-EY6sP_4?autoplay=1&controls=0&disablekb=1&loop=1&modestbranding=1" frameborder="0" allowfullscreen></iframe></div>
-                <div><iframe width="560" height="315" src="https://www.youtube.com/embed/MYR-EY6sP_4?autoplay=1&controls=0&disablekb=1&loop=1&modestbranding=1" frameborder="0" allowfullscreen></iframe></div>
-                <div><iframe width="560" height="315" src="https://www.youtube.com/embed/MYR-EY6sP_4?autoplay=1&controls=0&disablekb=1&loop=1&modestbranding=1" frameborder="0" allowfullscreen></iframe></div>
-                <div><iframe width="560" height="315" src="https://www.youtube.com/embed/MYR-EY6sP_4?autoplay=1&controls=0&disablekb=1&loop=1&modestbranding=1" frameborder="0" allowfullscreen></iframe></div>
+    <main class="page-body">
+        <section class="videos">
+            <h2>Videos Educativos</h2>
+        <div class="button-video-cont">
+                    
+        <div>
+        <button class="prev" onclick="moveSlide(-1)">&#10094;</button>
+        </div>           
+            <div class="video-slider-container">
+                
+                <div class="video-frame">
+                    <div class="video-container">
+                        <div><iframe width="560" height="315" src="https://www.youtube.com/embed/MYR-EY6sP_4?autoplay=1&controls=0&disablekb=1&loop=1&modestbranding=1" frameborder="0" allowfullscreen></iframe></div>
+                        <div><iframe width="560" height="315" src="https://www.youtube.com/embed/MYR-EY6sP_4?autoplay=1&controls=0&disablekb=1&loop=1&modestbranding=1" frameborder="0" allowfullscreen></iframe></div>
+                        <div><iframe width="560" height="315" src="https://www.youtube.com/embed/MYR-EY6sP_4?autoplay=1&controls=0&disablekb=1&loop=1&modestbranding=1" frameborder="0" allowfullscreen></iframe></div>
+                        <div><iframe width="560" height="315" src="https://www.youtube.com/embed/MYR-EY6sP_4?autoplay=1&controls=0&disablekb=1&loop=1&modestbranding=1" frameborder="0" allowfullscreen></iframe></div>
+                        <div><iframe width="560" height="315" src="https://www.youtube.com/embed/MYR-EY6sP_4?autoplay=1&controls=0&disablekb=1&loop=1&modestbranding=1" frameborder="0" allowfullscreen></iframe></div>
+                        <div><iframe width="560" height="315" src="https://www.youtube.com/embed/MYR-EY6sP_4?autoplay=1&controls=0&disablekb=1&loop=1&modestbranding=1" frameborder="0" allowfullscreen></iframe></div>
+                    </div>
+                </div>                     
             </div>
-        </div>
-        
+            <div>         
         <button class="next" onclick="moveSlide(1)">&#10095;</button>
-    </div>
-</section>
-
-    <section class="recursos">
-        <h2>Recursos Descargables</h2>
-        <a href="guia.pdf" download>Descargar Guía Educativa</a>
-    </section>
-
-    <footer>
-        <p>© 2025 Aprendiendo a Ahorrar Agua</p>
+            </div>         
+        </div>
+        </section>
+    
+        <section class="recursos">
+            <h2>Recursos Descargables</h2>
+            <a href="guia.pdf" download>Descargar Guía Educativa</a>
+        </section>
+    
+    </main>
+    <footer class="page-footer">
+        <p>Universidad Nacional Abierta y a Distancia<br>© 2025 Aprendiendo a Ahorrar Agua</p>
     </footer>
-
     <script src="script.js"></script>
-</body>
-</html>
+  </div>
+  </html>
