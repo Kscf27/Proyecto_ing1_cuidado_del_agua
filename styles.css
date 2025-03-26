@@ -57,12 +57,64 @@ h1 {
     background: #29b6f6;
 }
 
-/* Video */
+/* Video 
 .video-container iframe {
     width: 70%;
     height: 365px;
     border: none;
     margin-top: 10px;
+}*/
+
+.video-slider-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    max-width: 600px;
+    margin: auto;
+    overflow: hidden;
+}
+
+.video-frame {
+    width: 600px;
+    overflow: hidden;
+}
+
+.video-container {
+    display: flex;
+    transition: transform 0.5s ease-in-out;
+    width: 3000px; /* 5 videos * 600px */
+}
+
+.video-container iframe {
+    width: 600px;
+    height: 350px;
+    border: none;
+}
+
+.prev, .next {
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 18px;
+    z-index: 100;
+}
+
+.prev {
+    left: 0;
+}
+
+.next {
+    right: 0;
+}
+
+.prev:hover, .next:hover {
+    background-color: rgba(0, 0, 0, 0.8);
 }
 
 /* Recursos */
