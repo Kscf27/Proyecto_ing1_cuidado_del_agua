@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Atrapa las Gotas</title>
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="icon" type="image/x-icon" href="imagenes/gota-icono.ico">
+</head>
+
+<body>
+    <h1>Atrapa las Gotas 💧</h1>
+    <div class="info-panel">
+        <div>Rondas: <span id="round">1</span></div>
+        <div>Puntaje: <span id="score">0</span></div>
+        <div>Tiempo: <span id="timer">10</span>s</div>
+    </div>
+    <div class="gameTable" width="400" height="600">
+    <div class="left">
+        
+    </div>
+        <div class="game-container">
+        <div id="bucket"></div>
+    </div>
+    <div class="right">
+
+    </div>
+</div>
+    
+    <div id="game-over" class="hidden">
+        <h2>¡Juego Terminado!</h2>
+        <p>Puntaje final: <span id="final-score"></span></p>
+        <button onclick="restartGame()">Reiniciar</button>
+    </div>
+    <script src="script.js"></script>
+</body>
+<canvas id="gameCanvas"width="400" height="600">
+    <div id="bucket"></div>
+</canvas>
+</html>
