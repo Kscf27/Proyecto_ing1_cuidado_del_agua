@@ -1,93 +1,130 @@
-let bucket = document.getElementById("bucket");
+const bucket = document.getElementById("bucket");
+const gameContainer = document.querySelector(".game-container");
+const scoreDisplay = document.getElementById("score");
+const roundDisplay = document.getElementById("round");
+const timerDisplay = document.getElementById("timer");
+const gameOverScreen = document.getElementById("game-over");
+const finalScoreDisplay = document.getElementById("final-score");
+
 let score = 0;
 let round = 1;
-let speed = 8;
+let speed = 5;
 let intervalId;
 let roundTimer = 10;
 let maxRounds = 5;
+let isGameActive = true;
+
+// Bucket movement
+function moveBucket(direction) {
+    if (!isGameActive) return;
+
+    const containerWidth = gameContainer.offsetWidth;
+    const bucketWidth = bucket.offsetWidth;
+    // Get current left, default to 0 if NaN
+    let currentLeft = parseFloat(window.getComputedStyle(bucket).left) || 0;
+
+    const step = 40;
+
+    if (direction === "left") {
+        let newLeft = Math.max(0, currentLeft - step);
+        bucket.style.left = newLeft + "px";
+    } else if (direction === "right") {
+        let newLeft = Math.min(containerWidth - bucketWidth, currentLeft + step);
+        bucket.style.left = newLeft + "px";
+    }
+}
 
 document.addEventListener("keydown", (e) => {
-    let left = parseInt(window.getComputedStyle(bucket).left);
-    if (e.key === "ArrowLeft" && left > 0) {
-        bucket.style.left = left - 40 + "px";
-    } else if (e.key === "ArrowRight" && left < window.innerWidth - 80) {
-        bucket.style.left = left + 40 + "px";
-    }
+    if (e.key === "ArrowLeft") moveBucket("left");
+    if (e.key === "ArrowRight") moveBucket("right");
 });
 
-// function createDrop() {
-//     let drop = document.createElement("div");
-//     drop.classList.add("drop");
-//     drop.style.left = Math.random() * (window.innerWidth - 20) + "px";
-//     document.querySelector(".game-container").appendChild(drop);
+// Touch controls
+const btnLeft = document.getElementById("btn-left");
+const btnRight = document.getElementById("btn-right");
 
-//     let fall = setInterval(() => {
-//         let top = parseInt(window.getComputedStyle(drop).top || 0);
-//         drop.style.top = top + speed + "px";
+const addBtnListener = (btn, dir) => {
+    if(!btn) return;
 
-//         let dropLeft = drop.offsetLeft;
-//         let dropTop = drop.offsetTop;
-//         let bucketLeft = bucket.offsetLeft;
-//         let bucketTop = bucket.offsetTop;
+    // Handle both mouse and touch to ensure it works on all devices
+    const handleMove = (e) => {
+        if (e.cancelable) e.preventDefault(); // Prevent default behavior (like selection or scroll)
+        moveBucket(dir);
+    };
 
-//         if (
-//             dropTop + 20 >= bucketTop &&
-//             dropLeft > bucketLeft &&
-//             dropLeft < bucketLeft + 80
-//         ) {
-//             score++;
-//             document.getElementById("score").innerText = score;
-//             clearInterval(fall);
-//             drop.remove();
-//         } else if (dropTop > window.innerHeight) {
-//             clearInterval(fall);
-//             drop.remove();
-//         }
-//     }, 20);
-// }
+    btn.addEventListener("mousedown", handleMove);
+    btn.addEventListener("touchstart", handleMove);
+};
+
+addBtnListener(btnLeft, "left");
+addBtnListener(btnRight, "right");
+
+
 function createDrop() {
-    let drop = document.createElement("div");
+    if (!isGameActive) return;
 
-    // Aleatoriamente asignar si es limpia o sucia (70% limpia, 30% sucia)
-    if (Math.random() < 0.7) {
+    let drop = document.createElement("div");
+    // 70% clean, 30% dirty
+    const isClean = Math.random() < 0.7;
+
+    if (isClean) {
         drop.classList.add("drop", "clean");
     } else {
         drop.classList.add("drop", "dirty");
     }
 
-    drop.style.left = Math.random() * (window.innerWidth - 20) + "px";
-    document.querySelector(".game-container").appendChild(drop);
+    const containerWidth = gameContainer.offsetWidth;
+    const dropWidth = 40; // Defined in CSS
+
+    // Ensure drop stays fully inside the container width
+    const maxLeft = containerWidth - dropWidth;
+    drop.style.left = Math.random() * maxLeft + "px";
+
+    gameContainer.appendChild(drop);
 
     let fall = setInterval(() => {
-        let top = parseInt(window.getComputedStyle(drop).top || 0);
-        drop.style.top = top + speed + "px";
+        // Safety check: if drop removed from DOM
+        if (!document.body.contains(drop)) {
+            clearInterval(fall);
+            return;
+        }
 
-        let dropLeft = drop.offsetLeft;
-        let dropTop = drop.offsetTop;
-        let bucketLeft = bucket.offsetLeft;
-        let bucketTop = bucket.offsetTop;
+        if (!isGameActive) {
+            clearInterval(fall);
+            drop.remove();
+            return;
+        }
 
+        let top = parseFloat(window.getComputedStyle(drop).top) || -40;
+        drop.style.top = (top + speed) + "px";
+
+        // Collision detection using bounding rects for accuracy
+        const dropRect = drop.getBoundingClientRect();
+        const bucketRect = bucket.getBoundingClientRect();
+        const containerRect = gameContainer.getBoundingClientRect();
+
+        // Check intersection
         if (
-            dropTop + 20 >= bucketTop &&
-            dropLeft > bucketLeft &&
-            dropLeft < bucketLeft + 80
+            dropRect.bottom >= bucketRect.top + 15 && // Allow a little overlap into the bucket top
+            dropRect.top < bucketRect.bottom &&
+            dropRect.right > bucketRect.left + 15 &&
+            dropRect.left < bucketRect.right - 15
         ) {
+            // Hit!
             if (drop.classList.contains("dirty")) {
-                score--; // Resta puntos
+                score--;
             } else {
-                score++; // Suma puntos
+                score++;
             }
-
-            document.getElementById("score").innerText = score;
-
+            scoreDisplay.innerText = score;
             clearInterval(fall);
             drop.remove();
 
             if (score < 0) {
                 endGame();
             }
-
-        } else if (dropTop > window.innerHeight) {
+        } else if (dropRect.top > containerRect.bottom) {
+             // Missed/Out of bounds
             clearInterval(fall);
             drop.remove();
         }
@@ -100,18 +137,25 @@ function startRound() {
         return;
     }
 
-    document.getElementById("round").innerText = round;
+    roundDisplay.innerText = round;
     let timer = roundTimer;
-    document.getElementById("timer").innerText = timer;
-    speed = 8 + round;
+    timerDisplay.innerText = timer;
+    speed = 4 + round; // Adjust speed scaling
+
+    // Clear previous interval if any
+    if (intervalId) clearInterval(intervalId);
 
     intervalId = setInterval(() => {
-        createDrop();
-    }, 750 - round * 100);
+        if(isGameActive) createDrop();
+    }, Math.max(300, 1000 - round * 150));
 
     let countdown = setInterval(() => {
+        if (!isGameActive) {
+            clearInterval(countdown);
+            return;
+        }
         timer--;
-        document.getElementById("timer").innerText = timer;
+        timerDisplay.innerText = timer;
         if (timer <= 0) {
             clearInterval(intervalId);
             clearInterval(countdown);
@@ -122,17 +166,22 @@ function startRound() {
 }
 
 function endGame() {
-    document.getElementById("game-over").classList.remove("hidden");
-    document.getElementById("final-score").innerText = score;
+    isGameActive = false;
+    if (intervalId) clearInterval(intervalId);
+    gameOverScreen.classList.remove("hidden");
+    finalScoreDisplay.innerText = score;
 }
 
-function restartGame() {
+// Global function for the restart button in HTML
+window.restartGame = function() {
     score = 0;
     round = 1;
-    document.getElementById("score").innerText = score;
-    document.getElementById("game-over").classList.add("hidden");
+    isGameActive = true;
+    scoreDisplay.innerText = score;
+    gameOverScreen.classList.add("hidden");
     document.querySelectorAll(".drop").forEach(d => d.remove());
     startRound();
-}
+};
 
+// Initial Start
 startRound();

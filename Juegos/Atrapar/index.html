@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Atrapa las Gotas</title>
     <link rel="stylesheet" href="styles.css" />
-    <link rel="icon" type="image/x-icon" href="imagenes/gota-icono.ico">
+    <link rel="icon" type="image/x-icon" href="../../imagenes/gota-icono.ico">
 </head>
 
 <body>
@@ -15,18 +15,18 @@
         <div>Puntaje: <span id="score">0</span></div>
         <div>Tiempo: <span id="timer">10</span>s</div>
     </div>
-    <div class="gameTable" width="400" height="600">
-    <div class="left">
-        
-    </div>
-        <div class="game-container">
-        <div id="bucket"></div>
-    </div>
-    <div class="right">
 
+    <div class="game-wrapper">
+        <div class="game-container">
+            <div id="bucket"></div>
+        </div>
+
+        <div class="controls">
+            <button id="btn-left" class="control-btn">⬅️</button>
+            <button id="btn-right" class="control-btn">➡️</button>
+        </div>
     </div>
-</div>
-    
+
     <div id="game-over" class="hidden">
         <h2>¡Juego Terminado!</h2>
         <p>Puntaje final: <span id="final-score"></span></p>
