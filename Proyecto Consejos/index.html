@@ -3,313 +3,520 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ahorrar Agua - ¡Es divertido!</title>
+    <title>Consejos para Ahorrar Agua 💧 - AquaKids</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&family=Quicksand:wght@500;700&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/x-icon" href="../imagenes/gota-icono.ico">
     <style>
-        body {
-            font-family: 'Comic Sans MS', cursive, sans-serif;
-            background-color: #e0f7fa;
+        :root {
+            --primary-color: #0288D1;
+            --primary-dark: #01579B;
+            --secondary-color: #00BCD4;
+            --accent-color: #00E676;
+            --accent-dark: #00C853;
+            --background-color: #E8F9FF;
+            --surface-color: #FFFFFF;
+            --text-color: #1A365D;
+            --text-muted: #546E7A;
+            --font-heading: 'Fredoka', cursive, sans-serif;
+            --font-body: 'Quicksand', sans-serif;
+            --shadow-md: 0 8px 24px rgba(2, 136, 209, 0.12);
+        }
+
+        * {
+            box-sizing: border-box;
             margin: 0;
-            padding: 20px;
+            padding: 0;
+        }
+
+        body {
+            font-family: var(--font-body);
+            background-color: var(--background-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 0 0 40px;
             text-align: center;
+            line-height: 1.6;
         }
-        h1, h2, h3 {
-            color: #00796b;
-        }
-        h1 {
-            text-shadow: 2px 2px 4px #b2ebf2;
-            animation: titile 2s infinite;
-        }
-        @keyframes titile {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-        }
-        .consejo {
-            background-color: white;
-            border: 3px dashed #4db6ac;
-            border-radius: 15px;
-            padding: 15px;
-            margin: 20px auto;
-            max-width: 500px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            opacity: 0;
-            animation: aparecer 1s forwards;
-            animation-delay: calc(var(--order) * 0.3s);
-        }
-        @keyframes aparecer {
-            to { opacity: 1; }
-        }
-        .consejo:hover {
-            transform: scale(1.03);
-            transition: transform 0.3s ease;
-            background-color: #f0fdfa;
-        }
-        .img-container {
+
+        /* Top Bar */
+        .top-nav {
+            background: linear-gradient(135deg, #0288D1, #00BCD4);
+            color: white;
+            padding: 14px 20px;
             display: flex;
-            justify-content: center;
-            gap: 10px;
-            margin: 10px 0;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            margin-bottom: 25px;
         }
-        img {
-            width: 100px;
-            height: auto;
-            transition: transform 0.3s;
+
+        .btn-back-home {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: white;
+            color: var(--primary-dark);
+            text-decoration: none;
+            font-family: var(--font-heading);
+            font-weight: 700;
+            font-size: 0.95rem;
+            padding: 8px 16px;
+            border-radius: 20px;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+            transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
-        img:hover {
-            animation: bounce 0.5s;
+
+        .btn-back-home:hover {
+            transform: scale(1.05);
+            background: #E1F5FE;
         }
-        @keyframes bounce {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
+
+        .nav-title {
+            font-family: var(--font-heading);
+            font-size: 1.3rem;
         }
-        .sabias-btn, .quiz-btn, #sumar-ahorro, #iniciar-temporizador {
-            background-color: #4db6ac;
+
+        .main-container {
+            max-width: 760px;
+            margin: 0 auto;
+            padding: 0 16px;
+        }
+
+        h1, h2, h3 {
+            font-family: var(--font-heading);
+            color: var(--primary-dark);
+        }
+
+        h1 {
+            font-size: 2.3rem;
+            margin-bottom: 8px;
+        }
+
+        .page-intro {
+            font-size: 1.1rem;
+            color: var(--text-muted);
+            margin-bottom: 25px;
+        }
+
+        /* Sistema de recompensas */
+        .contador-card {
+            background: white;
+            border-radius: 20px;
+            padding: 24px 20px;
+            margin: 20px auto 30px;
+            box-shadow: var(--shadow-md);
+            border: 3px solid #B3E5FC;
+        }
+
+        .litros-display {
+            font-size: 1.4rem;
+            color: var(--primary-dark);
+            margin-bottom: 12px;
+        }
+
+        .litros-num {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #00838F;
+        }
+
+        .btn-action {
+            background: linear-gradient(135deg, #00C853, #00E676);
             color: white;
             border: none;
-            padding: 8px 15px;
-            border-radius: 20px;
+            padding: 12px 26px;
+            border-radius: 30px;
             cursor: pointer;
-            margin: 10px 5px;
-            font-family: 'Comic Sans MS', cursive;
-            transition: background-color 0.3s;
+            font-family: var(--font-heading);
+            font-size: 1.1rem;
+            font-weight: 700;
+            box-shadow: 0 4px 12px rgba(0, 200, 83, 0.3);
+            transition: all 0.25s ease;
         }
-        .sabias-btn:hover, .quiz-btn:hover, #sumar-ahorro:hover, #iniciar-temporizador:hover {
-            background-color: #00796b;
+
+        .btn-action:hover {
+            transform: translateY(-2px) scale(1.04);
+            box-shadow: 0 6px 16px rgba(0, 200, 83, 0.4);
         }
-        .dato-curioso {
-            background-color: #e8f5e9;
-            padding: 10px;
-            border-radius: 10px;
-            margin-top: 10px;
-            display: none;
-        }
-        .contador {
-            background-color: #b2ebf2;
-            padding: 15px;
-            border-radius: 15px;
-            margin: 20px auto;
-            max-width: 300px;
-        }
-        #sumar-ahorro {
-            padding: 10px 20px;
-            font-size: 16px;
-        }
+
         .recompensas {
             display: flex;
             justify-content: center;
             flex-wrap: wrap;
-            gap: 10px;
-            margin: 20px 0;
+            gap: 14px;
+            margin-top: 20px;
         }
+
         .medalla {
-            width: 60px;
-            height: 60px;
-            background-color: #ffd700;
+            width: 65px;
+            height: 65px;
+            background-color: #ECEFF1;
+            border: 3px solid #CFD8DC;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 30px;
-            opacity: 0.3;
-            transition: opacity 0.3s;
+            font-size: 32px;
+            opacity: 0.35;
+            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            filter: grayscale(1);
         }
+
         .medalla.ganada {
             opacity: 1;
-            animation: shine 1s;
+            filter: grayscale(0);
+            background-color: #FFF9C4;
+            border-color: #FFD54F;
+            transform: scale(1.15);
+            box-shadow: 0 0 15px rgba(255, 213, 79, 0.8);
         }
-        @keyframes shine {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.2); }
-            100% { transform: scale(1); }
-        }
-        .quiz-container, .compromiso-container, .temporizador-container {
+
+        /* Tarjetas de Consejos */
+        .consejo {
             background-color: white;
-            border: 3px dashed #4db6ac;
-            border-radius: 15px;
-            padding: 15px;
+            border: 3px solid #B2EBF2;
+            border-radius: 20px;
+            padding: 22px 20px;
             margin: 20px auto;
-            max-width: 500px;
+            box-shadow: var(--shadow-md);
+            transition: transform 0.3s ease, border-color 0.3s;
         }
-        .opcion-quiz {
-            background-color: #e0f7fa;
-            padding: 10px;
-            margin: 5px;
-            border-radius: 10px;
+
+        .consejo:hover {
+            transform: translateY(-4px);
+            border-color: #4DD0E1;
+        }
+
+        .consejo h2 {
+            font-size: 1.5rem;
+            margin-bottom: 8px;
+        }
+
+        .img-container {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin: 15px 0;
+        }
+
+        .img-container img {
+            width: 85px;
+            height: 85px;
+            object-fit: contain;
+            border-radius: 12px;
+            background: #E0F7FA;
+            padding: 8px;
+            transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .img-container img:hover {
+            transform: scale(1.12) rotate(4deg);
+        }
+
+        .sabias-btn {
+            background-color: #0288D1;
+            color: white;
+            border: none;
+            padding: 9px 20px;
+            border-radius: 20px;
             cursor: pointer;
-            transition: background-color 0.3s;
+            font-family: var(--font-heading);
+            font-size: 0.95rem;
+            font-weight: 600;
+            transition: all 0.2s ease;
         }
-        .opcion-quiz:hover {
-            background-color: #b2ebf2;
+
+        .sabias-btn:hover {
+            background-color: #01579B;
+            transform: scale(1.05);
         }
-        .opcion-quiz.correcta {
-            background-color: #a5d6a7;
+
+        .dato-curioso {
+            background-color: #E8F5E9;
+            color: #1B5E20;
+            padding: 14px;
+            border-radius: 14px;
+            border: 2px dashed #81C784;
+            margin-top: 14px;
+            display: none;
+            font-size: 0.95rem;
+            font-weight: 600;
+            animation: fadeIn 0.3s ease;
         }
-        .opcion-quiz.incorrecta {
-            background-color: #ef9a9a;
+
+        /* Secciones Interactivas: Temporizador, Compromiso, Quiz */
+        .interactive-card {
+            background-color: white;
+            border: 3px solid #B2EBF2;
+            border-radius: 20px;
+            padding: 26px 20px;
+            margin: 25px auto;
+            box-shadow: var(--shadow-md);
         }
-        #resultado-quiz {
-            margin-top: 10px;
-            font-weight: bold;
-        }
-        select, textarea {
-            width: 80%;
-            padding: 10px;
-            margin: 10px 0;
-            border-radius: 10px;
-            border: 2px solid #4db6ac;
-            font-family: 'Comic Sans MS', cursive;
-        }
+
         #temporizador {
-            font-size: 40px;
+            font-family: var(--font-heading);
+            font-size: 3.2rem;
             margin: 10px 0;
-            color: #00796b;
+            color: var(--primary-dark);
+            font-weight: 700;
         }
-        .footer {
-            margin-top: 20px;
-            font-size: 12px;
-            color: #00796b;
+
+        select, textarea {
+            width: 90%;
+            max-width: 450px;
+            padding: 12px;
+            margin: 12px 0;
+            border-radius: 12px;
+            border: 2px solid #81D4FA;
+            font-family: var(--font-body);
+            font-size: 1rem;
+            color: var(--text-color);
+            background: #F9FDFF;
         }
+
+        /* Quiz */
+        .pregunta {
+            margin: 20px 0;
+            text-align: left;
+            background: #F0FBFF;
+            padding: 16px;
+            border-radius: 16px;
+        }
+
+        .pregunta-title {
+            font-family: var(--font-heading);
+            font-size: 1.1rem;
+            color: var(--primary-dark);
+            margin-bottom: 10px;
+        }
+
+        .opcion-quiz {
+            background-color: white;
+            border: 2px solid #B3E5FC;
+            padding: 12px 16px;
+            margin: 8px 0;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-weight: 600;
+        }
+
+        .opcion-quiz:hover {
+            background-color: #E1F5FE;
+            transform: translateX(4px);
+        }
+
+        .opcion-quiz.selected {
+            background-color: #B3E5FC;
+            border-color: #0288D1;
+        }
+
+        .opcion-quiz.correcta {
+            background-color: #C8E6C9 !important;
+            border-color: #4CAF50 !important;
+            color: #1B5E20;
+        }
+
+        .opcion-quiz.incorrecta {
+            background-color: #FFCDD2 !important;
+            border-color: #E53935 !important;
+            color: #B71C1C;
+        }
+
+        #resultado-quiz {
+            margin-top: 15px;
+            font-family: var(--font-heading);
+            font-size: 1.3rem;
+            font-weight: 700;
+        }
+
+        /* Confeti */
         .confeti {
             position: fixed;
-            font-size: 20px;
-            animation: fall 3s linear forwards;
+            font-size: 24px;
+            animation: fallConfetti 3s linear forwards;
             z-index: 1000;
+            pointer-events: none;
         }
-        @keyframes fall {
-            to { transform: translateY(100vh); }
+
+        @keyframes fallConfetti {
+            from { transform: translateY(-50px) rotate(0deg); opacity: 1; }
+            to { transform: translateY(105vh) rotate(360deg); opacity: 0; }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-6px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .footer {
+            margin-top: 35px;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+
+        .footer a {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 700;
         }
     </style>
 </head>
 <body>
-    <h1>💧 ¡Aprende a Cuidar el Agua! 💧</h1>
-    <p>El agua es muy importante. ¡Sigue estos consejos para ser un héroe del planeta!</p>
+    <!-- Barra Superior -->
+    <nav class="top-nav">
+        <a href="../index.html" class="btn-back-home">
+            <span>🏠</span> Volver al Inicio
+        </a>
+        <div class="nav-title">💡 Consejos y Retos</div>
+    </nav>
 
-    <!-- Sistema de recompensas -->
-    <div class="contador">
-        <h3>Agua que has ahorrado: <span id="litros-ahorrados">0</span> litros</h3>
-        <button id="sumar-ahorro">¡Ahorré agua hoy!</button>
-        
-        <div class="recompensas">
-            <div class="medalla" id="medalla-50">🥉</div>
-            <div class="medalla" id="medalla-100">🥈</div>
-            <div class="medalla" id="medalla-150">🥇</div>
-            <div class="medalla" id="medalla-200">🏆</div>
-        </div>
-    </div>
+    <div class="main-container">
+        <h1>💧 ¡Aprende a Cuidar el Agua! 💧</h1>
+        <p class="page-intro">El agua es el tesoro más valioso de nuestro planeta. ¡Sigue estos sencillos hábitos para ser un gran Ecohéroe!</p>
 
-    <!-- Consejos interactivos -->
-    <div class="consejo" style="--order: 1">
-        <h2>🚰 Cierra el grifo</h2>
-        <p>Cuando te laves los dientes o las manos, cierra el grifo para no malgastar agua.</p>
-        <div class="img-container">
-            <img src="Imagenes/tap.gif" alt="Grifo cerrándose">
-            <img src="Imagenes/cepillo-de-dientes.gif" alt="Cepillo de dientes">
+        <!-- Sistema de Recompensas y Litros Ahorrados -->
+        <div class="contador-card">
+            <h3>💧 Tu Registro de Ahorro</h3>
+            <p class="litros-display">Agua que has ahorrado: <span id="litros-ahorrados" class="litros-num">0</span> litros</p>
+            <button id="sumar-ahorro" class="btn-action">¡Ahorré agua hoy! (+10L) 🎉</button>
+            
+            <div class="recompensas">
+                <div class="medalla" id="medalla-50" title="50 Litros Ahorrados">🥉</div>
+                <div class="medalla" id="medalla-100" title="100 Litros Ahorrados">🥈</div>
+                <div class="medalla" id="medalla-150" title="150 Litros Ahorrados">🥇</div>
+                <div class="medalla" id="medalla-200" title="200 Litros Ahorrados - ¡Eco Campeón!">🏆</div>
+            </div>
         </div>
-        <button class="sabias-btn">¿Sabías qué...?</button>
-        <p class="dato-curioso">¡Cerrar el grifo al lavarte los dientes puede ahorrar hasta 12 litros de agua por minuto!</p>
-    </div>
 
-    <div class="consejo" style="--order: 2">
-        <h2>🛁 Baños cortos</h2>
-        <p>¡Ducharte en 5 minutos es genial!</p>
-        <div class="img-container">
-            <img src="Imagenes/man.gif" alt="Niño en ducha rápida">
-            <img src="Imagenes/reloj-de-bolsillo.gif" alt="Reloj de arena">
+        <!-- Consejos Interactivos con GIFs -->
+        <div class="consejo">
+            <h2>🚰 1. Cierra el Grifo</h2>
+            <p>Cuando te laves los dientes o las manos con jabón, cierra la llave para no dejar correr el agua.</p>
+            <div class="img-container">
+                <img src="Imagenes/tap.gif" alt="Grifo cerrándose">
+                <img src="Imagenes/cepillo-de-dientes.gif" alt="Cepillo de dientes">
+            </div>
+            <button class="sabias-btn">¿Sabías qué...? 💡</button>
+            <p class="dato-curioso">¡Cerrar el grifo al lavarte los dientes puede ahorrar hasta 12 litros de agua por minuto!</p>
         </div>
-        <button class="sabias-btn">¿Sabías qué...?</button>
-        <p class="dato-curioso">Una ducha de 5 minutos usa aproximadamente 50 litros de agua, ¡mientras que un baño puede usar hasta 150 litros!</p>
-    </div>
 
-    <div class="consejo" style="--order: 3">
-        <h2>♻ Reutilizar el agua</h2>
-        <p>Reutiliza el agua de la lavadora para el inodoro. ¡Así ahorras agua!</p>
-        <div class="img-container">
-            <img src="Imagenes/laundry.gif" alt="Lavadora con agua">
-            <img src="Imagenes/toilet.gif" alt="Inodoro">
+        <div class="consejo">
+            <h2>🛁 2. Duchas Cortas de 5 Minutos</h2>
+            <p>¡Ducharte en 5 minutos es genial, refrescante y muy responsable con el planeta!</p>
+            <div class="img-container">
+                <img src="Imagenes/man.gif" alt="Niño en ducha rápida">
+                <img src="Imagenes/reloj-de-bolsillo.gif" alt="Reloj">
+            </div>
+            <button class="sabias-btn">¿Sabías qué...? 💡</button>
+            <p class="dato-curioso">Una ducha de 5 minutos usa solo 50 litros de agua, mientras que llenar la tina puede gastar más de 150 litros.</p>
         </div>
-        <button class="sabias-btn">¿Sabías qué...?</button>
-        <p class="dato-curioso">¡Reutilizar el agua de la lavadora puede ahorrar hasta 50 litros por cada carga de ropa!</p>
-    </div>
 
-    <div class="consejo" style="--order: 4">
-        <h2>🌳 Planta árboles</h2>
-        <p>Plantar árboles ayuda a conservar las fuentes de agua.</p>
-        <div class="img-container">
-            <img src="Imagenes/eco.gif" alt="Niña plantando un árbol">
-            <img src="Imagenes/arbol.gif" alt="Árbol">
+        <div class="consejo">
+            <h2>♻ 3. Reutiliza el Agua</h2>
+            <p>El agua de la lavadora o del lavado de vegetales sirve perfecto para limpiar pisos o el inodoro.</p>
+            <div class="img-container">
+                <img src="Imagenes/laundry.gif" alt="Lavadora con agua">
+                <img src="Imagenes/toilet.gif" alt="Inodoro">
+            </div>
+            <button class="sabias-btn">¿Sabías qué...? 💡</button>
+            <p class="dato-curioso">¡Reutilizar el agua de enjuague de la lavadora puede ahorrar hasta 50 litros en cada ciclo!</p>
         </div>
-        <button class="sabias-btn">¿Sabías qué...?</button>
-        <p class="dato-curioso">Los árboles ayudan a mantener los ríos y lagos llenos de agua, ¡un solo árbol puede conservar miles de litros de agua en el suelo!</p>
-    </div>
 
-    <!-- Temporizador de ducha -->
-    <div class="temporizador-container">
-        <h2>⏱ Temporizador de ducha</h2>
-        <p>¡Intenta ducharte en solo 5 minutos!</p>
-        <div id="temporizador">05:00</div>
-        <button id="iniciar-temporizador">Comenzar</button>
-        <button id="detener-temporizador" style="display:none;">Detener</button>
-        <audio id="alarma" src="https://assets.mixkit.co/sfx/preview/mixkit-alarm-digital-clock-beep-989.mp3" preload="auto"></audio>
-    </div>
+        <div class="consejo">
+            <h2>🌳 4. Cuida y Planta Árboles</h2>
+            <p>Los árboles y plantas actúan como esponjas naturales que conservan y purifican el agua en la tierra.</p>
+            <div class="img-container">
+                <img src="Imagenes/eco.gif" alt="Niña plantando un árbol">
+                <img src="Imagenes/arbol.gif" alt="Árbol">
+            </div>
+            <button class="sabias-btn">¿Sabías qué...? 💡</button>
+            <p class="dato-curioso">Los bosques retienen el agua de lluvia en sus raíces, manteniendo limpios los ríos y lagunas.</p>
+        </div>
 
-    <!-- Sección "Mi compromiso" -->
-    <div class="compromiso-container">
-        <h2>✋ Mi compromiso para ahorrar agua</h2>
-        <p>Selecciona qué acción vas a realizar esta semana:</p>
-        <select id="compromiso">
-            <option value="">--Elige tu compromiso--</option>
-            <option value="grifo">Cerrar el grifo al lavarme los dientes</option>
-            <option value="ducha">Ducharme en 5 minutos o menos</option>
-            <option value="reutilizar">Reutilizar agua de la lavadora</option>
-            <option value="arbol">Plantar un árbol o cuidar las plantas</option>
-            <option value="otro">Otro compromiso</option>
-        </select>
-        <div id="otro-compromiso" style="display:none;">
-            <textarea placeholder="Describe tu compromiso..." rows="3"></textarea>
+        <!-- Temporizador de Ducha Interactivo -->
+        <div class="interactive-card">
+            <h2>⏱️ Desafío: Temporizador de Ducha</h2>
+            <p>¡Intenta bañarte antes de que termine el reloj de 5 minutos!</p>
+            <div id="temporizador">05:00</div>
+            <div style="display: flex; justify-content: center; gap: 10px;">
+                <button id="iniciar-temporizador" class="btn-action">Comenzar 🚿</button>
+                <button id="detener-temporizador" class="btn-action" style="display:none; background: #E53935;">Detener ⏸️</button>
+                <button id="reiniciar-temporizador" class="sabias-btn" style="display:none;">Reiniciar 🔄</button>
+            </div>
+            <audio id="alarma" src="https://assets.mixkit.co/sfx/preview/mixkit-alarm-digital-clock-beep-989.mp3" preload="auto"></audio>
         </div>
-        <button id="guardar-compromiso">Guardar mi compromiso</button>
-        <div id="confirmacion-compromiso" style="display:none; margin-top:10px;">
-            <p>¡Excelente decisión! 💧 Recuerda cumplir tu compromiso.</p>
-        </div>
-    </div>
 
-    <!-- Cuestionario simple -->
-    <div class="quiz-container">
-        <h2>📝 Pon a prueba lo que aprendiste</h2>
-        <div class="pregunta">
-            <p>1. ¿Qué debes hacer mientras te lavas los dientes?</p>
-            <div class="opcion-quiz" data-correcta="true">Cerrar el grifo</div>
-            <div class="opcion-quiz" data-correcta="false">Dejar correr el agua</div>
-            <div class="opcion-quiz" data-correcta="false">Usar mucha agua</div>
+        <!-- Sección "Mi compromiso" -->
+        <div class="interactive-card">
+            <h2>✋ Mi Compromiso Eco-Guardián</h2>
+            <p>Selecciona tu reto para cumplir durante toda esta semana:</p>
+            <select id="compromiso">
+                <option value="">-- Elige tu compromiso --</option>
+                <option value="grifo">🚰 Cerrar el grifo al lavarme los dientes y manos</option>
+                <option value="ducha">⏱️ Ducharme en 5 minutos o menos</option>
+                <option value="reutilizar">♻️ Reutilizar agua limpia de la lavadora para aseo</option>
+                <option value="arbol">🌱 Regar las plantas temprano en la mañana o al atardecer</option>
+                <option value="otro">✨ Otro compromiso especial</option>
+            </select>
+            <div id="otro-compromiso" style="display:none;">
+                <textarea placeholder="Escribe aquí tu propio compromiso..." rows="3"></textarea>
+            </div>
+            <div>
+                <button id="guardar-compromiso" class="btn-action">Guardar mi Compromiso 🌟</button>
+            </div>
+            <div id="confirmacion-compromiso" class="dato-curioso" style="display:none; text-align:center; margin-top:15px;">
+                <p>🎉 ¡Excelente decisión! Recuerda practicar tu compromiso todos los días.</p>
+            </div>
         </div>
-        
-        <div class="pregunta">
-            <p>2. ¿Cuánto tiempo ideal debe durar tu ducha?</p>
-            <div class="opcion-quiz" data-correcta="false">15 minutos</div>
-            <div class="opcion-quiz" data-correcta="true">5 minutos</div>
-            <div class="opcion-quiz" data-correcta="false">Hasta que se acabe el agua caliente</div>
-        </div>
-        
-        <div class="pregunta">
-            <p>3. ¿Para qué podemos reutilizar el agua de la lavadora?</p>
-            <div class="opcion-quiz" data-correcta="false">Para beber</div>
-            <div class="opcion-quiz" data-correcta="true">Para el inodoro o regar plantas</div>
-            <div class="opcion-quiz" data-correcta="false">Para cocinar</div>
-        </div>
-        
-        <div id="resultado-quiz"></div>
-        <button class="quiz-btn" id="verificar-respuestas">Verificar respuestas</button>
-    </div>
 
-    <div class="footer">
-        <p>© 2025 - Creado con ❤️ para niños ecohéroes | Íconos de <a href="https://www.flaticon.com/" target="_blank">Flaticon</a></p>
+        <!-- Cuestionario de Aprendizaje -->
+        <div class="interactive-card">
+            <h2>📝 Mini-Quiz: Pon a Prueba tus Conocimientos</h2>
+            <p>Elige la respuesta correcta para cada pregunta:</p>
+            
+            <div class="pregunta" data-question="1">
+                <p class="pregunta-title">1. ¿Qué debes hacer mientras te enjabonas las manos o te cepillas?</p>
+                <div class="opcion-quiz" data-correcta="true">Cerrar el grifo del agua</div>
+                <div class="opcion-quiz" data-correcta="false">Dejar correr el agua todo el tiempo</div>
+                <div class="opcion-quiz" data-correcta="false">Abrir la llave al máximo</div>
+            </div>
+            
+            <div class="pregunta" data-question="2">
+                <p class="pregunta-title">2. ¿Cuánto tiempo ideal debería durar una ducha eco-amigable?</p>
+                <div class="opcion-quiz" data-correcta="false">20 minutos</div>
+                <div class="opcion-quiz" data-correcta="true">5 minutos</div>
+                <div class="opcion-quiz" data-correcta="false">Hasta que se vacíe el tanque</div>
+            </div>
+            
+            <div class="pregunta" data-question="3">
+                <p class="pregunta-title">3. ¿Cómo podemos reutilizar el agua de enjuague en el hogar?</p>
+                <div class="opcion-quiz" data-correcta="false">Para cocinar alimentos</div>
+                <div class="opcion-quiz" data-correcta="true">Para descargar el inodoro o aseo de pisos</div>
+                <div class="opcion-quiz" data-correcta="false">Para beber directamente</div>
+            </div>
+            
+            <div id="resultado-quiz"></div>
+            <button class="btn-action" id="verificar-respuestas" style="margin-top: 15px;">Verificar Respuestas 🎯</button>
+        </div>
+
+        <div class="footer">
+            <p>© 2025 Aprendiendo a Ahorrar Agua | Diseñado con amor para ecohéroes</p>
+        </div>
     </div>
 
     <script>
-        // Mostrar datos curiosos
+        // Mostrar / Ocultar datos curiosos
         document.querySelectorAll('.sabias-btn').forEach(btn => {
             btn.addEventListener('click', function() {
                 const dato = this.nextElementSibling;
-                dato.style.display = dato.style.display === 'none' ? 'block' : 'none';
+                if (dato && dato.classList.contains('dato-curioso')) {
+                    dato.style.display = dato.style.display === 'block' ? 'none' : 'block';
+                }
             });
         });
 
@@ -327,7 +534,7 @@
             if (litrosAhorrados >= 200) document.getElementById('medalla-200').classList.add('ganada');
             
             // Efecto de confeti
-            for (let i = 0; i < 10; i++) {
+            for (let i = 0; i < 8; i++) {
                 crearConfeti();
             }
         });
@@ -335,10 +542,10 @@
         function crearConfeti() {
             const confeti = document.createElement('div');
             confeti.className = 'confeti';
-            confeti.textContent = ['💧', '🌟', '🎉', '💎', '✨'][Math.floor(Math.random() * 5)];
-            confeti.style.left = Math.random() * window.innerWidth + 'px';
-            confeti.style.fontSize = (Math.random() * 20 + 15) + 'px';
-            confeti.style.animationDuration = (Math.random() * 2 + 2) + 's';
+            confeti.textContent = ['💧', '🌟', '🎉', '💎', '✨', '🍃'][Math.floor(Math.random() * 6)];
+            confeti.style.left = Math.random() * (window.innerWidth - 30) + 'px';
+            confeti.style.fontSize = (Math.random() * 16 + 18) + 'px';
+            confeti.style.animationDuration = (Math.random() * 1.5 + 2) + 's';
             document.body.appendChild(confeti);
             
             setTimeout(() => {
@@ -352,36 +559,51 @@
         const display = document.getElementById('temporizador');
         const iniciarBtn = document.getElementById('iniciar-temporizador');
         const detenerBtn = document.getElementById('detener-temporizador');
+        const reiniciarBtn = document.getElementById('reiniciar-temporizador');
         const alarma = document.getElementById('alarma');
 
+        function formatTime(secs) {
+            const mins = Math.floor(secs / 60);
+            const remainingSecs = secs % 60;
+            return `${mins.toString().padStart(2, '0')}:${remainingSecs.toString().padStart(2, '0')}`;
+        }
+
         function actualizarTemporizador() {
-            const mins = Math.floor(segundos / 60);
-            const secs = segundos % 60;
-            display.textContent = `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+            display.textContent = formatTime(segundos);
             
             if (segundos <= 0) {
                 clearInterval(temporizador);
-                alarma.play();
-                display.style.color = 'red';
-                display.style.animation = 'pulse 1s infinite';
+                try { alarma.play(); } catch(e){}
+                display.style.color = '#E53935';
             } else {
                 segundos--;
             }
         }
 
         iniciarBtn.addEventListener('click', function() {
-            segundos = 300;
-            display.style.color = '#00796b';
-            display.style.animation = 'none';
+            display.style.color = '#01579B';
             temporizador = setInterval(actualizarTemporizador, 1000);
             iniciarBtn.style.display = 'none';
             detenerBtn.style.display = 'inline-block';
+            reiniciarBtn.style.display = 'inline-block';
         });
 
         detenerBtn.addEventListener('click', function() {
             clearInterval(temporizador);
             iniciarBtn.style.display = 'inline-block';
+            iniciarBtn.textContent = 'Reanudar ▶️';
             detenerBtn.style.display = 'none';
+        });
+
+        reiniciarBtn.addEventListener('click', function() {
+            clearInterval(temporizador);
+            segundos = 300;
+            display.textContent = "05:00";
+            display.style.color = '#01579B';
+            iniciarBtn.style.display = 'inline-block';
+            iniciarBtn.textContent = 'Comenzar 🚿';
+            detenerBtn.style.display = 'none';
+            reiniciarBtn.style.display = 'none';
         });
 
         // Sección "Mi compromiso"
@@ -394,44 +616,53 @@
             const compromiso = document.getElementById('compromiso').value;
             if (compromiso) {
                 document.getElementById('confirmacion-compromiso').style.display = 'block';
-                crearConfeti();
+                for (let i = 0; i < 10; i++) crearConfeti();
             }
         });
 
-        // Cuestionario
+        // Quiz con selección única por pregunta
+        document.querySelectorAll('.pregunta').forEach(preguntaEl => {
+            const opciones = preguntaEl.querySelectorAll('.opcion-quiz');
+            opciones.forEach(opcion => {
+                opcion.addEventListener('click', function() {
+                    opciones.forEach(o => o.classList.remove('selected'));
+                    this.classList.add('selected');
+                });
+            });
+        });
+
         document.getElementById('verificar-respuestas').addEventListener('click', function() {
             let respuestasCorrectas = 0;
-            const opciones = document.querySelectorAll('.opcion-quiz');
+            const preguntas = document.querySelectorAll('.pregunta');
             
-            opciones.forEach(opcion => {
-                const esCorrecta = opcion.dataset.correcta === 'true';
-                if (esCorrecta && opcion.classList.contains('selected')) {
-                    respuestasCorrectas++;
-                    opcion.classList.add('correcta');
-                } else if (!esCorrecta && opcion.classList.contains('selected')) {
-                    opcion.classList.add('incorrecta');
-                } else if (esCorrecta) {
-                    opcion.classList.add('correcta');
-                }
+            preguntas.forEach(pregunta => {
+                const opciones = pregunta.querySelectorAll('.opcion-quiz');
+                opciones.forEach(opcion => {
+                    const esCorrecta = opcion.dataset.correcta === 'true';
+                    if (opcion.classList.contains('selected')) {
+                        if (esCorrecta) {
+                            respuestasCorrectas++;
+                            opcion.classList.add('correcta');
+                        } else {
+                            opcion.classList.add('incorrecta');
+                        }
+                    } else if (esCorrecta) {
+                        opcion.classList.add('correcta');
+                    }
+                });
             });
             
             const resultado = document.getElementById('resultado-quiz');
-            resultado.textContent = `Obtuviste ${respuestasCorrectas} de 3 respuestas correctas!`;
-            resultado.style.color = respuestasCorrectas === 3 ? 'green' : 'red';
+            resultado.textContent = `¡Obtuviste ${respuestasCorrectas} de 3 respuestas correctas! 🌟`;
+            resultado.style.color = respuestasCorrectas === 3 ? '#2E7D32' : '#C62828';
             
             if (respuestasCorrectas === 3) {
                 litrosAhorrados += 30;
                 contador.textContent = litrosAhorrados;
-                for (let i = 0; i < 20; i++) {
-                    setTimeout(() => crearConfeti(), i * 100);
+                for (let i = 0; i < 15; i++) {
+                    setTimeout(() => crearConfeti(), i * 80);
                 }
             }
-        });
-
-        document.querySelectorAll('.opcion-quiz').forEach(opcion => {
-            opcion.addEventListener('click', function() {
-                this.classList.add('selected');
-            });
         });
     </script>
 </body>
