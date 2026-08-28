@@ -1,55 +1,80 @@
 # 💧 AquaMind - Plataforma Educativa para el Cuidado del Agua
 
-[![Estado del Proyecto](https://img.shields.io/badge/Estado-Completado-brightgreen.svg)]()
+[![Estado del Proyecto](https://img.shields.io/badge/Estado-Completado%20%26%20Actualizado-brightgreen.svg)]()
 [![Público Objetivo](https://img.shields.io/badge/Público-Niños%206%20a%2010%20años-blue.svg)]()
-[![Tecnologías](https://img.shields.io/badge/Tecnologías-HTML5%20|%20CSS3%20|%20JavaScript%20ES6+-orange.svg)]()
+[![Tecnologías](https://img.shields.io/badge/Tecnologías-HTML5%20|%20CSS3%20|%20Vanilla%20JS%20ES6+-orange.svg)]()
+[![Sin Dependencias](https://img.shields.io/badge/Dependencias-100%25%20Nativas%20(Zero%20Deps)-purple.svg)]()
 [![Institución](https://img.shields.io/badge/Institución-UNAD-005691.svg)]()
 
-> **AquaMind** es una plataforma web educativa e interactiva creada para concientizar y empoderar a niños y niñas entre **6 y 10 años** sobre la preservación, uso responsable y ahorro del agua a través del juego, la multimedia y actividades prácticas cotidianas.
+> **AquaMind** es una plataforma web educativa, lúdica e interactiva diseñada para enseñar, concientizar y motivar a niños y niñas de **6 a 10 años** sobre la importancia vital del agua, su uso responsable, el cuidado de los ecosistemas y el ahorro en el hogar.
+
+---
+
+## 📑 Tabla de Contenidos
+
+1. [🌟 Descripción General](#-descripción-general)
+2. [🚀 Módulos y Experiencias Interactivas](#-módulos-y-experiencias-interactivas)
+   - [🎮 Mini-Juego: ¡Atrapa las Gotas!](#1--mini-juego-atrapa-las-gotas)
+   - [🧠 Quiz Interactivo: Eco-Guardián](#2--quiz-interactivo-eco-guardián)
+   - [💡 Módulo de Consejos y Retos del Agua](#3--módulo-de-consejos-y-retos-del-agua)
+   - [🎬 Videoteca Educativa Dinámica](#4--videoteca-educativa-dinámica)
+   - [📚 Material Didáctico Descargable](#5--material-didáctico-descargable)
+3. [📁 Estructura del Proyecto](#-estructura-del-proyecto)
+4. [💻 Tecnologías y Arquitectura](#-tecnologías-y-arquitectura)
+5. [🛠️ Cómo Ejecutar el Proyecto](#️-cómo-ejecutar-el-proyecto)
+6. [🎯 Enfoque Pedagógico y Gamificación](#-enfoque-pedagógico-y-gamificación)
+7. [🏫 Contexto Institucional](#-contexto-institucional)
+8. [👥 Contribuciones y Licencia](#-contribuciones-y-licencia)
 
 ---
 
 ## 🌟 Descripción General
 
-El proyecto combina elementos lúdicos y pedagógicos para transformar conceptos ambientales como el ciclo hidrológico, la huella hídrica y la contaminación de fuentes hídricas en experiencias dinámicas, visuales y fáciles de comprender para los más pequeños.
+AquaMind transforma el aprendizaje ambiental en una aventura interactiva para la infancia. A través de dinámicas de juego, desafíos de conocimiento, herramientas cotidianas y recursos visuales, los niños descubren cómo sus acciones diarias tienen un impacto directo en el planeta.
 
-Diseñado con una estética amigable, tipografías legibles (*Fredoka* y *Quicksand*), animaciones fluidas y soporte completo para dispositivos móviles, tablets y computadores de escritorio.
+### Principales bondades de diseño:
+- **100% Nativo y Autónomo:** No requiere frameworks pesados, librerías externas ni registros previos.
+- **Diseño Adaptativo (*Mobile-First*):** Optimizado para pantallas táctiles (smartphones y tablets) y computadores de escritorio.
+- **Identidad Visual Infantil:** Paleta de colores atractiva, microanimaciones y tipografías amigables (*Fredoka* y *Quicksand*).
+- **Audio Sintetizado:** Efectos de sonido dinámicos generados en tiempo real mediante la *Web Audio API*.
 
 ---
 
-## 🚀 Módulos y Características Principales
+## 🚀 Módulos y Experiencias Interactivas
 
 ### 1. 🎮 Mini-Juego: ¡Atrapa las Gotas!
-Un videojuego arcade educativo desarrollado en JavaScript puro:
-- **Mecánica:** Controla una cubeta recolectora para atrapar gotas de agua limpia (💧 +10 pts), burbujas ecológicas (🧼 +25 pts) y gotas doradas de bonificación (🌟 +50 pts), mientras esquivas barriles de contaminación tóxica (🛢️ -1 vida).
-- **Ecosistemas Progresivos:** Diferentes niveles dinámicos (*El Manantial*, *El Río Cristalino*, *El Gran Océano*).
-- **Efectos Audiovisuales:** Síntesis de sonido en tiempo real con **Web Audio API**, sistema de partículas, barra de progreso temporal y registro de récords mediante `localStorage`.
-- **Controles Universales:** Soporte para gestos táctiles (touch/drag), teclado (flechas `←` / `→`) y mouse.
+Un dinámico juego arcade en el navegador:
+- **Objetivo:** Mover la cubeta recolectora para atrapar agua limpia (💧 **+10 pts**), burbujas ecológicas (🧼 **+25 pts**) y gotas doradas especiales (🌟 **+50 pts**), evitando los barriles de residuos tóxicos (🛢️ **-1 vida**).
+- **Ecosistemas:** Progresión a través de diferentes niveles y biomas acuáticos (*El Manantial*, *El Río Cristalino*, *El Gran Océano*).
+- **Controles Multidispositivo:** Compatible con teclado (flechas `←` / `→`), arrastre con ratón y deslizamiento táctil en pantalla.
+- **HUD Completo:** Vidas visuales (❤️), medidor de tiempo, nivel de llenado de cubeta, sistema de partículas y récord guardado en `localStorage`.
 
-### 2. 💡 Consejos, Retos y Eco-Hábitos
-Un espacio interactivo para fomentar hábitos sostenibles en el hogar:
-- **Consejos Prácticos Ilustrados:** Buenas prácticas en el cepillado, lavado de manos, riego de plantas y detección de fugas.
-- **¿Sabías que...? (Datos Curiosos):** Información científica y datos asombrosos adaptados a lenguaje infantil.
-- **Sistema de Logros y Medallas:** Recompensas visuales coleccionables que motivan el aprendizaje continuo.
-- **Temporizador de Ducha Interactivo:** Herramienta visual con alerta sonora y conteo regresivo de 3-5 minutos para duchas cortas y eficientes.
-- **Compromiso Ecohéroe:** Generador interactivo de pactos ecológicos familiares.
+### 2. 🧠 Quiz Interactivo: Eco-Guardián
+Un módulo nativo de evaluación diagnóstica y formativa de 10 preguntas:
+- **Temáticas Clave:** Huella hídrica, ciclo del agua, conservación de ríos y océanos, y hábitos de ahorro en el hogar.
+- **Retroalimentación Inmediata:** Explicaciones didácticas al responder cada pregunta para afianzar el aprendizaje.
+- **Sistema de Rachas y Puntos:** Bonificaciones por aciertos continuos (🔥 racha).
+- **Ceremonia de Resultados:** Lluvia de confeti mediante Canvas, medallas personalizadas y rangos alcanzables (*Gran Guardián del Agua*, *Defensor de los Ríos*, *Protector del Manantial*, *Pequeño Aprendiz*).
 
-### 3. 🎬 Videoteca Educativa Interactiva
-Carrusel dinámico con miniaturas y acceso a videos animados educativos seleccionados:
-1. *El Ciclo del Agua y su Importancia*
-2. *¿Cómo Cuidar el Agua en Casa?*
-3. *La Aventura de la Gota de Agua*
-4. *Consejos Divertidos para Ahorrar Agua*
-5. *Cada Gota Cuenta para el Planeta*
-6. *¡Misión Salvemos los Ríos!*
+### 3. 💡 Módulo de Consejos y Retos del Agua
+Herramientas prácticas para llevar la teoría a la vida real:
+- **Consejos Ilustrados:** Tarjetas con recomendaciones fáciles y visuales para el día a día.
+- **Sección "¿Sabías que...?":** Datos curiosos y revelaciones científicas adaptadas para niños.
+- **Temporizador de Ducha Interactivo:** Cronómetro visual con alertas sonoras para motivar duchas de máximo 3 a 5 minutos.
+- **Insignias y Medallas:** Logros desbloqueables al explorar consejos.
+- **Compromiso Ecohéroe:** Generación simbólica del pacto familiar por el agua.
 
-### 4. 🧠 Desafío Kahoot: Quiz Interactivo
-Modal interactivo integrado con acceso rápido al desafío gamificado:
-- **PIN Oficial del Juego:** `009355358` (con botón de copia en un clic al portapapeles).
-- Enlace directo para unirse a la sala de juego en vivo con compañeros de clase o familia.
+### 4. 🎬 Videoteca Educativa Dinámica
+Carrusel multimedia con miniaturas y visualización directa de contenidos audiovisuales seleccionados:
+1. 💧 *El Ciclo del Agua y su Importancia*
+2. 🚰 *¿Cómo Cuidar el Agua en Casa?*
+3. 🌧️ *La Aventura de la Gota de Agua*
+4. 💡 *Consejos Divertidos para Ahorrar Agua*
+5. 🌍 *Cada Gota Cuenta para el Planeta*
+6. 🏞️ *¡Misión Salvemos los Ríos!*
 
-### 5. 📚 Material Didáctico Descargable (PDF)
-- **Guía Educativa Oficial:** Cuadernillo con láminas para colorear, sopas de letras, crucigramas y lecturas breves disponible en `Anexos/Guia_Educativa.pdf` para imprimir y trabajar sin conexión.
+### 5. 📚 Material Didáctico Descargable
+- **Guía Educativa Oficial (PDF):** Documento imprimible de alta calidad (`Anexos/Guia_Educativa.pdf`) con actividades prácticas, dibujos para colorear y dinámicas para trabajar en el aula o en el hogar sin necesidad de internet.
 
 ---
 
@@ -58,87 +83,98 @@ Modal interactivo integrado con acceso rápido al desafío gamificado:
 ```text
 Proyecto_ing1_cuidado_del_agua/
 │
-├── index.html                  # Página principal (Home / Portal de inicio)
-├── styles.css                  # Estilos globales, diseño responsive y temas
-├── script.js                   # Lógica del carrusel de videos, modales y navegación
+├── index.html                      # Portal principal de bienvenida y navegación
+├── styles.css                      # Estilos globales, variables CSS y diseño responsive
+├── script.js                       # Lógica de navegación y carrusel de videos
 │
 ├── Juegos/
-│   └── Atrapar/
-│       ├── index.html          # Interfaz del juego "Atrapa las Gotas"
-│       ├── styles.css          # Estilos y animaciones del juego y HUD
-│       ├── script.js           # Motor del juego, audio sintético y colisiones
-│       └── assets/             # Recursos adicionales del juego
+│   ├── Atrapar/                    # Mini-juego "¡Atrapa las Gotas!"
+│   │   ├── index.html              # Estructura del juego y HUD
+│   │   ├── styles.css              # Estilos, efectos visuales y animaciones
+│   │   ├── script.js               # Motor de físicas, colisiones y audio sintético
+│   │   └── assets/                 # Recursos gráficos adicionales
+│   │
+│   └── Quiz/                       # Módulo del Quiz "Eco-Guardián"
+│       ├── index.html              # Interfaz interactiva del cuestionario
+│       ├── styles.css              # Estilos, diseño de tarjetas y pantalla de resultados
+│       └── script.js               # Banco de preguntas, feedback, audio y confeti
 │
-├── Proyecto Consejos/
-│   ├── index.html          # Módulo de consejos, temporizador y medallas
-│   └── Imagenes/           # Ilustraciones y recursos visuales de consejos
+├── Proyecto Consejos/              # Módulo de hábitos sostenibles y temporizador
+│   ├── index.html                  # Interfaz de consejos, medallas y cronómetro
+│   └── Imagenes/                   # Ilustraciones y recursos visuales
 │
 ├── Anexos/
-│   └── Guia_Educativa.pdf      # Guía pedagógica descargable para imprimir
+│   └── Guia_Educativa.pdf          # Cuadernillo pedagógico descargable en PDF
 │
-├── imagenes/                   # Iconos, favicons y recursos gráficos generales
-└── README.md                   # Documentación del proyecto
+├── imagenes/                       # Iconos, favicons y assets globales
+└── README.md                       # Documentación técnica y pedagógica del proyecto
 ```
 
 ---
 
-## 💻 Tecnologías Utilizadas
+## 💻 Tecnologías y Arquitectura
 
-- **HTML5:** Semántica web estructurada, accesibilidad (`ARIA labels`) y metadatos adaptables.
-- **CSS3:** Flexbox, CSS Grid, Custom Properties (variables CSS), animaciones CSS y diseño responsivo (*Mobile First*).
-- **JavaScript (Vanilla ES6+):** Manipulación del DOM, eventos táctiles/mouse/teclado, API de Portapapeles (`navigator.clipboard`), almacenamiento local (`localStorage`).
-- **Web Audio API:** Generación procedural de efectos de sonido sin dependencias externas pesadas.
-- **Kahoot!:** Integración con plataforma externa de gamificación para evaluación diagnóstica y formativa.
-- **Google Fonts:** Fuentes tipográficas *Fredoka* y *Quicksand*.
+| Componente | Tecnología | Uso en el Proyecto |
+|---|---|---|
+| **Estructura** | HTML5 Semántico | Marcado accesible, etiquetas ARIA y organización modular. |
+| **Estilos** | CSS3 Moderno | Flexbox, CSS Grid, variables (`var(--...)`), animaciones y media queries. |
+| **Lógica** | JavaScript (ES6+) | Manipulación del DOM, control de flujo, eventos touch/mouse/keyboard. |
+| **Audio** | Web Audio API | Generación procedimental de tonos y efectos de sonido (sin archivos MP3 pesados). |
+| **Visuales** | HTML5 Canvas & SVG | Efecto de confeti para celebraciones y gráficos vectoriales escalables. |
+| **Persistencia** | Web Storage API | Guardado de mejores puntuaciones locales (`localStorage`). |
+| **Fuentes** | Google Fonts | Tipografías abiertas *Fredoka* y *Quicksand*. |
 
 ---
 
 ## 🛠️ Cómo Ejecutar el Proyecto
 
-El proyecto está diseñado para funcionar de forma ligera y sin necesidad de gestores de paquetes o servidores complejos:
+No se requieren compiladores ni servidores backend. Funciona directamente en cualquier navegador moderno:
 
-### Opción 1: Apertura Directa en Navegador
-1. Clona o descarga este repositorio en tu computadora:
+### Opción 1: Apertura Directa
+1. Descarga o clona el repositorio:
    ```bash
    git clone https://github.com/Kscf27/Proyecto_ing1_cuidado_del_agua.git
    ```
-2. Haz doble clic sobre el archivo `index.html` para abrirlo en cualquier navegador web moderno (Google Chrome, Mozilla Firefox, Microsoft Edge, Safari).
+2. Abre el archivo `index.html` en tu navegador favorito (Chrome, Edge, Firefox, Safari u Opera).
 
-### Opción 2: Usando un Servidor Local (Recomendado para desarrollo)
+### Opción 2: Servidor Local de Desarrollo (Live Server)
 Si utilizas **Visual Studio Code**:
 1. Instala la extensión **Live Server**.
 2. Abre la carpeta del proyecto en VS Code.
-3. Haz clic derecho sobre `index.html` y selecciona **"Open with Live Server"**.
+3. Haz clic derecho en `index.html` y selecciona **"Open with Live Server"**.
 
 ---
 
-## 🎯 Enfoque Pedagógico
+## 🎯 Enfoque Pedagógico y Gamificación
 
-| Pilar | Estrategia | Resultado Esperado |
-|---|---|---|
-| **Aprender Jugando** | Videojuegos y desafíos temporizados | Refuerzo positivo y retención de conceptos ecológicos. |
-| **Acción Cotidiana** | Temporizadores y guías prácticas | Transferencia del conocimiento al entorno del hogar y la escuela. |
-| **Inclusión Digital** | Material PDF descargable | Acceso a actividades educativas aún sin conexión a internet continua. |
+```mermaid
+graph TD
+    A["AquaMind 💧"] --> B["🎮 Experimentación Lúdica<br>(Juego 'Atrapa las Gotas')"]
+    A --> C["🧠 Evaluación Formativa<br>(Quiz 'Eco-Guardián')"]
+    A --> D["💡 Transferencia al Hogar<br>(Consejos y Temporizador)"]
+    A --> E["📚 Refuerzo Offline<br>(Guía en PDF)"]
+    
+    B --> F["Refuerzo de reflejos y conceptos de pureza vs contaminación"]
+    C --> G["Afianzamiento de conocimientos con feedback inmediato"]
+    D --> H["Creación de hábitos diarios de ahorro de agua"]
+    E --> I["Actividades manuales familiares y escolares"]
+```
 
 ---
 
 ## 🏫 Contexto Institucional
 
-Proyecto desarrollado en el marco académico de la **Universidad Nacional Abierta y a Distancia (UNAD)** - *Escuela de Ciencias Básicas, Tecnología e Ingeniería (ECBTI)*, con el propósito de crear soluciones de impacto social y ambiental mediante herramientas digitales interactivas.
+Proyecto concebido y desarrollado en el ámbito formativo de la **Universidad Nacional Abierta y a Distancia (UNAD)** dentro de la *Escuela de Ciencias Básicas, Tecnología e Ingeniería (ECBTI)*, con el propósito de integrar las Tecnologías de la Información y las Comunicaciones (TIC) en la educación ambiental comunitaria.
 
 ---
 
-## 👥 Contribuciones
+## 👥 Contribuciones y Licencia
 
-¡Las sugerencias y contribuciones son bienvenidas! Si deseas aportar ideas, nuevos minijuegos, actividades o mejoras visuales:
-1. Realiza un **Fork** del proyecto.
-2. Crea tu rama de características (`git checkout -b feature/NuevaActividad`).
-3. Confirma tus cambios (`git commit -m 'Añade nueva actividad didáctica'`).
-4. Sube la rama (`git push origin feature/NuevaActividad`).
+Las sugerencias, mejoras y nuevas actividades didácticas son bienvenidas:
+1. Haz un **Fork** del repositorio.
+2. Crea tu rama (`git checkout -b feature/NuevaActividad`).
+3. Realiza tus cambios y haz commit (`git commit -m 'Añade nueva actividad interactiva'`).
+4. Envía tu rama (`git push origin feature/NuevaActividad`).
 5. Abre un **Pull Request**.
 
----
-
-## 📄 Licencia
-
-Este proyecto es de carácter educativo y de código abierto bajo fines formativos y de divulgación comunitaria.
+Distribuido como material de código abierto con propósitos educativos y de concientización ambiental.
