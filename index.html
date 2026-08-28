@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Aprendiendo a Ahorrar Agua 💧</title>
+    <title>AquaMind 💧 - Aprendiendo a Cuidar el Agua</title>
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -20,7 +20,7 @@
             <nav class="nav-bar">
                 <a href="#" class="nav-logo">
                     <span class="logo-icon">💧</span>
-                    <span class="logo-text">AquaKids</span>
+                    <span class="logo-text">AquaMind</span>
                 </a>
                 
                 <button class="menu-icon" id="menuToggle" aria-label="Abrir menú de navegación">
@@ -43,7 +43,7 @@
                     <span class="droplet-mascot">💧</span>
                     <span class="mascot-sparkle">✨</span>
                 </div>
-                <h1>¡Aprendiendo a Cuidar el Agua!</h1>
+                <h1>AquaMind: ¡Aprende a Cuidar el Agua!</h1>
                 <p class="subtitle">Aventuras, juegos y retos interactivos para pequeños héroes del planeta (6 a 10 años)</p>
             </div>
 
@@ -103,23 +103,70 @@
                     <div class="video-slider-container">
                         <div class="video-frame">
                             <div class="video-container" id="videoContainer">
-                                <div class="video-slide" data-title="Video 1: El Ciclo del Agua y su Importancia" data-url="https://www.youtube.com/watch?v=MYR-EY6sP_4">
-                                    <iframe src="https://www.youtube.com/embed/MYR-EY6sP_4" title="El ciclo del agua" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                                <!-- Slide 1 -->
+                                <div class="video-slide" data-title="Video 1: El Ciclo del Agua y su Importancia" data-videoid="MYR-EY6sP_4" data-url="https://www.youtube.com/watch?v=MYR-EY6sP_4">
+                                    <div class="video-card-inner" onclick="loadActiveVideo(this, 'MYR-EY6sP_4')">
+                                        <img src="https://img.youtube.com/vi/MYR-EY6sP_4/hqdefault.jpg" alt="Video 1: El Ciclo del Agua" class="video-card-thumb" loading="lazy">
+                                        <div class="play-btn-overlay">
+                                            <span class="play-triangle">▶</span>
+                                        </div>
+                                        <span class="video-card-tag">💧 Video 1</span>
+                                    </div>
                                 </div>
-                                <div class="video-slide" data-title="Video 2: ¿Cómo Cuidar el Agua en Casa?" data-url="https://www.youtube.com/watch?v=fuo4tfzcGp4">
-                                    <iframe src="https://www.youtube.com/embed/fuo4tfzcGp4" title="Cuidando el agua en casa" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+
+                                <!-- Slide 2 -->
+                                <div class="video-slide" data-title="Video 2: ¿Cómo Cuidar el Agua en Casa?" data-videoid="fuo4tfzcGp4" data-url="https://www.youtube.com/watch?v=fuo4tfzcGp4">
+                                    <div class="video-card-inner" onclick="loadActiveVideo(this, 'fuo4tfzcGp4')">
+                                        <img src="https://img.youtube.com/vi/fuo4tfzcGp4/hqdefault.jpg" alt="Video 2: Cuidando el agua en casa" class="video-card-thumb" loading="lazy">
+                                        <div class="play-btn-overlay">
+                                            <span class="play-triangle">▶</span>
+                                        </div>
+                                        <span class="video-card-tag">🚰 Video 2</span>
+                                    </div>
                                 </div>
-                                <div class="video-slide" data-title="Video 3: La Aventura de la Gota de Agua" data-url="https://www.youtube.com/watch?v=EhfLMKOd8J0">
-                                    <iframe src="https://www.youtube.com/embed/EhfLMKOd8J0" title="La aventura de la gota de agua" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+
+                                <!-- Slide 3 -->
+                                <div class="video-slide" data-title="Video 3: La Aventura de la Gota de Agua" data-videoid="EhfLMKOd8J0" data-url="https://www.youtube.com/watch?v=EhfLMKOd8J0">
+                                    <div class="video-card-inner" onclick="loadActiveVideo(this, 'EhfLMKOd8J0')">
+                                        <img src="https://img.youtube.com/vi/EhfLMKOd8J0/hqdefault.jpg" alt="Video 3: La aventura de la gota de agua" class="video-card-thumb" loading="lazy">
+                                        <div class="play-btn-overlay">
+                                            <span class="play-triangle">▶</span>
+                                        </div>
+                                        <span class="video-card-tag">🌧️ Video 3</span>
+                                    </div>
                                 </div>
-                                <div class="video-slide" data-title="Video 4: Consejos Divertidos para Ahorrar Agua" data-url="https://www.youtube.com/watch?v=WGe8WbOKXJg">
-                                    <iframe src="https://www.youtube.com/embed/WGe8WbOKXJg" title="Consejos divertidos de ahorro" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+
+                                <!-- Slide 4 -->
+                                <div class="video-slide" data-title="Video 4: Consejos Divertidos para Ahorrar Agua" data-videoid="WGe8WbOKXJg" data-url="https://www.youtube.com/watch?v=WGe8WbOKXJg">
+                                    <div class="video-card-inner" onclick="loadActiveVideo(this, 'WGe8WbOKXJg')">
+                                        <img src="https://img.youtube.com/vi/WGe8WbOKXJg/hqdefault.jpg" alt="Video 4: Consejos divertidos" class="video-card-thumb" loading="lazy">
+                                        <div class="play-btn-overlay">
+                                            <span class="play-triangle">▶</span>
+                                        </div>
+                                        <span class="video-card-tag">💡 Video 4</span>
+                                    </div>
                                 </div>
-                                <div class="video-slide" data-title="Video 5: Cada Gota Cuenta para el Planeta" data-url="https://www.youtube.com/watch?v=yOGqpFOO2Dk">
-                                    <iframe src="https://www.youtube.com/embed/yOGqpFOO2Dk" title="Cada gota cuenta" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+
+                                <!-- Slide 5 -->
+                                <div class="video-slide" data-title="Video 5: Cada Gota Cuenta para el Planeta" data-videoid="yOGqpFOO2Dk" data-url="https://www.youtube.com/watch?v=yOGqpFOO2Dk">
+                                    <div class="video-card-inner" onclick="loadActiveVideo(this, 'yOGqpFOO2Dk')">
+                                        <img src="https://img.youtube.com/vi/yOGqpFOO2Dk/hqdefault.jpg" alt="Video 5: Cada gota cuenta" class="video-card-thumb" loading="lazy">
+                                        <div class="play-btn-overlay">
+                                            <span class="play-triangle">▶</span>
+                                        </div>
+                                        <span class="video-card-tag">🌍 Video 5</span>
+                                    </div>
                                 </div>
-                                <div class="video-slide" data-title="Video 6: ¡Misión Salvemos los Ríos!" data-url="https://www.youtube.com/watch?v=zhhAL0ALetA">
-                                    <iframe src="https://www.youtube.com/embed/zhhAL0ALetA" title="Misión salvemos los ríos" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+
+                                <!-- Slide 6 -->
+                                <div class="video-slide" data-title="Video 6: ¡Misión Salvemos los Ríos!" data-videoid="zhhAL0ALetA" data-url="https://www.youtube.com/watch?v=zhhAL0ALetA">
+                                    <div class="video-card-inner" onclick="loadActiveVideo(this, 'zhhAL0ALetA')">
+                                        <img src="https://img.youtube.com/vi/zhhAL0ALetA/hqdefault.jpg" alt="Video 6: Misión salvemos los ríos" class="video-card-thumb" loading="lazy">
+                                        <div class="play-btn-overlay">
+                                            <span class="play-triangle">▶</span>
+                                        </div>
+                                        <span class="video-card-tag">🏞️ Video 6</span>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -136,6 +183,7 @@
                             <span class="yt-icon">▶️</span> Ver directamente en YouTube
                         </a>
                     </div>
+                    <p class="video-note-hint">💡 Toca la tarjeta o el botón rojo para reproducir el video en YouTube</p>
                     <div class="slider-dots" id="sliderDots"></div>
                 </div>
             </section>
@@ -187,10 +235,10 @@
             <div class="footer-content">
                 <div class="footer-logo">
                     <span class="footer-droplet">💧</span>
-                    <strong>Aprendiendo a Ahorrar Agua</strong>
+                    <strong>AquaMind - Cuidado del Agua</strong>
                 </div>
                 <p class="footer-institution">Universidad Nacional Abierta y a Distancia (UNAD)</p>
-                <p class="footer-copy">© 2025 Proyecto Educativo Infantil | Creado con amor para los ecohéroes del mañana</p>
+                <p class="footer-copy">© 2025 AquaMind | Proyecto Educativo Infantil para los ecohéroes del mañana</p>
             </div>
         </footer>
         

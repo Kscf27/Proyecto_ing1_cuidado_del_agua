@@ -128,6 +128,30 @@ function setupVideoSlider() {
 }
 
 /* ==========================================================================
+   CARGADOR DINÁMICO DE VIDEOS (LITE EMBED RESILIENTE)
+   ========================================================================== */
+window.loadActiveVideo = function(cardElement, videoId) {
+    // Si se ejecuta desde un archivo local (file://), YouTube bloquea los iframes con Error 153 (sin Origin).
+    // Abrimos directamente el video en YouTube en una nueva pestaña.
+    if (window.location.protocol === 'file:') {
+        window.open(`https://www.youtube.com/watch?v=${videoId}`, '_blank');
+        return;
+    }
+
+    // En servidor web (http/https), creamos el iframe optimizado
+    const iframe = document.createElement("iframe");
+    iframe.src = `https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0`;
+    iframe.title = "Video Educativo AquaMind";
+    iframe.frameBorder = "0";
+    iframe.allow = "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share";
+    iframe.allowFullscreen = true;
+    iframe.setAttribute("referrerpolicy", "strict-origin-when-cross-origin");
+
+    cardElement.innerHTML = "";
+    cardElement.appendChild(iframe);
+};
+
+/* ==========================================================================
    MODAL DE KAHOOT
    ========================================================================== */
 function setupKahootModal() {

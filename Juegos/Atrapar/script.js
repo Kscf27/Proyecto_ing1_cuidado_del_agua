@@ -604,10 +604,10 @@ function endGame(isVictory) {
     clearActiveDrops();
 
     // Obtener y guardar High Score
-    const savedHighScore = parseInt(localStorage.getItem("aquakids_catch_highscore") || "0", 10);
+    const savedHighScore = parseInt(localStorage.getItem("aquamind_catch_highscore") || "0", 10);
     let isNewRecord = false;
     if (score > savedHighScore) {
-        localStorage.setItem("aquakids_catch_highscore", score.toString());
+        localStorage.setItem("aquamind_catch_highscore", score.toString());
         bestScoreDisplay.textContent = score;
         isNewRecord = true;
     } else {
@@ -675,7 +675,7 @@ function togglePause() {
 function toggleSound() {
     soundEnabled = !soundEnabled;
     btnSound.textContent = soundEnabled ? "🔊" : "🔇";
-    localStorage.setItem("aquakids_sound", soundEnabled ? "on" : "off");
+    localStorage.setItem("aquamind_sound", soundEnabled ? "on" : "off");
 }
 
 /* ==========================================================================
@@ -745,7 +745,7 @@ function triggerConfetti(particleCount = 50) {
    ========================================================================== */
 document.addEventListener("DOMContentLoaded", () => {
     // Configuración inicial de sonido
-    const savedSound = localStorage.getItem("aquakids_sound");
+    const savedSound = localStorage.getItem("aquamind_sound");
     if (savedSound === "off") {
         soundEnabled = false;
         btnSound.textContent = "🔇";
