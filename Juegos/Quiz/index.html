@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Quiz Eco-Guardián 🧠💧 - AquaMind</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&family=Quicksand:wght@500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="icon" type="image/x-icon" href="../../imagenes/gota-icono.ico">
+</head>
+<body>
+    <div class="quiz-app-wrapper">
+        <!-- Barra Superior -->
+        <header class="quiz-top-bar">
+            <a href="../../index.html" class="btn-back-home">
+                <span>🏠</span> Inicio
+            </a>
+            <div class="quiz-brand">
+                <span class="quiz-mascot">💧</span>
+                <span class="quiz-logo-text">AquaMind Quiz</span>
+            </div>
+            <button id="btn-sound-toggle" class="btn-sound" aria-label="Activar o desactivar sonido" title="Sonido">🔊</button>
+        </header>
+
+        <main class="quiz-main-card">
+            <!-- PANTALLA 1: INICIO / BIENVENIDA -->
+            <section id="screen-welcome" class="quiz-screen active">
+                <div class="welcome-badge">🏆 Desafío de Conocimiento</div>
+                <h1 class="quiz-title">¡Quiz del Eco-Guardián! 💧</h1>
+                <p class="quiz-subtitle">Demuestra cuánto sabes sobre el cuidado, el ahorro y los misterios del agua en 10 entretenidas preguntas.</p>
+                
+                <div class="quiz-perks-grid">
+                    <div class="perk-item">
+                        <span class="perk-icon">🧠</span>
+                        <strong>10 Preguntas</strong>
+                        <span>Curiosidades y retos</span>
+                    </div>
+                    <div class="perk-item">
+                        <span class="perk-icon">🔥</span>
+                        <strong>Rachas y Puntos</strong>
+                        <span>Gana bonus por aciertos</span>
+                    </div>
+                    <div class="perk-item">
+                        <span class="perk-icon">🎖️</span>
+                        <strong>Medallas Eco</strong>
+                        <span>Conviértete en leyenda</span>
+                    </div>
+                </div>
+
+                <button id="btn-start-quiz" class="btn-primary-action">
+                    ¡Comenzar Desafío! 🚀
+                </button>
+            </section>
+
+            <!-- PANTALLA 2: PREGUNTAS ACTIVAS -->
+            <section id="screen-game" class="quiz-screen">
+                <!-- Barra de Progreso y Estadísticas -->
+                <div class="quiz-hud">
+                    <div class="hud-item hud-progress">
+                        <span class="hud-label">Pregunta</span>
+                        <strong id="question-counter">1 / 10</strong>
+                    </div>
+
+                    <div class="hud-item hud-score">
+                        <span class="hud-label">Puntos</span>
+                        <strong id="current-score">0</strong>
+                    </div>
+
+                    <div class="hud-item hud-streak">
+                        <span class="hud-label">Racha</span>
+                        <strong id="current-streak">🔥 0</strong>
+                    </div>
+                </div>
+
+                <!-- Barra de progreso visual -->
+                <div class="progress-bar-container">
+                    <div class="progress-bar-fill" id="progress-bar-fill"></div>
+                </div>
+
+                <!-- Tarjeta de Pregunta -->
+                <div class="question-box">
+                    <div class="question-category" id="question-category">🚰 Ahorro en el Hogar</div>
+                    <h2 class="question-text" id="question-text">Cargando pregunta...</h2>
+                </div>
+
+                <!-- Opciones de Respuesta -->
+                <div class="options-grid" id="options-grid">
+                    <!-- Inyectadas dinámicamente por JS -->
+                </div>
+
+                <!-- Tarjeta de Retroalimentación Didáctica -->
+                <div class="feedback-card hidden" id="feedback-card">
+                    <div class="feedback-header">
+                        <span class="feedback-icon" id="feedback-icon">🎉</span>
+                        <h3 class="feedback-title" id="feedback-title">¡Correcto!</h3>
+                    </div>
+                    <p class="feedback-explanation" id="feedback-explanation">Explicación didáctica sobre el agua...</p>
+                    <button id="btn-next-question" class="btn-next-action">Siguiente Pregunta ➔</button>
+                </div>
+            </section>
+
+            <!-- PANTALLA 3: RESULTADOS FINALES -->
+            <section id="screen-results" class="quiz-screen">
+                <div class="results-badge" id="results-medal-icon">🏆</div>
+                <h2 class="results-title" id="results-title">¡Increíble Trabajo!</h2>
+                <div class="stars-row" id="results-stars">⭐⭐⭐</div>
+                
+                <div class="results-stats-box">
+                    <div class="result-stat">
+                        <span>Aciertos</span>
+                        <strong id="results-correct-count">10 / 10</strong>
+                    </div>
+                    <div class="result-stat">
+                        <span>Puntaje Total</span>
+                        <strong id="results-final-score">1000 pts</strong>
+                    </div>
+                    <div class="result-stat">
+                        <span>Mejor Récord</span>
+                        <strong id="results-best-score">1000 pts</strong>
+                    </div>
+                </div>
+
+                <div class="eco-rank-card">
+                    <span class="rank-label">Tu Rango Eco-Guardián:</span>
+                    <h3 class="rank-title" id="results-rank-title">🌟 Maestro Protector del Agua</h3>
+                    <p class="rank-desc" id="results-rank-desc">¡Conoces todos los secretos para ahorrar y cuidar el agua en tu comunidad!</p>
+                </div>
+
+                <div class="results-actions">
+                    <button id="btn-restart-quiz" class="btn-primary-action">🔁 Intentar de Nuevo</button>
+                    <a href="../../index.html" class="btn-secondary-action">🏠 Volver al Inicio</a>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Canvas para Confeti -->
+    <canvas id="confetti-canvas"></canvas>
+
+    <script src="script.js"></script>
+</body>
+</html>

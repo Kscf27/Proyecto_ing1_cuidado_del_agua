@@ -4,9 +4,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // Inicializar Carrusel de Videos
     setupVideoSlider();
-
-    // Inicializar Modal de Kahoot
-    setupKahootModal();
 });
 
 /* ==========================================================================
@@ -151,75 +148,5 @@ window.loadActiveVideo = function(cardElement, videoId) {
     cardElement.appendChild(iframe);
 };
 
-/* ==========================================================================
-   MODAL DE KAHOOT
-   ========================================================================== */
-function setupKahootModal() {
-    const modal = document.getElementById("kahootModal");
-    const openMenuBtn = document.getElementById("openKahootModal");
-    const openHeroBtn = document.getElementById("heroKahootBtn");
-    const closeBtn = document.getElementById("closeKahootModal");
-    const copyBtn = document.getElementById("copyPinBtn");
-    const pinText = document.getElementById("kahootPin");
-    const copySuccess = document.getElementById("copySuccessMsg");
 
-    if (!modal) return;
-
-    function openModal(e) {
-        if (e) e.preventDefault();
-        modal.classList.add("active");
-        modal.setAttribute("aria-hidden", "false");
-    }
-
-    function closeModal() {
-        modal.classList.remove("active");
-        modal.setAttribute("aria-hidden", "true");
-        if (copySuccess) copySuccess.style.display = "none";
-    }
-
-    if (openMenuBtn) openMenuBtn.addEventListener("click", openModal);
-    if (openHeroBtn) openHeroBtn.addEventListener("click", openModal);
-    if (closeBtn) closeBtn.addEventListener("click", closeModal);
-
-    // Cerrar al hacer clic en el fondo
-    modal.addEventListener("click", function (e) {
-        if (e.target === modal) closeModal();
-    });
-
-    // Cerrar con Escape
-    document.addEventListener("keydown", function (e) {
-        if (e.key === "Escape" && modal.classList.contains("active")) {
-            closeModal();
-        }
-    });
-
-    // Copiar PIN al portapapeles
-    if (copyBtn && pinText) {
-        copyBtn.addEventListener("click", function () {
-            const textToCopy = pinText.innerText.trim();
-            navigator.clipboard.writeText(textToCopy).then(() => {
-                if (copySuccess) {
-                    copySuccess.style.display = "block";
-                    setTimeout(() => {
-                        copySuccess.style.display = "none";
-                    }, 3000);
-                }
-            }).catch(() => {
-                // Fallback clásico
-                const tempInput = document.createElement("input");
-                tempInput.value = textToCopy;
-                document.body.appendChild(tempInput);
-                tempInput.select();
-                document.execCommand("copy");
-                document.body.removeChild(tempInput);
-                if (copySuccess) {
-                    copySuccess.style.display = "block";
-                    setTimeout(() => {
-                        copySuccess.style.display = "none";
-                    }, 3000);
-                }
-            });
-        });
-    }
-}
 
