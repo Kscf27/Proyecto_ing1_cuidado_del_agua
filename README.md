@@ -21,7 +21,9 @@
    - [📚 Material Didáctico Descargable](#5--material-didáctico-descargable)
 3. [📁 Estructura del Proyecto](#-estructura-del-proyecto)
 4. [💻 Tecnologías y Arquitectura](#-tecnologías-y-arquitectura)
-5. [🛠️ Cómo Ejecutar el Proyecto](#️-cómo-ejecutar-el-proyecto)
+5. [🛠️ Cómo Ejecutar y Desplegar el Proyecto](#️-cómo-ejecutar-y-desplegar-el-proyecto)
+   - [💻 Ejecución Local](#opción-1-apertura-directa)
+   - [🌐 Despliegue en Servidor Ubuntu (Producción)](#opción-3-despliegue-en-servidor-ubuntu-producción)
 6. [🎯 Enfoque Pedagógico y Gamificación](#-enfoque-pedagógico-y-gamificación)
 7. [🏫 Contexto Institucional](#-contexto-institucional)
 8. [👥 Contribuciones y Licencia](#-contribuciones-y-licencia)
@@ -107,6 +109,7 @@ Proyecto_ing1_cuidado_del_agua/
 │   └── Guia_Educativa.pdf          # Cuadernillo pedagógico descargable en PDF
 │
 ├── imagenes/                       # Iconos, favicons y assets globales
+├── IMPLEMENTATION.md               # Guía completa de despliegue en servidores Ubuntu
 └── README.md                       # Documentación técnica y pedagógica del proyecto
 ```
 
@@ -126,9 +129,9 @@ Proyecto_ing1_cuidado_del_agua/
 
 ---
 
-## 🛠️ Cómo Ejecutar el Proyecto
+## 🛠️ Cómo Ejecutar y Desplegar el Proyecto
 
-No se requieren compiladores ni servidores backend. Funciona directamente en cualquier navegador moderno:
+No se requieren compiladores ni servidores backend para su funcionamiento básico. Puedes ejecutarlo localmente o desplegarlo en producción:
 
 ### Opción 1: Apertura Directa
 1. Descarga o clona el repositorio:
@@ -142,6 +145,12 @@ Si utilizas **Visual Studio Code**:
 1. Instala la extensión **Live Server**.
 2. Abre la carpeta del proyecto en VS Code.
 3. Haz clic derecho en `index.html` y selecciona **"Open with Live Server"**.
+
+### Opción 3: Despliegue en Servidor Ubuntu (Producción)
+Para poner la plataforma en línea en un servidor **Ubuntu Linux (20.04 / 22.04 / 24.04 LTS)**:
+- **Servidor Dedicado (Servicio Único):** Despliegue optimizado con Nginx, Apache2 o Docker Standalone en puertos estándar (80/443).
+- **Servidor Compartido (Multi-Servicio):** Integración armónica cuando el servidor ya corre otros servicios (APIs Node.js/Python, bases de datos o sitios web) mediante subdominios (Virtual Hosts), subrutas (`/aquamind/`) o reverse proxies.
+- 📖 **Instrucciones completas y archivos de configuración:** Consulta el manual técnico en [**IMPLEMENTATION.md**](IMPLEMENTATION.md).
 
 ---
 
