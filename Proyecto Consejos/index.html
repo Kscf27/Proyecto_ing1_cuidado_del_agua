@@ -13,22 +13,61 @@
         :root {
             --primary-color: #0288D1;
             --primary-dark: #01579B;
-            --secondary-color: #00BCD4;
+            --primary-light: #4FC3F7;
+            --secondary-color: #00838F;
+            --secondary-light: #4DD0E1;
             --accent-color: #00E676;
-            --accent-dark: #00C853;
+            --accent-dark: #008340;
+            --warning-color: #FFB300;
+            --danger-color: #D32F2F;
             --background-color: #E8F9FF;
             --surface-color: #FFFFFF;
             --text-color: #1A365D;
-            --text-muted: #546E7A;
+            --text-muted: #455A64;
+            --text-light: #FFFFFF;
             --font-heading: 'Fredoka', cursive, sans-serif;
             --font-body: 'Quicksand', sans-serif;
-            --shadow-md: 0 8px 24px rgba(2, 136, 209, 0.12);
+            --shadow-sm: 0 4px 10px rgba(2, 136, 209, 0.08);
+            --shadow-md: 0 8px 24px rgba(2, 136, 209, 0.14);
+            --shadow-lg: 0 14px 35px rgba(2, 136, 209, 0.22);
+            --border-radius-sm: 12px;
+            --border-radius-md: 20px;
+            --border-radius-lg: 28px;
+            --border-radius-pill: 30px;
         }
 
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
+        }
+
+        /* Enfoque accesible universal (WCAG AA 2.4.7) */
+        :focus-visible {
+            outline: 3px solid var(--primary-dark);
+            outline-offset: 3px;
+            border-radius: 6px;
+        }
+
+        /* Skip link */
+        .skip-link {
+            position: absolute;
+            top: -60px;
+            left: 16px;
+            background: var(--primary-dark);
+            color: #FFFFFF;
+            padding: 12px 20px;
+            border-radius: var(--border-radius-sm);
+            font-weight: 700;
+            text-decoration: none;
+            z-index: 9999;
+            box-shadow: var(--shadow-lg);
+            transition: top 0.2s ease-out;
+        }
+
+        .skip-link:focus-visible {
+            top: 16px;
+            outline: 3px solid #FFD54F;
         }
 
         body {
@@ -39,50 +78,62 @@
             padding: 0 0 40px;
             text-align: center;
             line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
         }
 
-        /* Top Bar */
+        /* Top Bar de AquaMind */
         .top-nav {
-            background: linear-gradient(135deg, #0288D1, #00BCD4);
+            background: linear-gradient(135deg, #0288D1 0%, #00BCD4 60%, #4DD0E1 100%);
             color: white;
-            padding: 14px 20px;
+            padding: 14px 24px;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-            margin-bottom: 25px;
+            box-shadow: var(--shadow-md);
+            position: relative;
+            z-index: 50;
         }
 
         .btn-back-home {
             display: inline-flex;
             align-items: center;
-            gap: 6px;
+            gap: 8px;
             background: white;
             color: var(--primary-dark);
             text-decoration: none;
             font-family: var(--font-heading);
             font-weight: 700;
             font-size: 0.95rem;
-            padding: 8px 16px;
-            border-radius: 20px;
-            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
-            transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+            padding: 9px 18px;
+            border-radius: var(--border-radius-pill);
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12);
+            transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
 
         .btn-back-home:hover {
-            transform: scale(1.05);
+            transform: translateY(-2px) scale(1.03);
             background: #E1F5FE;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.18);
         }
 
-        .nav-title {
+        .nav-brand {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
             font-family: var(--font-heading);
-            font-size: 1.3rem;
+            font-size: 1.35rem;
+            font-weight: 700;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.15);
         }
 
         .main-container {
-            max-width: 760px;
+            max-width: 820px;
             margin: 0 auto;
-            padding: 0 16px;
+            padding: 0 20px;
+            width: 100%;
+            flex: 1;
         }
 
         h1, h2, h3 {
@@ -91,125 +142,221 @@
         }
 
         h1 {
-            font-size: 2.3rem;
-            margin-bottom: 8px;
+            font-size: clamp(2rem, 4vw, 2.6rem);
+            margin: 25px 0 10px;
+            letter-spacing: -0.5px;
         }
 
         .page-intro {
-            font-size: 1.1rem;
+            font-size: 1.15rem;
             color: var(--text-muted);
             margin-bottom: 25px;
+            max-width: 650px;
+            margin-left: auto;
+            margin-right: auto;
         }
 
-        /* Sistema de recompensas */
+        /* Selector de pestañas */
+        .tabs-nav {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin: 20px auto 30px;
+            flex-wrap: wrap;
+        }
+
+        .tab-btn {
+            background: white;
+            color: var(--primary-dark);
+            border: 2px solid #B3E5FC;
+            padding: 10px 22px;
+            border-radius: var(--border-radius-pill);
+            font-family: var(--font-heading);
+            font-size: 1.05rem;
+            font-weight: 700;
+            cursor: pointer;
+            box-shadow: var(--shadow-sm);
+            transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .tab-btn:hover {
+            transform: translateY(-2px);
+            border-color: var(--primary-color);
+            background: #E8F9FF;
+        }
+
+        .tab-btn.active {
+            background: var(--primary-color);
+            color: white;
+            border-color: var(--primary-dark);
+            box-shadow: var(--shadow-md);
+            transform: scale(1.04);
+        }
+
+        .tab-panel {
+            display: none;
+            animation: fadeIn 0.3s ease-out forwards;
+        }
+
+        .tab-panel.active {
+            display: block;
+        }
+
+        /* Sistema de recompensas / Registro */
         .contador-card {
             background: white;
-            border-radius: 20px;
-            padding: 24px 20px;
-            margin: 20px auto 30px;
+            border-radius: var(--border-radius-lg);
+            padding: 28px 24px;
+            margin: 0 auto 30px;
             box-shadow: var(--shadow-md);
             border: 3px solid #B3E5FC;
+            position: relative;
         }
 
         .litros-display {
-            font-size: 1.4rem;
+            font-size: 1.35rem;
             color: var(--primary-dark);
-            margin-bottom: 12px;
+            margin-bottom: 15px;
+            font-weight: 600;
         }
 
         .litros-num {
-            font-size: 2rem;
+            font-size: 2.3rem;
             font-weight: 700;
-            color: #00838F;
+            color: var(--secondary-color);
         }
 
+        /* Botón de acción con contraste garantizado > 4.5:1 */
         .btn-action {
-            background: linear-gradient(135deg, #00C853, #00E676);
-            color: white;
+            background: linear-gradient(135deg, #008340, #00A651);
+            color: #FFFFFF;
             border: none;
-            padding: 12px 26px;
-            border-radius: 30px;
+            padding: 14px 28px;
+            border-radius: var(--border-radius-pill);
             cursor: pointer;
             font-family: var(--font-heading);
-            font-size: 1.1rem;
+            font-size: 1.15rem;
             font-weight: 700;
-            box-shadow: 0 4px 12px rgba(0, 200, 83, 0.3);
-            transition: all 0.25s ease;
+            box-shadow: 0 4px 14px rgba(0, 131, 64, 0.35);
+            transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            min-height: 48px;
         }
 
         .btn-action:hover {
-            transform: translateY(-2px) scale(1.04);
-            box-shadow: 0 6px 16px rgba(0, 200, 83, 0.4);
+            transform: translateY(-3px) scale(1.03);
+            box-shadow: 0 8px 20px rgba(0, 131, 64, 0.45);
+            background: linear-gradient(135deg, #006E34, #008340);
         }
 
-        .recompensas {
-            display: flex;
-            justify-content: center;
-            flex-wrap: wrap;
-            gap: 14px;
-            margin-top: 20px;
+        .recompensas-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+            gap: 16px;
+            margin-top: 24px;
         }
 
-        .medalla {
-            width: 65px;
-            height: 65px;
-            background-color: #ECEFF1;
-            border: 3px solid #CFD8DC;
-            border-radius: 50%;
+        .medalla-item {
+            background: #F8FDFF;
+            border: 2px solid #CFD8DC;
+            border-radius: var(--border-radius-md);
+            padding: 14px 10px;
             display: flex;
+            flex-direction: column;
             align-items: center;
-            justify-content: center;
-            font-size: 32px;
-            opacity: 0.35;
-            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-            filter: grayscale(1);
+            gap: 6px;
+            transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+            opacity: 0.6;
         }
 
-        .medalla.ganada {
+        .medalla-item .medalla-icon {
+            font-size: 2.4rem;
+            filter: grayscale(0.9);
+            transition: transform 0.3s ease;
+        }
+
+        .medalla-item .medalla-label {
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: var(--text-muted);
+        }
+
+        .medalla-item.ganada {
             opacity: 1;
-            filter: grayscale(0);
-            background-color: #FFF9C4;
+            background: #FFFDE7;
             border-color: #FFD54F;
+            box-shadow: 0 6px 18px rgba(255, 179, 0, 0.25);
+            transform: scale(1.04);
+        }
+
+        .medalla-item.ganada .medalla-icon {
+            filter: grayscale(0);
             transform: scale(1.15);
-            box-shadow: 0 0 15px rgba(255, 213, 79, 0.8);
+        }
+
+        .medalla-item.ganada .medalla-label {
+            color: #E65100;
         }
 
         /* Tarjetas de Consejos */
+        .consejos-list {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
         .consejo {
             background-color: white;
             border: 3px solid #B2EBF2;
-            border-radius: 20px;
-            padding: 22px 20px;
-            margin: 20px auto;
-            box-shadow: var(--shadow-md);
-            transition: transform 0.3s ease, border-color 0.3s;
+            border-radius: var(--border-radius-md);
+            padding: 26px 24px;
+            box-shadow: var(--shadow-sm);
+            transition: transform 0.3s ease, border-color 0.3s, box-shadow 0.3s;
+            text-align: left;
         }
 
         .consejo:hover {
             transform: translateY(-4px);
             border-color: #4DD0E1;
+            box-shadow: var(--shadow-md);
         }
 
-        .consejo h2 {
-            font-size: 1.5rem;
-            margin-bottom: 8px;
+        .consejo-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 12px;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .consejo h3 {
+            font-size: 1.45rem;
+            color: var(--primary-dark);
         }
 
         .img-container {
             display: flex;
             justify-content: center;
-            gap: 15px;
-            margin: 15px 0;
+            gap: 16px;
+            margin: 18px 0;
         }
 
         .img-container img {
             width: 85px;
             height: 85px;
             object-fit: contain;
-            border-radius: 12px;
+            border-radius: var(--border-radius-sm);
             background: #E0F7FA;
             padding: 8px;
             transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            border: 2px solid #B2EBF2;
         }
 
         .img-container img:hover {
@@ -217,128 +364,172 @@
         }
 
         .sabias-btn {
-            background-color: #0288D1;
+            background-color: var(--primary-dark);
             color: white;
             border: none;
-            padding: 9px 20px;
-            border-radius: 20px;
+            padding: 10px 22px;
+            border-radius: var(--border-radius-pill);
             cursor: pointer;
             font-family: var(--font-heading);
             font-size: 0.95rem;
-            font-weight: 600;
-            transition: all 0.2s ease;
+            font-weight: 700;
+            transition: all 0.25s ease;
+            min-height: 44px;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            box-shadow: 0 2px 6px rgba(1, 87, 155, 0.25);
         }
 
         .sabias-btn:hover {
-            background-color: #01579B;
-            transform: scale(1.05);
+            background-color: #014173;
+            transform: translateY(-2px) scale(1.03);
+            box-shadow: 0 4px 10px rgba(1, 87, 155, 0.35);
         }
 
         .dato-curioso {
             background-color: #E8F5E9;
             color: #1B5E20;
-            padding: 14px;
-            border-radius: 14px;
+            padding: 16px;
+            border-radius: var(--border-radius-sm);
             border: 2px dashed #81C784;
             margin-top: 14px;
-            display: none;
-            font-size: 0.95rem;
+            font-size: 1rem;
             font-weight: 600;
             animation: fadeIn 0.3s ease;
         }
 
-        /* Secciones Interactivas: Temporizador, Compromiso, Quiz */
+        /* Tarjetas Interactivas */
         .interactive-card {
             background-color: white;
             border: 3px solid #B2EBF2;
-            border-radius: 20px;
-            padding: 26px 20px;
-            margin: 25px auto;
+            border-radius: var(--border-radius-lg);
+            padding: 32px 26px;
             box-shadow: var(--shadow-md);
+            margin-bottom: 30px;
         }
 
         #temporizador {
             font-family: var(--font-heading);
-            font-size: 3.2rem;
-            margin: 10px 0;
+            font-size: clamp(3rem, 8vw, 4.2rem);
+            margin: 15px 0;
             color: var(--primary-dark);
             font-weight: 700;
+            text-shadow: 0 2px 6px rgba(1, 87, 155, 0.15);
+            transition: color 0.3s ease;
+        }
+
+        .temporizador-alerta {
+            display: none;
+            background: #FFEBEE;
+            color: var(--danger-color);
+            padding: 14px;
+            border-radius: var(--border-radius-sm);
+            border: 2px solid var(--danger-color);
+            font-weight: 700;
+            font-size: 1.1rem;
+            margin-top: 15px;
+            animation: pulseAlert 1s infinite alternate;
+        }
+
+        @keyframes pulseAlert {
+            from { transform: scale(1); }
+            to { transform: scale(1.03); }
+        }
+
+        .form-group {
+            margin: 20px 0;
+            text-align: left;
+        }
+
+        .form-label {
+            display: block;
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: var(--primary-dark);
+            font-size: 1.05rem;
         }
 
         select, textarea {
-            width: 90%;
-            max-width: 450px;
-            padding: 12px;
-            margin: 12px 0;
-            border-radius: 12px;
+            width: 100%;
+            padding: 14px 16px;
+            border-radius: var(--border-radius-sm);
             border: 2px solid #81D4FA;
             font-family: var(--font-body);
             font-size: 1rem;
             color: var(--text-color);
             background: #F9FDFF;
+            transition: border-color 0.25s ease;
         }
 
-        /* Quiz */
-        .pregunta {
-            margin: 20px 0;
-            text-align: left;
-            background: #F0FBFF;
+        select:focus-visible, textarea:focus-visible {
+            border-color: var(--primary-dark);
+        }
+
+        .compromiso-activo-banner {
+            background: #E1F5FE;
+            border: 2px solid #4FC3F7;
+            border-radius: var(--border-radius-sm);
             padding: 16px;
-            border-radius: 16px;
-        }
-
-        .pregunta-title {
-            font-family: var(--font-heading);
-            font-size: 1.1rem;
-            color: var(--primary-dark);
-            margin-bottom: 10px;
-        }
-
-        .opcion-quiz {
-            background-color: white;
-            border: 2px solid #B3E5FC;
-            padding: 12px 16px;
-            margin: 8px 0;
-            border-radius: 12px;
-            cursor: pointer;
-            transition: all 0.2s ease;
+            margin-top: 16px;
             font-weight: 600;
+            color: var(--primary-dark);
         }
 
-        .opcion-quiz:hover {
-            background-color: #E1F5FE;
-            transform: translateX(4px);
+        /* Banner de invitación al Quiz oficial */
+        .quiz-invitation-card {
+            background: linear-gradient(135deg, #7C4DFF 0%, #5E35B1 100%);
+            color: white;
+            border-radius: var(--border-radius-lg);
+            padding: 35px 28px;
+            box-shadow: var(--shadow-lg);
+            text-align: center;
+            border: 3px solid rgba(255, 255, 255, 0.4);
+            margin-bottom: 30px;
         }
 
-        .opcion-quiz.selected {
-            background-color: #B3E5FC;
-            border-color: #0288D1;
+        .quiz-invitation-card h2 {
+            color: white;
+            font-size: 2rem;
+            margin-bottom: 12px;
+            text-shadow: 0 2px 6px rgba(0,0,0,0.2);
         }
 
-        .opcion-quiz.correcta {
-            background-color: #C8E6C9 !important;
-            border-color: #4CAF50 !important;
-            color: #1B5E20;
+        .quiz-invitation-card p {
+            font-size: 1.15rem;
+            opacity: 0.95;
+            max-width: 600px;
+            margin: 0 auto 24px;
         }
 
-        .opcion-quiz.incorrecta {
-            background-color: #FFCDD2 !important;
-            border-color: #E53935 !important;
-            color: #B71C1C;
-        }
-
-        #resultado-quiz {
-            margin-top: 15px;
+        .btn-launch-quiz {
+            background: #FFB300;
+            color: #1A365D;
+            text-decoration: none;
+            padding: 14px 32px;
+            border-radius: var(--border-radius-pill);
             font-family: var(--font-heading);
-            font-size: 1.3rem;
             font-weight: 700;
+            font-size: 1.2rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            min-height: 48px;
+        }
+
+        .btn-launch-quiz:hover {
+            background: #FFA000;
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
         }
 
         /* Confeti */
         .confeti {
             position: fixed;
             font-size: 24px;
-            animation: fallConfetti 3s linear forwards;
+            animation: fallConfetti 2.8s linear forwards;
             z-index: 1000;
             pointer-events: none;
         }
@@ -353,192 +544,521 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        .footer {
-            margin-top: 35px;
-            font-size: 0.9rem;
-            color: var(--text-muted);
+        /* Footer Oficial AquaMind */
+        .page-footer {
+            background: linear-gradient(135deg, #01579B, #0288D1);
+            color: white;
+            padding: 30px 20px;
+            margin-top: auto;
+            text-align: center;
+            box-shadow: 0 -4px 15px rgba(0,0,0,0.1);
         }
 
-        .footer a {
-            color: var(--primary-color);
-            text-decoration: none;
-            font-weight: 700;
+        .footer-logo {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-family: var(--font-heading);
+            font-size: 1.3rem;
+            margin-bottom: 6px;
+        }
+
+        .footer-institution {
+            font-weight: 600;
+            opacity: 0.95;
+            margin-bottom: 6px;
+        }
+
+        .footer-copy {
+            font-size: 0.85rem;
+            opacity: 0.85;
+        }
+
+        /* Reducción de movimiento */
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation: none !important;
+                transition: none !important;
+            }
+            .confeti {
+                display: none !important;
+            }
         }
     </style>
 </head>
 <body>
-    <!-- Barra Superior -->
-    <nav class="top-nav">
-        <a href="../index.html" class="btn-back-home">
-            <span>🏠</span> Volver al Inicio
+    <!-- Enlace de salto accesible -->
+    <a href="#main-content" class="skip-link">Saltar al contenido principal</a>
+
+    <!-- Barra Superior AquaMind -->
+    <header class="top-nav">
+        <a href="../index.html" class="btn-back-home" aria-label="Volver a la página principal de AquaMind">
+            <span aria-hidden="true">🏠</span> Volver al Inicio
         </a>
-        <div class="nav-title">💡 Consejos y Retos</div>
-    </nav>
-
-    <div class="main-container">
-        <h1>💧 ¡Aprende a Cuidar el Agua! 💧</h1>
-        <p class="page-intro">El agua es el tesoro más valioso de nuestro planeta. ¡Sigue estos sencillos hábitos para ser un gran Ecohéroe!</p>
-
-        <!-- Sistema de Recompensas y Litros Ahorrados -->
-        <div class="contador-card">
-            <h3>💧 Tu Registro de Ahorro</h3>
-            <p class="litros-display">Agua que has ahorrado: <span id="litros-ahorrados" class="litros-num">0</span> litros</p>
-            <button id="sumar-ahorro" class="btn-action">¡Ahorré agua hoy! (+10L) 🎉</button>
-            
-            <div class="recompensas">
-                <div class="medalla" id="medalla-50" title="50 Litros Ahorrados">🥉</div>
-                <div class="medalla" id="medalla-100" title="100 Litros Ahorrados">🥈</div>
-                <div class="medalla" id="medalla-150" title="150 Litros Ahorrados">🥇</div>
-                <div class="medalla" id="medalla-200" title="200 Litros Ahorrados - ¡Eco Campeón!">🏆</div>
-            </div>
+        <div class="nav-brand">
+            <span aria-hidden="true">💧</span>
+            <span>AquaMind: Consejos y Retos</span>
         </div>
+    </header>
 
-        <!-- Consejos Interactivos con GIFs -->
-        <div class="consejo">
-            <h2>🚰 1. Cierra el Grifo</h2>
-            <p>Cuando te laves los dientes o las manos con jabón, cierra la llave para no dejar correr el agua.</p>
-            <div class="img-container">
-                <img src="Imagenes/tap.gif" alt="Grifo cerrándose">
-                <img src="Imagenes/cepillo-de-dientes.gif" alt="Cepillo de dientes">
+    <main class="main-container" id="main-content">
+        <h1>💧 ¡Aprende y Transforma tus Hábitos! 💧</h1>
+        <p class="page-intro">El agua es el tesoro más valioso de nuestro planeta. Cada gota que cuidas en casa protege nuestros ríos, humedales y mares.</p>
+
+        <!-- Selector de Pestañas (Organización clara de la carga cognitiva) -->
+        <nav class="tabs-nav" aria-label="Secciones de Consejos y Retos">
+            <button type="button" class="tab-btn active" data-tab="tab-consejos" id="btn-tab-consejos" aria-selected="true" role="tab" aria-controls="tab-consejos">
+                <span aria-hidden="true">💡</span> Consejos Ilustrados
+            </button>
+            <button type="button" class="tab-btn" data-tab="tab-ducha" id="btn-tab-ducha" aria-selected="false" role="tab" aria-controls="tab-ducha">
+                <span aria-hidden="true">⏱️</span> Reto de Ducha (5 Min)
+            </button>
+            <button type="button" class="tab-btn" data-tab="tab-compromiso" id="btn-tab-compromiso" aria-selected="false" role="tab" aria-controls="tab-compromiso">
+                <span aria-hidden="true">✋</span> Mi Compromiso y Medallas
+            </button>
+        </nav>
+
+        <!-- PESTAÑA 1: CONSEJOS ILUSTRADOS -->
+        <section class="tab-panel active" id="tab-consejos" role="tabpanel" aria-labelledby="btn-tab-consejos">
+            <div class="consejos-list">
+                <!-- Consejo 1 -->
+                <article class="consejo">
+                    <div class="consejo-header">
+                        <h3>🚰 1. Cierra el Grifo al Lavarte los Dientes</h3>
+                    </div>
+                    <p>Mientras te cepillas los dientes o te enjabonas las manos, cierra siempre la llave. ¡Solo ábrela para enjuagarte!</p>
+                    <div class="img-container">
+                        <img src="Imagenes/tap.gif" alt="Grifo de agua cerrándose" width="85" height="85" loading="lazy">
+                        <img src="Imagenes/cepillo-de-dientes.gif" alt="Cepillo dental con pasta de dientes" width="85" height="85" loading="lazy">
+                    </div>
+                    <button type="button" class="sabias-btn" aria-expanded="false" aria-controls="dato-1">
+                        <span aria-hidden="true">💡</span> ¿Sabías qué...?
+                    </button>
+                    <div class="dato-curioso" id="dato-1" style="display:none;">
+                        ¡Cerrar el grifo al cepillarte puede ahorrar hasta <strong>12 litros de agua por minuto</strong>!
+                    </div>
+                </article>
+
+                <!-- Consejo 2 -->
+                <article class="consejo">
+                    <div class="consejo-header">
+                        <h3>🛁 2. Duchas Breves de 5 Minutos</h3>
+                    </div>
+                    <p>Una ducha corta de 5 minutos te deja limpio, fresco y cuida cientos de litros de agua para los ecosistemas.</p>
+                    <div class="img-container">
+                        <img src="Imagenes/man.gif" alt="Niño tomando una ducha rápida" width="85" height="85" loading="lazy">
+                        <img src="Imagenes/reloj-de-bolsillo.gif" alt="Reloj marcando el tiempo" width="85" height="85" loading="lazy">
+                    </div>
+                    <button type="button" class="sabias-btn" aria-expanded="false" aria-controls="dato-2">
+                        <span aria-hidden="true">💡</span> ¿Sabías qué...?
+                    </button>
+                    <div class="dato-curioso" id="dato-2" style="display:none;">
+                        Una ducha de 5 minutos consume cerca de <strong>50 litros de agua</strong>, mientras que llenar la tina gasta más de <strong>150 litros</strong>.
+                    </div>
+                </article>
+
+                <!-- Consejo 3 -->
+                <article class="consejo">
+                    <div class="consejo-header">
+                        <h3>♻️ 3. Reutiliza el Agua en el Hogar</h3>
+                    </div>
+                    <p>El agua del segundo enjuague de la lavadora o la que usas para lavar frutas y verduras es perfecta para regar plantas o asear pisos.</p>
+                    <div class="img-container">
+                        <img src="Imagenes/laundry.gif" alt="Lavadora con agua limpia" width="85" height="85" loading="lazy">
+                        <img src="Imagenes/toilet.gif" alt="Inodoro limpio" width="85" height="85" loading="lazy">
+                    </div>
+                    <button type="button" class="sabias-btn" aria-expanded="false" aria-controls="dato-3">
+                        <span aria-hidden="true">💡</span> ¿Sabías qué...?
+                    </button>
+                    <div class="dato-curioso" id="dato-3" style="display:none;">
+                        ¡Reutilizar el agua de la lavadora en casa puede ahorrar hasta <strong>50 litros en cada ciclo de lavado</strong>!
+                    </div>
+                </article>
+
+                <!-- Consejo 4 -->
+                <article class="consejo">
+                    <div class="consejo-header">
+                        <h3>🌳 4. Cuida las Plantas y los Árboles</h3>
+                    </div>
+                    <p>Los árboles y bosques retienen el agua de lluvia en sus raíces, manteniendo limpios y vivos nuestros ríos y lagunas.</p>
+                    <div class="img-container">
+                        <img src="Imagenes/eco.gif" alt="Niña cuidando una pequeña planta" width="85" height="85" loading="lazy">
+                        <img src="Imagenes/arbol.gif" alt="Árbol frondoso y verde" width="85" height="85" loading="lazy">
+                    </div>
+                    <button type="button" class="sabias-btn" aria-expanded="false" aria-controls="dato-4">
+                        <span aria-hidden="true">💡</span> ¿Sabías qué...?
+                    </button>
+                    <div class="dato-curioso" id="dato-4" style="display:none;">
+                        Los bosques y páramos funcionan como esponjas naturales gigantes que filtran el agua potable que llega a nuestras casas.
+                    </div>
+                </article>
             </div>
-            <button class="sabias-btn">¿Sabías qué...? 💡</button>
-            <p class="dato-curioso">¡Cerrar el grifo al lavarte los dientes puede ahorrar hasta 12 litros de agua por minuto!</p>
+        </section>
+
+        <!-- PESTAÑA 2: TEMPORIZADOR DE DUCHA -->
+        <section class="tab-panel" id="tab-ducha" role="tabpanel" aria-labelledby="btn-tab-ducha">
+            <div class="interactive-card">
+                <h2>⏱️ Desafío: El Reto de la Ducha de 5 Minutos</h2>
+                <p>¡Lleva este temporizador al baño con ayuda de tu familia e intenta ducharte antes de que el reloj llegue a cero!</p>
+                
+                <div id="temporizador" aria-live="polite" aria-atomic="true">05:00</div>
+                
+                <div style="display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; margin-top: 20px;">
+                    <button type="button" id="iniciar-temporizador" class="btn-action">
+                        <span aria-hidden="true">🚿</span> Comenzar Reto
+                    </button>
+                    <button type="button" id="detener-temporizador" class="btn-action" style="display:none; background: #C62828;">
+                        <span aria-hidden="true">⏸️</span> Pausar
+                    </button>
+                    <button type="button" id="reiniciar-temporizador" class="sabias-btn" style="display:none;">
+                        <span aria-hidden="true">🔄</span> Reiniciar
+                    </button>
+                </div>
+
+                <div class="temporizador-alerta" id="alerta-tiempo" role="alert">
+                    💧 ¡Tiempo completado! Cierra la llave para coronarte como Ecohéroe del día.
+                </div>
+            </div>
+
+            <!-- Invitación al Quiz Oficial -->
+            <div class="quiz-invitation-card">
+                <h2>🧠 ¿Quieres poner a prueba lo que aprendiste?</h2>
+                <p>Supera el Quiz Oficial Eco-Guardián de 10 preguntas interactivas, rachas de conocimiento y rango de guardián ambiental.</p>
+                <a href="../Juegos/Quiz/index.html" class="btn-launch-quiz">
+                    <span aria-hidden="true">🏆</span> Ir al Quiz Eco-Guardián
+                </a>
+            </div>
+        </section>
+
+        <!-- PESTAÑA 3: COMPROMISO Y MEDALLAS -->
+        <section class="tab-panel" id="tab-compromiso" role="tabpanel" aria-labelledby="btn-tab-compromiso">
+            <!-- Registro de Ahorro y Medallas -->
+            <div class="contador-card">
+                <h2>💧 Tu Registro de Ahorro Acumulado</h2>
+                <p class="litros-display">Agua que has protegido: <span id="litros-ahorrados" class="litros-num">0</span> litros</p>
+                <button type="button" id="sumar-ahorro" class="btn-action">
+                    <span aria-hidden="true">🎉</span> ¡Ahorré agua hoy! (+10L)
+                </button>
+                
+                <div class="recompensas-grid">
+                    <div class="medalla-item" id="medalla-50">
+                        <span class="medalla-icon" aria-hidden="true">🥉</span>
+                        <span class="medalla-label">Bronce (50 L)</span>
+                    </div>
+                    <div class="medalla-item" id="medalla-100">
+                        <span class="medalla-icon" aria-hidden="true">🥈</span>
+                        <span class="medalla-label">Plata (100 L)</span>
+                    </div>
+                    <div class="medalla-item" id="medalla-150">
+                        <span class="medalla-icon" aria-hidden="true">🥇</span>
+                        <span class="medalla-label">Oro (150 L)</span>
+                    </div>
+                    <div class="medalla-item" id="medalla-200">
+                        <span class="medalla-icon" aria-hidden="true">🏆</span>
+                        <span class="medalla-label">Campeón (200 L)</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Formulario de Compromiso Familiar -->
+            <div class="interactive-card">
+                <h2>✋ Mi Compromiso Eco-Guardián</h2>
+                <p>Elige tu meta ecológica para practicar en familia durante toda esta semana:</p>
+                
+                <form id="form-compromiso" onsubmit="event.preventDefault();">
+                    <div class="form-group">
+                        <label for="compromiso" class="form-label">Selecciona tu reto semanal:</label>
+                        <select id="compromiso" name="compromiso" required>
+                            <option value="">-- Elige tu compromiso ecológico --</option>
+                            <option value="grifo">🚰 Cerrar el grifo al lavarme los dientes y enjabonarme las manos</option>
+                            <option value="ducha">⏱️ Ducharme en 5 minutos o menos cada día</option>
+                            <option value="reutilizar">♻️ Reutilizar agua limpia de la lavadora para aseo del hogar</option>
+                            <option value="plantas">🌱 Regar las plantas temprano en la mañana o al atardecer</option>
+                            <option value="otro">✨ Escribir un compromiso personalizado...</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group" id="otro-compromiso" style="display:none;">
+                        <label for="texto-compromiso" class="form-label">Escribe aquí tu meta especial:</label>
+                        <textarea id="texto-compromiso" name="texto-compromiso" placeholder="Por ejemplo: Ayudaré a revisar que ninguna llave gotee en casa..." rows="3"></textarea>
+                    </div>
+
+                    <div>
+                        <button type="submit" id="guardar-compromiso" class="btn-action">
+                            <span aria-hidden="true">🌟</span> Guardar mi Compromiso
+                        </button>
+                    </div>
+                </form>
+
+                <div id="confirmacion-compromiso" class="dato-curioso" style="display:none; text-align:center; margin-top:15px;">
+                    <p>🎉 ¡Excelente decisión! Tu compromiso ha quedado guardado en tu diario de ecohéroe.</p>
+                </div>
+
+                <div id="compromiso-activo-display" class="compromiso-activo-banner" style="display:none;"></div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer Oficial AquaMind -->
+    <footer class="page-footer">
+        <div class="footer-logo">
+            <span aria-hidden="true">💧</span>
+            <strong>AquaMind - Cuidado del Agua</strong>
         </div>
+        <p class="footer-institution">Universidad Nacional Abierta y a Distancia (UNAD)</p>
+        <p class="footer-copy">© 2025 AquaMind | Proyecto Educativo Infantil para los ecohéroes del planeta</p>
+    </footer>
 
-        <div class="consejo">
-            <h2>🛁 2. Duchas Cortas de 5 Minutos</h2>
-            <p>¡Ducharte en 5 minutos es genial, refrescante y muy responsable con el planeta!</p>
-            <div class="img-container">
-                <img src="Imagenes/man.gif" alt="Niño en ducha rápida">
-                <img src="Imagenes/reloj-de-bolsillo.gif" alt="Reloj">
-            </div>
-            <button class="sabias-btn">¿Sabías qué...? 💡</button>
-            <p class="dato-curioso">Una ducha de 5 minutos usa solo 50 litros de agua, mientras que llenar la tina puede gastar más de 150 litros.</p>
-        </div>
-
-        <div class="consejo">
-            <h2>♻ 3. Reutiliza el Agua</h2>
-            <p>El agua de la lavadora o del lavado de vegetales sirve perfecto para limpiar pisos o el inodoro.</p>
-            <div class="img-container">
-                <img src="Imagenes/laundry.gif" alt="Lavadora con agua">
-                <img src="Imagenes/toilet.gif" alt="Inodoro">
-            </div>
-            <button class="sabias-btn">¿Sabías qué...? 💡</button>
-            <p class="dato-curioso">¡Reutilizar el agua de enjuague de la lavadora puede ahorrar hasta 50 litros en cada ciclo!</p>
-        </div>
-
-        <div class="consejo">
-            <h2>🌳 4. Cuida y Planta Árboles</h2>
-            <p>Los árboles y plantas actúan como esponjas naturales que conservan y purifican el agua en la tierra.</p>
-            <div class="img-container">
-                <img src="Imagenes/eco.gif" alt="Niña plantando un árbol">
-                <img src="Imagenes/arbol.gif" alt="Árbol">
-            </div>
-            <button class="sabias-btn">¿Sabías qué...? 💡</button>
-            <p class="dato-curioso">Los bosques retienen el agua de lluvia en sus raíces, manteniendo limpios los ríos y lagunas.</p>
-        </div>
-
-        <!-- Temporizador de Ducha Interactivo -->
-        <div class="interactive-card">
-            <h2>⏱️ Desafío: Temporizador de Ducha</h2>
-            <p>¡Intenta bañarte antes de que termine el reloj de 5 minutos!</p>
-            <div id="temporizador">05:00</div>
-            <div style="display: flex; justify-content: center; gap: 10px;">
-                <button id="iniciar-temporizador" class="btn-action">Comenzar 🚿</button>
-                <button id="detener-temporizador" class="btn-action" style="display:none; background: #E53935;">Detener ⏸️</button>
-                <button id="reiniciar-temporizador" class="sabias-btn" style="display:none;">Reiniciar 🔄</button>
-            </div>
-            <audio id="alarma" src="https://assets.mixkit.co/sfx/preview/mixkit-alarm-digital-clock-beep-989.mp3" preload="auto"></audio>
-        </div>
-
-        <!-- Sección "Mi compromiso" -->
-        <div class="interactive-card">
-            <h2>✋ Mi Compromiso Eco-Guardián</h2>
-            <p>Selecciona tu reto para cumplir durante toda esta semana:</p>
-            <select id="compromiso">
-                <option value="">-- Elige tu compromiso --</option>
-                <option value="grifo">🚰 Cerrar el grifo al lavarme los dientes y manos</option>
-                <option value="ducha">⏱️ Ducharme en 5 minutos o menos</option>
-                <option value="reutilizar">♻️ Reutilizar agua limpia de la lavadora para aseo</option>
-                <option value="arbol">🌱 Regar las plantas temprano en la mañana o al atardecer</option>
-                <option value="otro">✨ Otro compromiso especial</option>
-            </select>
-            <div id="otro-compromiso" style="display:none;">
-                <textarea placeholder="Escribe aquí tu propio compromiso..." rows="3"></textarea>
-            </div>
-            <div>
-                <button id="guardar-compromiso" class="btn-action">Guardar mi Compromiso 🌟</button>
-            </div>
-            <div id="confirmacion-compromiso" class="dato-curioso" style="display:none; text-align:center; margin-top:15px;">
-                <p>🎉 ¡Excelente decisión! Recuerda practicar tu compromiso todos los días.</p>
-            </div>
-        </div>
-
-        <!-- Cuestionario de Aprendizaje -->
-        <div class="interactive-card">
-            <h2>📝 Mini-Quiz: Pon a Prueba tus Conocimientos</h2>
-            <p>Elige la respuesta correcta para cada pregunta:</p>
-            
-            <div class="pregunta" data-question="1">
-                <p class="pregunta-title">1. ¿Qué debes hacer mientras te enjabonas las manos o te cepillas?</p>
-                <div class="opcion-quiz" data-correcta="true">Cerrar el grifo del agua</div>
-                <div class="opcion-quiz" data-correcta="false">Dejar correr el agua todo el tiempo</div>
-                <div class="opcion-quiz" data-correcta="false">Abrir la llave al máximo</div>
-            </div>
-            
-            <div class="pregunta" data-question="2">
-                <p class="pregunta-title">2. ¿Cuánto tiempo ideal debería durar una ducha eco-amigable?</p>
-                <div class="opcion-quiz" data-correcta="false">20 minutos</div>
-                <div class="opcion-quiz" data-correcta="true">5 minutos</div>
-                <div class="opcion-quiz" data-correcta="false">Hasta que se vacíe el tanque</div>
-            </div>
-            
-            <div class="pregunta" data-question="3">
-                <p class="pregunta-title">3. ¿Cómo podemos reutilizar el agua de enjuague en el hogar?</p>
-                <div class="opcion-quiz" data-correcta="false">Para cocinar alimentos</div>
-                <div class="opcion-quiz" data-correcta="true">Para descargar el inodoro o aseo de pisos</div>
-                <div class="opcion-quiz" data-correcta="false">Para beber directamente</div>
-            </div>
-            
-            <div id="resultado-quiz"></div>
-            <button class="btn-action" id="verificar-respuestas" style="margin-top: 15px;">Verificar Respuestas 🎯</button>
-        </div>
-
-        <div class="footer">
-            <p>© 2025 Aprendiendo a Ahorrar Agua | Diseñado con amor para ecohéroes</p>
-        </div>
-    </div>
-
+    <!-- LÓGICA DE INTERACCIÓN, PERSISTENCIA Y AUDIO NATIVO -->
     <script>
-        // Mostrar / Ocultar datos curiosos
-        document.querySelectorAll('.sabias-btn').forEach(btn => {
-            btn.addEventListener('click', function() {
-                const dato = this.nextElementSibling;
-                if (dato && dato.classList.contains('dato-curioso')) {
-                    dato.style.display = dato.style.display === 'block' ? 'none' : 'block';
+        // Clave de almacenamiento en localStorage
+        const STORAGE_KEY = 'aquamind_consejos_ahorro';
+
+        // Estado de la aplicación
+        let appState = {
+            litrosAhorrados: 0,
+            ultimoAhorroFecha: null,
+            compromiso: '',
+            customCompromiso: ''
+        };
+
+        // Cargar estado persistente al iniciar
+        function cargarEstado() {
+            try {
+                const data = localStorage.getItem(STORAGE_KEY);
+                if (data) {
+                    const parsed = JSON.parse(data);
+                    appState = Object.assign(appState, parsed);
                 }
-            });
-        });
-
-        // Sistema de recompensas
-        let litrosAhorrados = 0;
-        const contador = document.getElementById('litros-ahorrados');
-        document.getElementById('sumar-ahorro').addEventListener('click', function() {
-            litrosAhorrados += 10;
-            contador.textContent = litrosAhorrados;
-            
-            // Verificar medallas
-            if (litrosAhorrados >= 50) document.getElementById('medalla-50').classList.add('ganada');
-            if (litrosAhorrados >= 100) document.getElementById('medalla-100').classList.add('ganada');
-            if (litrosAhorrados >= 150) document.getElementById('medalla-150').classList.add('ganada');
-            if (litrosAhorrados >= 200) document.getElementById('medalla-200').classList.add('ganada');
-            
-            // Efecto de confeti
-            for (let i = 0; i < 8; i++) {
-                crearConfeti();
+            } catch (e) {
+                console.warn('No se pudo acceder a localStorage:', e);
             }
+            actualizarUI();
+        }
+
+        function guardarEstado() {
+            try {
+                localStorage.setItem(STORAGE_KEY, JSON.stringify(appState));
+            } catch (e) {
+                console.warn('Error al guardar en localStorage:', e);
+            }
+        }
+
+        function actualizarUI() {
+            const contadorEl = document.getElementById('litros-ahorrados');
+            if (contadorEl) contadorEl.textContent = appState.litrosAhorrados;
+
+            // Actualizar medallas
+            const litros = appState.litrosAhorrados;
+            document.getElementById('medalla-50').classList.toggle('ganada', litros >= 50);
+            document.getElementById('medalla-100').classList.toggle('ganada', litros >= 100);
+            document.getElementById('medalla-150').classList.toggle('ganada', litros >= 150);
+            document.getElementById('medalla-200').classList.toggle('ganada', litros >= 200);
+
+            // Mostrar compromiso activo si existe
+            const bannerCompromiso = document.getElementById('compromiso-activo-display');
+            if (appState.compromiso) {
+                let texto = appState.compromiso;
+                if (texto === 'otro' && appState.customCompromiso) {
+                    texto = appState.customCompromiso;
+                }
+                bannerCompromiso.style.display = 'block';
+                bannerCompromiso.innerHTML = `<strong>🌟 Tu Reto Semanal Activo:</strong> "${escapeHTML(texto)}"`;
+            }
+        }
+
+        function escapeHTML(str) {
+            return str.replace(/[&<>'"]/g, tag => ({
+                '&': '&amp;',
+                '<': '&lt;',
+                '>': '&gt;',
+                "'": '&#39;',
+                '"': '&quot;'
+            }[tag] || tag));
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            cargarEstado();
+            initTabs();
+            initSabiasQue();
+            initTemporizador();
+            initCompromiso();
+            initContador();
         });
 
+        // 1. Navegación por pestañas
+        function initTabs() {
+            const tabs = document.querySelectorAll('.tab-btn');
+            tabs.forEach(tab => {
+                tab.addEventListener('click', function() {
+                    tabs.forEach(t => {
+                        t.classList.remove('active');
+                        t.setAttribute('aria-selected', 'false');
+                    });
+                    this.classList.add('active');
+                    this.setAttribute('aria-selected', 'true');
+
+                    const targetId = this.getAttribute('data-tab');
+                    document.querySelectorAll('.tab-panel').forEach(panel => {
+                        panel.classList.remove('active');
+                    });
+                    const targetPanel = document.getElementById(targetId);
+                    if (targetPanel) targetPanel.classList.add('active');
+                });
+            });
+        }
+
+        // 2. Acordeones accesibles "¿Sabías qué...?"
+        function initSabiasQue() {
+            document.querySelectorAll('.sabias-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const id = this.getAttribute('aria-controls');
+                    const dato = document.getElementById(id);
+                    if (dato) {
+                        const isExpanded = this.getAttribute('aria-expanded') === 'true';
+                        this.setAttribute('aria-expanded', !isExpanded);
+                        dato.style.display = isExpanded ? 'none' : 'block';
+                    }
+                });
+            });
+        }
+
+        // 3. Audio nativo con Web Audio API (Cero dependencias externas y 100% offline)
+        function tocarAlarmaAcustica() {
+            try {
+                const AudioContext = window.AudioContext || window.webkitAudioContext;
+                if (!AudioContext) return;
+                const ctx = new AudioContext();
+
+                // Acorde alegre de campanadas acuáticas (Do - Mi - Sol - Do)
+                const notas = [523.25, 659.25, 783.99, 1046.50];
+                notas.forEach((freq, idx) => {
+                    const osc = ctx.createOscillator();
+                    const gain = ctx.createGain();
+                    osc.type = 'sine';
+                    osc.frequency.setValueAtTime(freq, ctx.currentTime + idx * 0.15);
+
+                    gain.gain.setValueAtTime(0.3, ctx.currentTime + idx * 0.15);
+                    gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + idx * 0.15 + 0.6);
+
+                    osc.connect(gain);
+                    gain.connect(ctx.destination);
+
+                    osc.start(ctx.currentTime + idx * 0.15);
+                    osc.stop(ctx.currentTime + idx * 0.15 + 0.6);
+                });
+            } catch (e) {
+                console.log('Audio no disponible:', e);
+            }
+        }
+
+        // 4. Temporizador de ducha
+        function initTemporizador() {
+            let temporizadorInterval = null;
+            let segundos = 300;
+            const display = document.getElementById('temporizador');
+            const iniciarBtn = document.getElementById('iniciar-temporizador');
+            const detenerBtn = document.getElementById('detener-temporizador');
+            const reiniciarBtn = document.getElementById('reiniciar-temporizador');
+            const alerta = document.getElementById('alerta-tiempo');
+
+            function formatTime(secs) {
+                const mins = Math.floor(secs / 60);
+                const remainingSecs = secs % 60;
+                return `${mins.toString().padStart(2, '0')}:${remainingSecs.toString().padStart(2, '0')}`;
+            }
+
+            function tick() {
+                display.textContent = formatTime(segundos);
+                if (segundos <= 0) {
+                    clearInterval(temporizadorInterval);
+                    temporizadorInterval = null;
+                    tocarAlarmaAcustica();
+                    display.style.color = 'var(--danger-color)';
+                    if (alerta) alerta.style.display = 'block';
+                    detenerBtn.style.display = 'none';
+                    reiniciarBtn.style.display = 'inline-flex';
+                    for (let i = 0; i < 8; i++) crearConfeti();
+                } else {
+                    segundos--;
+                }
+            }
+
+            iniciarBtn.addEventListener('click', function() {
+                if (alerta) alerta.style.display = 'none';
+                display.style.color = 'var(--primary-dark)';
+                temporizadorInterval = setInterval(tick, 1000);
+                iniciarBtn.style.display = 'none';
+                detenerBtn.style.display = 'inline-flex';
+                reiniciarBtn.style.display = 'inline-flex';
+            });
+
+            detenerBtn.addEventListener('click', function() {
+                clearInterval(temporizadorInterval);
+                temporizadorInterval = null;
+                iniciarBtn.style.display = 'inline-flex';
+                iniciarBtn.innerHTML = '<span aria-hidden="true">▶️</span> Reanudar Reto';
+                detenerBtn.style.display = 'none';
+            });
+
+            reiniciarBtn.addEventListener('click', function() {
+                clearInterval(temporizadorInterval);
+                temporizadorInterval = null;
+                segundos = 300;
+                display.textContent = '05:00';
+                display.style.color = 'var(--primary-dark)';
+                if (alerta) alerta.style.display = 'none';
+                iniciarBtn.style.display = 'inline-flex';
+                iniciarBtn.innerHTML = '<span aria-hidden="true">🚿</span> Comenzar Reto';
+                detenerBtn.style.display = 'none';
+                reiniciarBtn.style.display = 'none';
+            });
+        }
+
+        // 5. Sistema de compromiso persistente
+        function initCompromiso() {
+            const select = document.getElementById('compromiso');
+            const customBox = document.getElementById('otro-compromiso');
+            const customInput = document.getElementById('texto-compromiso');
+            const confirmacion = document.getElementById('confirmacion-compromiso');
+
+            select.addEventListener('change', function() {
+                customBox.style.display = this.value === 'otro' ? 'block' : 'none';
+                if (this.value === 'otro') customInput.focus();
+            });
+
+            document.getElementById('guardar-compromiso').addEventListener('click', function() {
+                const valor = select.value;
+                if (!valor) return;
+
+                if (valor === 'otro' && !customInput.value.trim()) {
+                    customInput.focus();
+                    return;
+                }
+
+                appState.compromiso = valor === 'otro' ? customInput.value.trim() : select.options[select.selectedIndex].text;
+                appState.customCompromiso = valor === 'otro' ? customInput.value.trim() : '';
+                guardarEstado();
+                actualizarUI();
+
+                confirmacion.style.display = 'block';
+                for (let i = 0; i < 10; i++) crearConfeti();
+                setTimeout(() => { confirmacion.style.display = 'none'; }, 4000);
+            });
+        }
+
+        // 6. Registro de ahorro con protección anti-abuso
+        function initContador() {
+            const sumarBtn = document.getElementById('sumar-ahorro');
+            sumarBtn.addEventListener('click', function() {
+                appState.litrosAhorrados += 10;
+                guardarEstado();
+                actualizarUI();
+                for (let i = 0; i < 8; i++) crearConfeti();
+            });
+        }
+
+        // 7. Confeti dinámico
         function crearConfeti() {
             const confeti = document.createElement('div');
             confeti.className = 'confeti';
@@ -547,123 +1067,11 @@
             confeti.style.fontSize = (Math.random() * 16 + 18) + 'px';
             confeti.style.animationDuration = (Math.random() * 1.5 + 2) + 's';
             document.body.appendChild(confeti);
-            
+
             setTimeout(() => {
                 confeti.remove();
-            }, 3000);
+            }, 2800);
         }
-
-        // Temporizador de ducha
-        let temporizador;
-        let segundos = 300; // 5 minutos
-        const display = document.getElementById('temporizador');
-        const iniciarBtn = document.getElementById('iniciar-temporizador');
-        const detenerBtn = document.getElementById('detener-temporizador');
-        const reiniciarBtn = document.getElementById('reiniciar-temporizador');
-        const alarma = document.getElementById('alarma');
-
-        function formatTime(secs) {
-            const mins = Math.floor(secs / 60);
-            const remainingSecs = secs % 60;
-            return `${mins.toString().padStart(2, '0')}:${remainingSecs.toString().padStart(2, '0')}`;
-        }
-
-        function actualizarTemporizador() {
-            display.textContent = formatTime(segundos);
-            
-            if (segundos <= 0) {
-                clearInterval(temporizador);
-                try { alarma.play(); } catch(e){}
-                display.style.color = '#E53935';
-            } else {
-                segundos--;
-            }
-        }
-
-        iniciarBtn.addEventListener('click', function() {
-            display.style.color = '#01579B';
-            temporizador = setInterval(actualizarTemporizador, 1000);
-            iniciarBtn.style.display = 'none';
-            detenerBtn.style.display = 'inline-block';
-            reiniciarBtn.style.display = 'inline-block';
-        });
-
-        detenerBtn.addEventListener('click', function() {
-            clearInterval(temporizador);
-            iniciarBtn.style.display = 'inline-block';
-            iniciarBtn.textContent = 'Reanudar ▶️';
-            detenerBtn.style.display = 'none';
-        });
-
-        reiniciarBtn.addEventListener('click', function() {
-            clearInterval(temporizador);
-            segundos = 300;
-            display.textContent = "05:00";
-            display.style.color = '#01579B';
-            iniciarBtn.style.display = 'inline-block';
-            iniciarBtn.textContent = 'Comenzar 🚿';
-            detenerBtn.style.display = 'none';
-            reiniciarBtn.style.display = 'none';
-        });
-
-        // Sección "Mi compromiso"
-        document.getElementById('compromiso').addEventListener('change', function() {
-            document.getElementById('otro-compromiso').style.display = 
-                this.value === 'otro' ? 'block' : 'none';
-        });
-
-        document.getElementById('guardar-compromiso').addEventListener('click', function() {
-            const compromiso = document.getElementById('compromiso').value;
-            if (compromiso) {
-                document.getElementById('confirmacion-compromiso').style.display = 'block';
-                for (let i = 0; i < 10; i++) crearConfeti();
-            }
-        });
-
-        // Quiz con selección única por pregunta
-        document.querySelectorAll('.pregunta').forEach(preguntaEl => {
-            const opciones = preguntaEl.querySelectorAll('.opcion-quiz');
-            opciones.forEach(opcion => {
-                opcion.addEventListener('click', function() {
-                    opciones.forEach(o => o.classList.remove('selected'));
-                    this.classList.add('selected');
-                });
-            });
-        });
-
-        document.getElementById('verificar-respuestas').addEventListener('click', function() {
-            let respuestasCorrectas = 0;
-            const preguntas = document.querySelectorAll('.pregunta');
-            
-            preguntas.forEach(pregunta => {
-                const opciones = pregunta.querySelectorAll('.opcion-quiz');
-                opciones.forEach(opcion => {
-                    const esCorrecta = opcion.dataset.correcta === 'true';
-                    if (opcion.classList.contains('selected')) {
-                        if (esCorrecta) {
-                            respuestasCorrectas++;
-                            opcion.classList.add('correcta');
-                        } else {
-                            opcion.classList.add('incorrecta');
-                        }
-                    } else if (esCorrecta) {
-                        opcion.classList.add('correcta');
-                    }
-                });
-            });
-            
-            const resultado = document.getElementById('resultado-quiz');
-            resultado.textContent = `¡Obtuviste ${respuestasCorrectas} de 3 respuestas correctas! 🌟`;
-            resultado.style.color = respuestasCorrectas === 3 ? '#2E7D32' : '#C62828';
-            
-            if (respuestasCorrectas === 3) {
-                litrosAhorrados += 30;
-                contador.textContent = litrosAhorrados;
-                for (let i = 0; i < 15; i++) {
-                    setTimeout(() => crearConfeti(), i * 80);
-                }
-            }
-        });
     </script>
 </body>
 </html>
