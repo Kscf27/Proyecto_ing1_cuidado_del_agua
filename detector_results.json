@@ -1,0 +1,334 @@
+[
+  {
+    "antipattern": "low-contrast",
+    "name": "Low contrast text",
+    "description": "Text does not meet WCAG AA contrast requirements (4.5:1 for body, 3:1 for large text). Increase the contrast between text and background.",
+    "severity": "warning",
+    "category": "quality",
+    "file": "C:\\Projects\\Proyecto_ing1_cuidado_del_agua\\index.html",
+    "line": 0,
+    "snippet": "1.8:1 (need 3:1) GÇö text #ffffff on #4dd0e1"
+  },
+  {
+    "antipattern": "low-contrast",
+    "name": "Low contrast text",
+    "description": "Text does not meet WCAG AA contrast requirements (4.5:1 for body, 3:1 for large text). Increase the contrast between text and background.",
+    "severity": "warning",
+    "category": "quality",
+    "file": "C:\\Projects\\Proyecto_ing1_cuidado_del_agua\\index.html",
+    "line": 0,
+    "snippet": "1.8:1 (need 4.5:1) GÇö text #ffffff on #4dd0e1"
+  },
+  {
+    "antipattern": "low-contrast",
+    "name": "Low contrast text",
+    "description": "Text does not meet WCAG AA contrast requirements (4.5:1 for body, 3:1 for large text). Increase the contrast between text and background.",
+    "severity": "warning",
+    "category": "quality",
+    "file": "C:\\Projects\\Proyecto_ing1_cuidado_del_agua\\index.html",
+    "line": 0,
+    "snippet": "2.7:1 (need 4.5:1) GÇö text #ffffff on #ff7043"
+  },
+  {
+    "antipattern": "low-contrast",
+    "name": "Low contrast text",
+    "description": "Text does not meet WCAG AA contrast requirements (4.5:1 for body, 3:1 for large text). Increase the contrast between text and background.",
+    "severity": "warning",
+    "category": "quality",
+    "file": "C:\\Projects\\Proyecto_ing1_cuidado_del_agua\\index.html",
+    "line": 0,
+    "snippet": "2.4:1 (need 4.5:1) GÇö text #ffffff on #00b0ff"
+  },
+  {
+    "antipattern": "low-contrast",
+    "name": "Low contrast text",
+    "description": "Text does not meet WCAG AA contrast requirements (4.5:1 for body, 3:1 for large text). Increase the contrast between text and background.",
+    "severity": "warning",
+    "category": "quality",
+    "file": "C:\\Projects\\Proyecto_ing1_cuidado_del_agua\\index.html",
+    "line": 0,
+    "snippet": "4.0:1 (need 4.5:1) GÇö text #ffffff on #ff0000"
+  },
+  {
+    "antipattern": "low-contrast",
+    "name": "Low contrast text",
+    "description": "Text does not meet WCAG AA contrast requirements (4.5:1 for body, 3:1 for large text). Increase the contrast between text and background.",
+    "severity": "warning",
+    "category": "quality",
+    "file": "C:\\Projects\\Proyecto_ing1_cuidado_del_agua\\index.html",
+    "line": 0,
+    "snippet": "3.9:1 (need 4.5:1) GÇö text #ffffff on #0288d1"
+  },
+  {
+    "antipattern": "low-contrast",
+    "name": "Low contrast text",
+    "description": "Text does not meet WCAG AA contrast requirements (4.5:1 for body, 3:1 for large text). Increase the contrast between text and background.",
+    "severity": "warning",
+    "category": "quality",
+    "file": "C:\\Projects\\Proyecto_ing1_cuidado_del_agua\\index.html",
+    "line": 0,
+    "snippet": "3.9:1 (need 4.5:1) GÇö text #ffffff on #0288d1"
+  },
+  {
+    "antipattern": "low-contrast",
+    "name": "Low contrast text",
+    "description": "Text does not meet WCAG AA contrast requirements (4.5:1 for body, 3:1 for large text). Increase the contrast between text and background.",
+    "severity": "warning",
+    "category": "quality",
+    "file": "C:\\Projects\\Proyecto_ing1_cuidado_del_agua\\index.html",
+    "line": 0,
+    "snippet": "3.9:1 (need 4.5:1) GÇö text #ffffff on #0288d1"
+  },
+  {
+    "antipattern": "low-contrast",
+    "name": "Low contrast text",
+    "description": "Text does not meet WCAG AA contrast requirements (4.5:1 for body, 3:1 for large text). Increase the contrast between text and background.",
+    "severity": "warning",
+    "category": "quality",
+    "file": "C:\\Projects\\Proyecto_ing1_cuidado_del_agua\\index.html",
+    "line": 0,
+    "snippet": ":hover state 3.6:1 (need 4.5:1) GÇö text #0288d1 on #e8f9ff"
+  },
+  {
+    "antipattern": "low-contrast",
+    "name": "Low contrast text",
+    "description": "Text does not meet WCAG AA contrast requirements (4.5:1 for body, 3:1 for large text). Increase the contrast between text and background.",
+    "severity": "warning",
+    "category": "quality",
+    "file": "C:\\Projects\\Proyecto_ing1_cuidado_del_agua\\index.html",
+    "line": 0,
+    "snippet": ":hover state 3.6:1 (need 4.5:1) GÇö text #0288d1 on #e8f9ff"
+  },
+  {
+    "antipattern": "low-contrast",
+    "name": "Low contrast text",
+    "description": "Text does not meet WCAG AA contrast requirements (4.5:1 for body, 3:1 for large text). Increase the contrast between text and background.",
+    "severity": "warning",
+    "category": "quality",
+    "file": "C:\\Projects\\Proyecto_ing1_cuidado_del_agua\\index.html",
+    "line": 0,
+    "snippet": ":hover state 3.6:1 (need 4.5:1) GÇö text #0288d1 on #e8f9ff"
+  },
+  {
+    "antipattern": "low-contrast",
+    "name": "Low contrast text",
+    "description": "Text does not meet WCAG AA contrast requirements (4.5:1 for body, 3:1 for large text). Increase the contrast between text and background.",
+    "severity": "warning",
+    "category": "quality",
+    "file": "C:\\Projects\\Proyecto_ing1_cuidado_del_agua\\index.html",
+    "line": 0,
+    "snippet": ":hover state 3.6:1 (need 4.5:1) GÇö text #0288d1 on #e8f9ff"
+  },
+  {
+    "antipattern": "low-contrast",
+    "name": "Low contrast text",
+    "description": "Text does not meet WCAG AA contrast requirements (4.5:1 for body, 3:1 for large text). Increase the contrast between text and background.",
+    "severity": "warning",
+    "category": "quality",
+    "file": "C:\\Projects\\Proyecto_ing1_cuidado_del_agua\\index.html",
+    "line": 0,
+    "snippet": ":hover state 3.6:1 (need 4.5:1) GÇö text #0288d1 on #e8f9ff"
+  },
+  {
+    "antipattern": "bounce-easing",
+    "name": "Bounce or elastic easing",
+    "description": "Bounce and elastic easing feel dated and tacky. Real objects decelerate smoothly GÇö use exponential easing (ease-out-quart/quint/expo) instead.",
+    "severity": "warning",
+    "category": "slop",
+    "file": "C:\\Projects\\Proyecto_ing1_cuidado_del_agua\\index.html",
+    "line": 0,
+    "snippet": "cubic-bezier(0.34, 1.56, 0.64, 1)"
+  },
+  {
+    "antipattern": "bounce-easing",
+    "name": "Bounce or elastic easing",
+    "description": "Bounce and elastic easing feel dated and tacky. Real objects decelerate smoothly GÇö use exponential easing (ease-out-quart/quint/expo) instead.",
+    "severity": "warning",
+    "category": "slop",
+    "file": "C:\\Projects\\Proyecto_ing1_cuidado_del_agua\\index.html",
+    "line": 0,
+    "snippet": "cubic-bezier(0.34, 1.56, 0.64, 1)"
+  },
+  {
+    "antipattern": "bounce-easing",
+    "name": "Bounce or elastic easing",
+    "description": "Bounce and elastic easing feel dated and tacky. Real objects decelerate smoothly GÇö use exponential easing (ease-out-quart/quint/expo) instead.",
+    "severity": "warning",
+    "category": "slop",
+    "file": "C:\\Projects\\Proyecto_ing1_cuidado_del_agua\\index.html",
+    "line": 0,
+    "snippet": "cubic-bezier(0.34, 1.56, 0.64, 1)"
+  },
+  {
+    "antipattern": "bounce-easing",
+    "name": "Bounce or elastic easing",
+    "description": "Bounce and elastic easing feel dated and tacky. Real objects decelerate smoothly GÇö use exponential easing (ease-out-quart/quint/expo) instead.",
+    "severity": "warning",
+    "category": "slop",
+    "file": "C:\\Projects\\Proyecto_ing1_cuidado_del_agua\\index.html",
+    "line": 0,
+    "snippet": "cubic-bezier(0.34, 1.56, 0.64, 1)"
+  },
+  {
+    "antipattern": "bounce-easing",
+    "name": "Bounce or elastic easing",
+    "description": "Bounce and elastic easing feel dated and tacky. Real objects decelerate smoothly GÇö use exponential easing (ease-out-quart/quint/expo) instead.",
+    "severity": "warning",
+    "category": "slop",
+    "file": "C:\\Projects\\Proyecto_ing1_cuidado_del_agua\\index.html",
+    "line": 0,
+    "snippet": "cubic-bezier(0.34, 1.56, 0.64, 1)"
+  },
+  {
+    "antipattern": "bounce-easing",
+    "name": "Bounce or elastic easing",
+    "description": "Bounce and elastic easing feel dated and tacky. Real objects decelerate smoothly GÇö use exponential easing (ease-out-quart/quint/expo) instead.",
+    "severity": "warning",
+    "category": "slop",
+    "file": "C:\\Projects\\Proyecto_ing1_cuidado_del_agua\\index.html",
+    "line": 0,
+    "snippet": "cubic-bezier(0.34, 1.56, 0.64, 1)"
+  },
+  {
+    "antipattern": "bounce-easing",
+    "name": "Bounce or elastic easing",
+    "description": "Bounce and elastic easing feel dated and tacky. Real objects decelerate smoothly GÇö use exponential easing (ease-out-quart/quint/expo) instead.",
+    "severity": "warning",
+    "category": "slop",
+    "file": "C:\\Projects\\Proyecto_ing1_cuidado_del_agua\\index.html",
+    "line": 0,
+    "snippet": "cubic-bezier(0.34, 1.56, 0.64, 1)"
+  },
+  {
+    "antipattern": "bounce-easing",
+    "name": "Bounce or elastic easing",
+    "description": "Bounce and elastic easing feel dated and tacky. Real objects decelerate smoothly GÇö use exponential easing (ease-out-quart/quint/expo) instead.",
+    "severity": "warning",
+    "category": "slop",
+    "file": "C:\\Projects\\Proyecto_ing1_cuidado_del_agua\\index.html",
+    "line": 0,
+    "snippet": "cubic-bezier(0.34, 1.56, 0.64, 1)"
+  },
+  {
+    "antipattern": "bounce-easing",
+    "name": "Bounce or elastic easing",
+    "description": "Bounce and elastic easing feel dated and tacky. Real objects decelerate smoothly GÇö use exponential easing (ease-out-quart/quint/expo) instead.",
+    "severity": "warning",
+    "category": "slop",
+    "file": "C:\\Projects\\Proyecto_ing1_cuidado_del_agua\\index.html",
+    "line": 0,
+    "snippet": "cubic-bezier(0.34, 1.56, 0.64, 1)"
+  },
+  {
+    "antipattern": "cramped-padding",
+    "name": "Cramped padding",
+    "description": "Text is too close to the edge of its container. Two shapes: (1) an element with its own text where the padding is too low for the font size, and (2) a wrapper with text-bearing children and near-zero padding against a visible boundary (border, outline, or non-transparent background) GÇö children land flush against the boundary line. Add at least 8px (ideally 12GÇô16px) of padding inside bordered, outlined, or colored containers.",
+    "severity": "warning",
+    "category": "quality",
+    "file": "C:\\Projects\\Proyecto_ing1_cuidado_del_agua\\index.html",
+    "line": 0,
+    "snippet": "<div> \"video-slider-container\": children flush against bg on all sides (no inset)"
+  },
+  {
+    "antipattern": "clipped-overflow-container",
+    "name": "Positioned child clipped by overflow container",
+    "description": "A clipping container (overflow hidden or clip) wrapping an absolutely-positioned child cuts off tooltips, menus, and popovers that need to escape. Let the overflow be visible, or move the positioned layer out of the clip.",
+    "severity": "warning",
+    "category": "quality",
+    "file": "C:\\Projects\\Proyecto_ing1_cuidado_del_agua\\index.html",
+    "line": 0,
+    "snippet": "body clips a positioned child"
+  },
+  {
+    "antipattern": "design-system-radius",
+    "name": "Radius outside DESIGN.md",
+    "description": "A border-radius value is outside the DESIGN.md rounded scale. Use a documented radius token or update the design system if the new shape is intentional.",
+    "severity": "advisory",
+    "category": "quality",
+    "file": "C:\\Projects\\Proyecto_ing1_cuidado_del_agua\\index.html",
+    "line": 0,
+    "snippet": "border-radius 4px on span is outside the DESIGN.md rounded scale",
+    "advisory": true,
+    "ignoreValue": "4px"
+  },
+  {
+    "antipattern": "design-system-color",
+    "name": "Color outside DESIGN.md",
+    "description": "A literal color is outside the DESIGN.md palette and sidecar tonal ramps. This may be legitimate, but it should be an intentional design-system addition rather than drift.",
+    "severity": "advisory",
+    "category": "quality",
+    "file": "C:\\Projects\\Proyecto_ing1_cuidado_del_agua\\index.html",
+    "line": 0,
+    "snippet": "background rgb(0, 176, 255) on span \"Ver Consejos GPö\" is outside DESIGN.md colors",
+    "advisory": true,
+    "ignoreValue": "rgb(0, 176, 255)"
+  },
+  {
+    "antipattern": "design-system-color",
+    "name": "Color outside DESIGN.md",
+    "description": "A literal color is outside the DESIGN.md palette and sidecar tonal ramps. This may be legitimate, but it should be an intentional design-system addition rather than drift.",
+    "severity": "advisory",
+    "category": "quality",
+    "file": "C:\\Projects\\Proyecto_ing1_cuidado_del_agua\\index.html",
+    "line": 0,
+    "snippet": "background rgb(0, 0, 0) on div \"Gû¦ =ƒÆº Video 1 Gû¦ =ƒÜ¦ Video 2 Gû¦ =ƒîºn+Å Video 3 \" is outside DESIGN.md colors",
+    "advisory": true,
+    "ignoreValue": "rgb(0, 0, 0)"
+  },
+  {
+    "antipattern": "design-system-color",
+    "name": "Color outside DESIGN.md",
+    "description": "A literal color is outside the DESIGN.md palette and sidecar tonal ramps. This may be legitimate, but it should be an intentional design-system addition rather than drift.",
+    "severity": "advisory",
+    "category": "quality",
+    "file": "C:\\Projects\\Proyecto_ing1_cuidado_del_agua\\index.html",
+    "line": 0,
+    "snippet": "background rgba(255, 0, 0, 0.9) on div \"Gû¦\" is outside DESIGN.md colors",
+    "advisory": true,
+    "ignoreValue": "rgba(255, 0, 0, 0.9)"
+  },
+  {
+    "antipattern": "design-system-color",
+    "name": "Color outside DESIGN.md",
+    "description": "A literal color is outside the DESIGN.md palette and sidecar tonal ramps. This may be legitimate, but it should be an intentional design-system addition rather than drift.",
+    "severity": "advisory",
+    "category": "quality",
+    "file": "C:\\Projects\\Proyecto_ing1_cuidado_del_agua\\index.html",
+    "line": 0,
+    "snippet": "background rgba(1, 40, 75, 0.85) on span \"=ƒÆº Video 1\" is outside DESIGN.md colors",
+    "advisory": true,
+    "ignoreValue": "rgba(1, 40, 75, 0.85)"
+  },
+  {
+    "antipattern": "design-system-radius",
+    "name": "Radius outside DESIGN.md",
+    "description": "A border-radius value is outside the DESIGN.md rounded scale. Use a documented radius token or update the design system if the new shape is intentional.",
+    "severity": "advisory",
+    "category": "quality",
+    "file": "C:\\Projects\\Proyecto_ing1_cuidado_del_agua\\index.html",
+    "line": 0,
+    "snippet": "border-radius 35px on a \"G¼çn+Å Descargar Gu+¡a Educativa (PDF)\" is outside the DESIGN.md rounded scale",
+    "advisory": true,
+    "ignoreValue": "35px"
+  },
+  {
+    "antipattern": "nested-cards",
+    "name": "Nested cards",
+    "description": "Cards inside cards create visual noise and excessive depth. Flatten the hierarchy GÇö use spacing, typography, and dividers instead of nesting containers.",
+    "severity": "warning",
+    "category": "slop",
+    "file": "C:\\Projects\\Proyecto_ing1_cuidado_del_agua\\index.html",
+    "line": 0,
+    "snippet": "Card inside card (div)"
+  },
+  {
+    "antipattern": "dark-glow",
+    "name": "Glowing shadow accents",
+    "description": "Colored glow shadows GÇö a zero-offset chromatic halo (box- or text-shadow) on any background, or any colored blurred shadow on a dark background GÇö are the default \"cool\" look of AI-generated UIs. Use neutral elevation shadows and subtle, purposeful lighting instead.",
+    "severity": "warning",
+    "category": "slop",
+    "file": "C:\\Projects\\Proyecto_ing1_cuidado_del_agua\\index.html",
+    "line": 0,
+    "snippet": "Colored box-shadow glow (#0288d1) on dark page"
+  }
+]

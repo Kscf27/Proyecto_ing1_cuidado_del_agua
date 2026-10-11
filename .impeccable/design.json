@@ -1,0 +1,163 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-09-28T12:42:35.000Z",
+  "title": "Design System: AquaMind",
+  "extensions": {
+    "colorMeta": {
+      "primary": {
+        "role": "primary",
+        "displayName": "Azul Océano Solar",
+        "canonical": "#0288D1",
+        "tonalRamp": ["#002544", "#014373", "#01579B", "#0288D1", "#29B6F6", "#81D4FA", "#B3E5FC", "#E1F5FE"]
+      },
+      "secondary": {
+        "role": "secondary",
+        "displayName": "Turquesa Glaciar",
+        "canonical": "#00BCD4",
+        "tonalRamp": ["#00363A", "#006064", "#00838F", "#00BCD4", "#26C6DA", "#80DEEA", "#B2EBF2", "#E0F7FA"]
+      },
+      "accent-green": {
+        "role": "tertiary",
+        "displayName": "Verde Alga Viva",
+        "canonical": "#00E676",
+        "tonalRamp": ["#003B14", "#006622", "#00A838", "#00E676", "#33EB91", "#66F0AC", "#B2F8D5", "#E8FDF3"]
+      },
+      "warning-gold": {
+        "role": "tertiary",
+        "displayName": "Amarillo Dorado Logro",
+        "canonical": "#FFB300",
+        "tonalRamp": ["#4D3600", "#805A00", "#CC8F00", "#FFB300", "#FFC233", "#FFD166", "#FFE8B3", "#FFF8E6"]
+      },
+      "danger-coral": {
+        "role": "tertiary",
+        "displayName": "Rojo Coral Alerta",
+        "canonical": "#FF5252",
+        "tonalRamp": ["#520000", "#8F0000", "#CC2424", "#FF5252", "#FF7575", "#FF9E9E", "#FFCCCC", "#FFF0F0"]
+      },
+      "bg-spring": {
+        "role": "neutral",
+        "displayName": "Cielo Manantial Fondo",
+        "canonical": "#E8F9FF",
+        "tonalRamp": ["#0A2540", "#154360", "#2E86C1", "#7FB3D5", "#A9CCE3", "#D4E6F1", "#E8F9FF", "#F4FCFF"]
+      },
+      "surface": {
+        "role": "neutral",
+        "displayName": "Blanco Superficie",
+        "canonical": "#FFFFFF",
+        "tonalRamp": ["#1A1A1A", "#333333", "#666666", "#999999", "#CCCCCC", "#E5E5E5", "#F7F7F7", "#FFFFFF"]
+      },
+      "text-deep": {
+        "role": "neutral",
+        "displayName": "Azul Abisal Texto",
+        "canonical": "#1A365D",
+        "tonalRamp": ["#081220", "#10233D", "#1A365D", "#2E5984", "#4E7DA8", "#82A7CA", "#B9D1E8", "#E6EFF7"]
+      }
+    },
+    "typographyMeta": {
+      "display": { "displayName": "Display (Fredoka)", "purpose": "Títulos hero y cabeceras principales llamativas." },
+      "headline": { "displayName": "Headline (Fredoka)", "purpose": "Títulos de sección y módulos." },
+      "title": { "displayName": "Title (Fredoka)", "purpose": "Encabezados de tarjetas y modales." },
+      "body": { "displayName": "Body (Quicksand)", "purpose": "Párrafos informativos, instrucciones y explicaciones didácticas." },
+      "label": { "displayName": "Label (Quicksand)", "purpose": "Botones, etiquetas, píldoras de navegación y HUD." }
+    },
+    "shadows": [
+      { "name": "shadow-sm", "value": "0 4px 10px rgba(2, 136, 209, 0.08)", "purpose": "Elevación base en tarjetas y controles en reposo." },
+      { "name": "shadow-md", "value": "0 8px 24px rgba(2, 136, 209, 0.15)", "purpose": "Elevación para cabecera, contenedor de videos y HUD." },
+      { "name": "shadow-lg", "value": "0 14px 35px rgba(2, 136, 209, 0.22)", "purpose": "Elevación activa durante hover interactivo y modales de éxito." }
+    ],
+    "motion": [
+      { "name": "float-mascot", "value": "2.5s ease-in-out infinite", "purpose": "Oscilación flotante suave y continua de la mascota gota de agua." },
+      { "name": "bounce-pop", "value": "0.35s cubic-bezier(0.34, 1.56, 0.64, 1)", "purpose": "Transición de rebote elástico alegre para tarjetas, botones y logo." }
+    ],
+    "breakpoints": [
+      { "name": "sm", "value": "480px" },
+      { "name": "md", "value": "768px" },
+      { "name": "lg", "value": "1024px" }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "Botón principal de acción en píldora con elevación y rebote suave.",
+      "html": "<button class=\"ds-btn-primary\">¡Jugar Ahora! ➔</button>",
+      "css": ".ds-btn-primary { background: #0288D1; color: #FFFFFF; font-family: 'Quicksand', sans-serif; font-size: 15px; font-weight: 700; padding: 10px 22px; border: none; border-radius: 30px; cursor: pointer; box-shadow: 0 4px 10px rgba(2, 136, 209, 0.18); transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s ease; } .ds-btn-primary:hover { transform: translateY(-3px) scale(1.03); box-shadow: 0 6px 16px rgba(2, 136, 209, 0.3); background: #01579B; }"
+    },
+    {
+      "name": "Action Card",
+      "kind": "card",
+      "refersTo": "card-action",
+      "description": "Tarjeta interactiva de módulo con barra superior en gradiente y elevación en hover.",
+      "html": "<div class=\"ds-card-action\"><div class=\"ds-card-icon\">🎮</div><h3 class=\"ds-card-title\">¡Atrapa las Gotas!</h3><p class=\"ds-card-text\">Demuestra tu agilidad recolectando agua limpia y evitando residuos.</p><span class=\"ds-card-btn\">¡Jugar Ahora! ➔</span></div>",
+      "css": ".ds-card-action { background: #FFFFFF; border-radius: 20px; padding: 30px 24px; text-align: center; box-shadow: 0 4px 10px rgba(2, 136, 209, 0.08); position: relative; overflow: hidden; border: 3px solid transparent; transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.35s ease; font-family: 'Quicksand', sans-serif; } .ds-card-action::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 8px; background: linear-gradient(90deg, #FF7043, #FFB300); } .ds-card-icon { font-size: 48px; margin-bottom: 12px; } .ds-card-title { font-family: 'Fredoka', cursive, sans-serif; font-size: 22px; color: #01579B; margin-bottom: 8px; } .ds-card-text { font-size: 14px; color: #546E7A; margin-bottom: 18px; line-height: 1.5; } .ds-card-btn { display: inline-block; padding: 8px 18px; background: #FF7043; color: #FFF; border-radius: 30px; font-weight: 700; font-size: 14px; } .ds-card-action:hover { transform: translateY(-8px) scale(1.02); box-shadow: 0 14px 35px rgba(2, 136, 209, 0.22); border-color: #FFE0B2; }"
+    },
+    {
+      "name": "Navigation Pill",
+      "kind": "nav",
+      "refersTo": "nav-pill",
+      "description": "Enlace de navegación translúcido con desenfoque de fondo y transición a blanco.",
+      "html": "<a class=\"ds-nav-pill\" href=\"#\"><span class=\"ds-nav-emoji\">🎮</span> Juego: Atrapa las Gotas</a>",
+      "css": ".ds-nav-pill { display: inline-flex; align-items: center; gap: 8px; padding: 10px 18px; color: #FFFFFF; text-decoration: none; font-family: 'Quicksand', sans-serif; font-weight: 700; font-size: 15px; border-radius: 30px; background: rgba(255, 255, 255, 0.15); backdrop-filter: blur(8px); transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1); box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08); } .ds-nav-pill:hover { background: #FFFFFF; color: #0288D1; transform: translateY(-3px) scale(1.03); box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15); }"
+    },
+    {
+      "name": "Mascot Badge",
+      "kind": "custom",
+      "refersTo": "mascot-badge",
+      "description": "Emblema circular de la mascota con borde translúcido y animación de flotación.",
+      "html": "<div class=\"ds-mascot-badge\"><span class=\"ds-mascot-icon\">💧</span><span class=\"ds-mascot-sparkle\">✨</span></div>",
+      "css": ".ds-mascot-badge { display: inline-flex; align-items: center; justify-content: center; width: 80px; height: 80px; border-radius: 50%; background: rgba(255, 255, 255, 0.25); backdrop-filter: blur(10px); border: 3px solid rgba(255, 255, 255, 0.5); box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15); position: relative; } .ds-mascot-icon { font-size: 42px; } .ds-mascot-sparkle { position: absolute; top: -4px; right: -4px; font-size: 22px; }"
+    }
+  ],
+  "narrative": {
+    "northStar": "El Manantial Digital",
+    "overview": "AquaMind está fundamentado en la pureza, fluidez y transparencia de un manantial de agua viva. Es un ecosistema visual diseñado minuciosamente para niños y niñas de 6 a 10 años, equilibrando un estímulo lúdico alegre con una calma pedagógica ordenada. La interfaz no busca deslumbrar con ruido o saturación de arcade caótico, sino ofrecer una atmósfera acogedora, fresca y profundamente interactiva donde cada elemento invita a ser explorado de manera intuitiva y segura.\n\nEl sistema se apoya en superficies marinas luminosas, curvas orgánicas generosas y burbujas de contenido que parecen flotar sobre un lecho acuático cristalino. Las microinteracciones responden con rebotes suaves elásticos (spring physics) y destellos dorados que recompensan el aprendizaje ecológico, reforzando la sensación de logro sin generar frustración punitiva.",
+    "keyCharacteristics": [
+      "Atmósfera Acuática y Fresca: Gradientes oceánicos fluidos con fondo claro cielo manantial (#E8F9FF).",
+      "Geometría Orgánica Protegida: Siluetas libres de aristas agresivas; predominio de radios amplios (12px, 20px, 28px y píldoras completas de 30px).",
+      "Elevación Luminosa Táctil: Sombras suaves con tinte azul refractivo (rgba(2, 136, 209, ...)) y paneles con efecto cristal/burbuja.",
+      "Tipografía Infantil de Alta Legibilidad: Diálogo entre la expresividad redonda de Fredoka en títulos y la claridad geométrica de Quicksand en textos."
+    ],
+    "rules": [
+      {
+        "name": "La Regla del Brillo Acuático",
+        "body": "Toda sombra proyectada en el sistema debe incorporar un tinte azul oceánico (rgba(2, 136, 209, 0.08–0.22)) en lugar de negro o gris neutro opaco. La profundidad se percibe como luz que atraviesa agua limpia.",
+        "section": "colors"
+      },
+      {
+        "name": "La Regla de la Claridad Lúdica",
+        "body": "No más de dos colores de acento vibrante (naranja, púrpura, verde o amarillo) pueden competir en una misma sección de visualización simultánea, evitando la fatiga cognitiva infantil.",
+        "section": "colors"
+      },
+      {
+        "name": "La Regla del Título Amable",
+        "body": "Todos los encabezados principales (H1 a H3) deben usar Fredoka, manteniendo un espaciado de letras relajado y un ligero sombreado de texto para flotar limpiamente sobre degradados.",
+        "section": "typography"
+      },
+      {
+        "name": "La Regla de la Elevación Flotante",
+        "body": "Los elementos accionables ganan volumen y flotación ascendente (translateY(-3px) a translateY(-8px)) con escalado sutil al interactuar con ellos, simulando una boya en el agua.",
+        "section": "elevation"
+      },
+      {
+        "name": "La Regla de la Esquina Amigable",
+        "body": "Ningún elemento de interfaz, tarjeta, botón o modal puede tener un radio de curvatura menor a 12px. Las esquinas rectas de 90° están terminantemente prohibidas en la experiencia infantil de AquaMind.",
+        "section": "shapes"
+      }
+    ],
+    "dos": [
+      "Do emplear siempre las tipografías oficiales: Fredoka para encabezados y Quicksand para cuerpos de texto e instrucciones.",
+      "Do teñir las sombras con la familia azulada rgba(2, 136, 209, ...) para mantener la frescura acuática y la sensación de manantial.",
+      "Do asegurar áreas de pulsación táctil generosas (mínimo 44px de altura) en todos los botones y opciones de quiz.",
+      "Do utilizar microanimaciones de rebote elástico (cubic-bezier(0.34, 1.56, 0.64, 1)) que transmitan dinamismo y alegría al interactuar.",
+      "Do incluir la mascota gota (💧) y destellos (✨) en pantallas de bienvenida y estados de celebración."
+    ],
+    "donts": [
+      "Don't usar bordes rectos (radio de 0px) ni aristas afiladas en ninguna tarjeta, botón o ventana.",
+      "Don't recurrir a sombras grises/negras crudas que ensucien la estética transparente y luminosa.",
+      "Don't sobreestimular con parpadeos constantes, movimientos excesivos o sonidos estridentes que desorienten a los niños.",
+      "Don't implementar pantallas corporativas grises, aburridas o con exceso de texto denso sin apoyo iconográfico.",
+      "Don't diseñar elementos interactivos diminutos difíciles de acertar con el dedo en pantallas táctiles o tablets de aula."
+    ]
+  }
+}

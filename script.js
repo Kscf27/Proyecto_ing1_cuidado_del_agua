@@ -15,28 +15,43 @@ function setupMobileMenu() {
 
     if (!menuToggle || !menuList) return;
 
+    function toggleMenu(open) {
+        const isOpen = typeof open === 'boolean' ? open : !menuList.classList.contains("show");
+        menuList.classList.toggle("show", isOpen);
+        menuToggle.setAttribute("aria-expanded", isOpen ? "true" : "false");
+        menuToggle.setAttribute("aria-label", isOpen ? "Cerrar menú de navegación" : "Abrir menú de navegación");
+    }
+
     menuToggle.addEventListener("click", function (e) {
         e.stopPropagation();
-        menuList.classList.toggle("show");
+        toggleMenu();
+    });
+
+    // Cerrar al pulsar Escape
+    document.addEventListener("keydown", function (e) {
+        if (e.key === "Escape" && menuList.classList.contains("show")) {
+            toggleMenu(false);
+            menuToggle.focus();
+        }
     });
 
     // Cerrar al hacer clic fuera del menú
     document.addEventListener("click", function (e) {
         if (!menuList.contains(e.target) && !menuToggle.contains(e.target)) {
-            menuList.classList.remove("show");
+            toggleMenu(false);
         }
     });
 
     // Cerrar menú al hacer clic en cualquier enlace
     menuList.querySelectorAll("a").forEach(link => {
         link.addEventListener("click", () => {
-            menuList.classList.remove("show");
+            toggleMenu(false);
         });
     });
 }
 
 /* ==========================================================================
-   CARRUSEL DE VIDEOS
+   CARRUSEL DE VIDEOS CON ACCESIBILIDAD TOTAL
    ========================================================================== */
 let currentIndex = 0;
 
@@ -46,6 +61,7 @@ function setupVideoSlider() {
     const videoContainer = document.getElementById("videoContainer");
     const dotsContainer = document.getElementById("sliderDots");
     const titleDisplay = document.getElementById("currentVideoTitle");
+    const btnYtDirect = document.getElementById("btnYtDirect");
 
     if (!videoContainer) return;
 
@@ -53,24 +69,23 @@ function setupVideoSlider() {
     const totalSlides = slides.length;
     if (totalSlides === 0) return;
 
-    // Crear puntos indicadores (dots)
+    // Crear botones indicadores (dots semánticos tipo <button>)
     if (dotsContainer) {
         dotsContainer.innerHTML = "";
         for (let i = 0; i < totalSlides; i++) {
-            const dot = document.createElement("div");
+            const dot = document.createElement("button");
+            dot.type = "button";
             dot.classList.add("dot");
             if (i === 0) dot.classList.add("active");
-            dot.setAttribute("role", "button");
-            dot.setAttribute("aria-label", `Ir al video ${i + 1}`);
+            dot.setAttribute("aria-label", `Ir al video ${i + 1} de ${totalSlides}`);
+            dot.setAttribute("aria-current", i === 0 ? "true" : "false");
             dot.addEventListener("click", () => goToSlide(i));
             dotsContainer.appendChild(dot);
         }
     }
 
-    const btnYtDirect = document.getElementById("btnYtDirect");
-
     function updateSlider() {
-        // Desplazamiento por porcentaje (100% responsivo)
+        // Desplazamiento responsivo
         videoContainer.style.transform = `translateX(-${currentIndex * 100}%)`;
 
         // Actualizar título y enlace a YouTube
@@ -78,14 +93,19 @@ function setupVideoSlider() {
             const title = slides[currentIndex].getAttribute("data-title") || `Video ${currentIndex + 1}`;
             const url = slides[currentIndex].getAttribute("data-url") || "https://www.youtube.com";
             if (titleDisplay) titleDisplay.textContent = title;
-            if (btnYtDirect) btnYtDirect.href = url;
+            if (btnYtDirect) {
+                btnYtDirect.href = url;
+                btnYtDirect.setAttribute("aria-label", `Abrir ${title} en YouTube (se abre en nueva pestaña)`);
+            }
         }
 
         // Actualizar dots
         if (dotsContainer) {
             const dots = dotsContainer.querySelectorAll(".dot");
             dots.forEach((dot, idx) => {
-                dot.classList.toggle("active", idx === currentIndex);
+                const isActive = idx === currentIndex;
+                dot.classList.toggle("active", isActive);
+                dot.setAttribute("aria-current", isActive ? "true" : "false");
             });
         }
     }
@@ -99,6 +119,17 @@ function setupVideoSlider() {
 
     if (prevBtn) prevBtn.addEventListener("click", () => goToSlide(currentIndex - 1));
     if (nextBtn) nextBtn.addEventListener("click", () => goToSlide(currentIndex + 1));
+
+    // Navegación por teclado para el carrusel (Flechas Izquierda / Derecha)
+    videoContainer.parentElement.addEventListener("keydown", function (e) {
+        if (e.key === "ArrowLeft") {
+            e.preventDefault();
+            goToSlide(currentIndex - 1);
+        } else if (e.key === "ArrowRight") {
+            e.preventDefault();
+            goToSlide(currentIndex + 1);
+        }
+    });
 
     // Soporte táctil para deslizar (swipe) en dispositivos móviles
     let touchStartX = 0;
@@ -127,8 +158,10 @@ function setupVideoSlider() {
 /* ==========================================================================
    CARGADOR DINÁMICO DE VIDEOS (LITE EMBED RESILIENTE)
    ========================================================================== */
-window.loadActiveVideo = function(cardElement, videoId) {
-    // Si se ejecuta desde un archivo local (file://), YouTube bloquea los iframes con Error 153 (sin Origin).
+window.loadActiveVideo = function(buttonElement, videoId) {
+    if (!buttonElement) return;
+
+    // Si se ejecuta desde un archivo local (file://), YouTube bloquea los iframes con Error 153.
     // Abrimos directamente el video en YouTube en una nueva pestaña.
     if (window.location.protocol === 'file:') {
         window.open(`https://www.youtube.com/watch?v=${videoId}`, '_blank');
@@ -138,14 +171,18 @@ window.loadActiveVideo = function(cardElement, videoId) {
     // En servidor web (http/https), creamos el iframe optimizado
     const iframe = document.createElement("iframe");
     iframe.src = `https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0`;
-    iframe.title = "Video Educativo AquaMind";
-    iframe.frameBorder = "0";
+    iframe.title = buttonElement.getAttribute("aria-label") || "Video Educativo AquaMind";
     iframe.allow = "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share";
     iframe.allowFullscreen = true;
+    iframe.loading = "lazy";
     iframe.setAttribute("referrerpolicy", "strict-origin-when-cross-origin");
 
-    cardElement.innerHTML = "";
-    cardElement.appendChild(iframe);
+    // Reemplazar de forma limpia el contenido del botón con el reproductor iframe
+    const parent = buttonElement.parentElement;
+    if (parent) {
+        parent.innerHTML = "";
+        parent.appendChild(iframe);
+    }
 };
 
 
