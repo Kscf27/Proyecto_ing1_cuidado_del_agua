@@ -1,0 +1,2512 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="artifact-type" content="narrative">
+<meta name="design-style" content="briefing">
+<title>AquaMind — Póster Científico Interactivo (Fase 5 · UNAD)</title>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Geist+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/lucide@1.43.0/dist/umd/lucide.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.5.1/dist/chart.umd.min.js"></script>
+<style>
+:root {
+  color-scheme: light;
+
+  /* 1. Briefing style tokens */
+  --background: #faf9f5;
+  --surface-container-low: #ffffff;
+  --surface-container: #f1efe8;
+  --surface-container-high: #e6e2d6;
+
+  --on-surface: #17181a;
+  --on-surface-variant: #56585c;
+
+  --outline: #17181a;
+  --outline-variant: #dedad0;
+
+  --primary: #17181a;
+  --on-primary: #faf9f5;
+  --primary-container: #f2b705;
+  --on-primary-container: #17181a;
+  --secondary: #1f4e5f;
+  --tertiary: #785008;
+  --error: #b42318;
+  --on-error: #ffffff;
+
+  --data-1: #1f4e5f;
+  --data-2: #d99000;
+  --data-3: #2b6e52;
+  --data-4: #b84a39;
+  --data-context: #c4bfb2;
+
+  --font-headline: 'Source Serif 4', serif;
+  --font-body: 'Plus Jakarta Sans', sans-serif;
+  --font-label: 'Geist Mono', monospace;
+
+  --rounded: 0.25rem;
+  --rounded-lg: 0.375rem;
+  --rounded-full: 0.25rem;
+
+  --section-rule: 1.5px solid var(--outline);
+  --card-border: 1px solid var(--outline-variant);
+  --badge-radius: 2px;
+  --heading-tracking: -0.02em;
+  --label-tracking: 0.08em;
+
+  /* 2. Shared foundation tokens */
+  --positive: #2b6e52;
+  --warning: #785008;
+  --focus: #1f4e5f;
+
+  --secondary-wash: color-mix(in srgb, var(--secondary) 10%, var(--surface-container-low));
+  --warning-wash: color-mix(in srgb, var(--primary-container) 22%, var(--surface-container-low));
+  --positive-wash: color-mix(in srgb, var(--positive) 12%, var(--surface-container-low));
+  --edit-ring: 2px dashed var(--secondary);
+  --poster-shadow: 0 2px 14px color-mix(in srgb, var(--on-surface) 6%, transparent);
+
+  /* Type scale */
+  --display-size: clamp(1.75rem, 1.3rem + 1.8vw, 2.55rem);
+  --headline-size: clamp(1.15rem, 1rem + 0.55vw, 1.4rem);
+  --subhead-size: clamp(0.975rem, 0.92rem + 0.25vw, 1.08rem);
+  --body-size: clamp(0.9375rem, 0.91rem + 0.12vw, 0.98rem);
+  --label-size: 0.75rem;
+
+  /* Spacing scale (4pt base) */
+  --space-xs: 0.25rem;
+  --space-sm: 0.5rem;
+  --space-md: 1rem;
+  --space-lg: 1.5rem;
+  --space-xl: 2.5rem;
+  --space-2xl: 4rem;
+  --space-3xl: 6rem;
+
+  /* Motion */
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --dur-micro: 120ms;
+  --dur-short: 220ms;
+  --dur-long: 420ms;
+}
+
+/* Base reset */
+*, *::before, *::after { box-sizing: border-box; }
+html, body {
+  overflow-x: clip;
+  margin: 0;
+  padding: 0;
+  background-color: var(--background);
+  color: var(--on-surface);
+  font-family: var(--font-body);
+  font-size: var(--body-size);
+  line-height: 1.58;
+  -webkit-font-smoothing: antialiased;
+}
+header { position: static !important; }
+
+/* Interactive Controls Bar */
+.toolbar-wrap {
+  background: var(--surface-container);
+  border-bottom: var(--section-rule);
+  padding: var(--space-sm) var(--space-lg);
+}
+.toolbar-inner {
+  max-width: 1440px;
+  margin: 0 auto;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-md);
+}
+.toolbar-brand {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  flex-wrap: wrap;
+}
+.toolbar-status {
+  font-family: var(--font-label);
+  font-size: var(--label-size);
+  color: var(--on-surface-variant);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: var(--space-xs) var(--space-sm);
+  background: var(--surface-container-low);
+  border: var(--card-border);
+  border-radius: var(--rounded);
+}
+.toolbar-status.is-editing {
+  background: var(--warning-wash);
+  color: var(--tertiary);
+  border-color: var(--tertiary);
+}
+.toolbar-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-sm);
+}
+
+/* Segmented language & layout toggle */
+.seg-group {
+  display: inline-flex;
+  background: var(--surface-container-low);
+  border: 1px solid var(--outline-variant);
+  border-radius: var(--rounded);
+  padding: 2px;
+  gap: 2px;
+}
+.seg-btn {
+  font-family: var(--font-label);
+  font-size: var(--label-size);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  border: none;
+  background: transparent;
+  color: var(--on-surface-variant);
+  padding: 0.45rem 0.75rem;
+  min-height: 40px;
+  border-radius: var(--badge-radius);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-xs);
+  transition: background-color var(--dur-micro) var(--ease-out), color var(--dur-micro) var(--ease-out);
+}
+.seg-btn:hover {
+  background: var(--surface-container);
+  color: var(--on-surface);
+}
+.seg-btn[aria-pressed="true"] {
+  background: var(--primary);
+  color: var(--on-primary);
+}
+
+/* Buttons */
+.btn {
+  font-family: var(--font-body);
+  font-size: 0.84rem;
+  font-weight: 600;
+  border-radius: var(--rounded);
+  padding: 0.5rem 0.9rem;
+  min-height: 44px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-xs);
+  border: 1px solid var(--outline-variant);
+  background: var(--surface-container-low);
+  color: var(--on-surface);
+  transition: background-color var(--dur-micro) var(--ease-out), border-color var(--dur-micro) var(--ease-out), color var(--dur-micro) var(--ease-out);
+}
+.btn:hover {
+  background: var(--surface-container-high);
+  border-color: var(--outline);
+}
+.btn:active {
+  transform: translateY(1px);
+}
+.btn-primary {
+  background: var(--primary);
+  color: var(--on-primary);
+  border-color: var(--primary);
+}
+.btn-primary:hover {
+  background: var(--secondary);
+  border-color: var(--secondary);
+}
+.btn-accent {
+  background: var(--primary-container);
+  color: var(--on-primary-container);
+  border-color: var(--outline);
+}
+.btn-accent:hover {
+  background: var(--warning-wash);
+}
+.btn-accent[aria-pressed="true"] {
+  background: var(--secondary);
+  color: var(--on-primary);
+  border-color: var(--secondary);
+}
+.btn-danger-armed {
+  background: var(--error);
+  color: var(--on-error);
+  border-color: var(--error);
+}
+.btn:focus-visible, .seg-btn:focus-visible, input:focus-visible, [contenteditable="true"]:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 2px;
+}
+
+/* Inline Editor Drawer for Chart Metrics */
+.metrics-editor-drawer {
+  max-width: 1440px;
+  margin: var(--space-md) auto 0;
+  padding: var(--space-md) var(--space-lg);
+  background: var(--surface-container-low);
+  border: 1.5px solid var(--secondary);
+  border-radius: var(--rounded-lg);
+}
+.metrics-editor-drawer[hidden] {
+  display: none;
+}
+.metrics-editor-head {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--space-sm);
+  border-bottom: var(--card-border);
+  padding-bottom: var(--space-sm);
+  margin-bottom: var(--space-md);
+}
+.metrics-editor-title {
+  font-family: var(--font-headline);
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: var(--secondary);
+  margin: 0;
+}
+.metrics-input-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(210px, 100%), 1fr));
+  gap: var(--space-md);
+  align-items: end;
+}
+.field-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+}
+.field-group label {
+  font-family: var(--font-label);
+  font-size: var(--label-size);
+  font-weight: 600;
+  text-transform: uppercase;
+  color: var(--on-surface-variant);
+  letter-spacing: 0.04em;
+}
+.field-group input {
+  font-family: var(--font-label);
+  font-size: 0.92rem;
+  font-variant-numeric: tabular-nums;
+  padding: 0.5rem 0.65rem;
+  min-height: 44px;
+  border: 1px solid var(--outline-variant);
+  border-radius: var(--rounded);
+  background: var(--background);
+  color: var(--on-surface);
+  width: 100%;
+}
+
+/* Poster Shell */
+.poster-outer {
+  max-width: 1440px;
+  margin: var(--space-lg) auto var(--space-2xl);
+  padding: 0 var(--space-lg);
+}
+.poster-sheet {
+  background: var(--surface-container-low);
+  border: 1.5px solid var(--outline);
+  border-radius: var(--rounded-lg);
+  box-shadow: var(--poster-shadow);
+  padding: var(--space-xl);
+}
+
+/* Dossier Header inside Poster */
+.dossier-bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-sm);
+  border-bottom: var(--section-rule);
+  padding-bottom: var(--space-sm);
+  margin-bottom: var(--space-md);
+}
+.dossier-bar-left {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-sm);
+}
+.dossier-pill {
+  background: var(--primary-container);
+  color: var(--on-primary-container);
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: var(--label-size);
+  letter-spacing: var(--label-tracking);
+  text-transform: uppercase;
+  padding: 0.2rem 0.55rem;
+  border-radius: var(--badge-radius);
+}
+.dossier-meta {
+  font-family: var(--font-label);
+  font-size: var(--label-size);
+  color: var(--on-surface-variant);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.poster-masthead {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: var(--space-lg);
+  align-items: start;
+  padding-bottom: var(--space-lg);
+  border-bottom: var(--section-rule);
+}
+.poster-masthead * { min-width: 0; }
+
+.poster-title {
+  font-family: var(--font-headline);
+  font-size: var(--display-size);
+  font-weight: 600;
+  letter-spacing: var(--heading-tracking);
+  line-height: 1.08;
+  color: var(--on-surface);
+  margin: 0;
+}
+.poster-standfirst {
+  font-family: var(--font-body);
+  font-size: var(--subhead-size);
+  font-weight: 600;
+  color: var(--secondary);
+  margin: var(--space-sm) 0 0;
+  line-height: 1.38;
+}
+.poster-emblem {
+  width: 86px;
+  height: 86px;
+  border: var(--card-border);
+  border-radius: var(--rounded-lg);
+  background: var(--background);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-xs);
+  flex-shrink: 0;
+}
+.poster-emblem-code {
+  font-family: var(--font-label);
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: var(--secondary);
+  margin-top: 2px;
+}
+
+/* Authors & Institutional Affiliation Row */
+.authors-band {
+  display: grid;
+  grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr);
+  gap: var(--space-lg);
+  padding: var(--space-md) 0;
+  border-bottom: var(--card-border);
+}
+.authors-band * { min-width: 0; }
+.authors-label, .meta-label {
+  font-family: var(--font-label);
+  font-size: var(--label-size);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--on-surface-variant);
+  margin-bottom: var(--space-xs);
+}
+.authors-names {
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 0.96rem;
+  color: var(--on-surface);
+  margin: 0 0 var(--space-xs);
+}
+.affiliation-line {
+  font-size: 0.86rem;
+  color: var(--on-surface-variant);
+  margin: 0;
+}
+.research-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-xs);
+  margin-top: var(--space-xs);
+}
+.tag-chip {
+  font-family: var(--font-label);
+  font-size: var(--label-size);
+  font-weight: 500;
+  background: var(--surface-container);
+  color: var(--on-surface);
+  border: var(--card-border);
+  border-radius: var(--rounded);
+  padding: 0.2rem 0.5rem;
+}
+.tag-chip-gold {
+  background: var(--warning-wash);
+  color: var(--tertiary);
+  border-color: var(--tertiary);
+}
+.tag-chip-petrol {
+  background: var(--secondary-wash);
+  color: var(--secondary);
+  border-color: var(--secondary);
+}
+
+/* Headline KPI Strip */
+.kpi-strip {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: var(--space-md);
+  padding: var(--space-md) 0 var(--space-lg);
+  border-bottom: var(--section-rule);
+}
+.figure-card {
+  background: var(--background);
+  border: var(--card-border);
+  border-radius: var(--rounded-lg);
+  padding: var(--space-md);
+}
+.figure-card .kpi-kicker {
+  font-family: var(--font-label);
+  font-size: var(--label-size);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--on-surface-variant);
+  margin-bottom: var(--space-xs);
+}
+.figure-card .value {
+  font-family: var(--font-headline);
+  font-size: clamp(1.5rem, 1.2rem + 0.9vw, 2rem);
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  line-height: 1.1;
+  color: var(--secondary);
+}
+.figure-card .kpi-sub {
+  font-size: 0.83rem;
+  color: var(--on-surface-variant);
+  margin-top: var(--space-xs);
+  line-height: 1.35;
+}
+
+/* 3-Column Academic Poster Grid */
+.poster-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--space-xl);
+  padding-top: var(--space-lg);
+  align-items: start;
+}
+.poster-grid.is-two-col {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+.poster-grid.is-two-col > .poster-col:nth-child(3) {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-lg) var(--space-xl);
+  align-items: start;
+}
+.poster-grid.is-two-col > .poster-col:nth-child(3) > .poster-section:first-child {
+  grid-row: span 2;
+}
+.poster-grid.is-single-col {
+  grid-template-columns: minmax(0, 860px);
+  justify-content: center;
+}
+.poster-grid * { min-width: 0; }
+.poster-col {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-lg);
+}
+
+/* Poster Section Blocks */
+.poster-section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+.section-bar {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-sm);
+  border-bottom: var(--section-rule);
+  padding-bottom: var(--space-xs);
+}
+.index-num {
+  font-family: var(--font-label);
+  font-weight: 600;
+  font-size: var(--label-size);
+  color: var(--on-primary-container);
+  background: var(--primary-container);
+  padding: 0.12rem 0.42rem;
+  border-radius: var(--badge-radius);
+  flex-shrink: 0;
+}
+.section-heading {
+  font-family: var(--font-headline);
+  font-size: var(--headline-size);
+  font-weight: 600;
+  letter-spacing: var(--heading-tracking);
+  line-height: 1.15;
+  color: var(--on-surface);
+  margin: 0;
+}
+.section-lead {
+  font-weight: 600;
+  color: var(--secondary);
+  margin: 0;
+  font-size: 0.94rem;
+}
+.poster-p {
+  margin: 0;
+  max-width: 65ch;
+  color: var(--on-surface);
+}
+.poster-list {
+  margin: 0;
+  padding-left: 1.15rem;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+}
+.poster-list li {
+  line-height: 1.48;
+}
+
+/* Aside / Callout Box (Briefing style #5) */
+.aside-box {
+  background: var(--surface-container);
+  border-top: var(--section-rule);
+  border-radius: 0 0 var(--rounded) var(--rounded);
+  padding: var(--space-md);
+}
+.aside-box-title {
+  font-family: var(--font-label);
+  font-size: var(--label-size);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--secondary);
+  margin: 0 0 var(--space-xs);
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+}
+
+/* Charts inside Poster */
+.chart-card {
+  background: var(--background);
+  border: var(--card-border);
+  border-radius: var(--rounded-lg);
+  padding: var(--space-md);
+}
+.chart-card-title {
+  font-family: var(--font-headline);
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--on-surface);
+  margin: 0 0 2px;
+}
+.chart-card-sub {
+  font-family: var(--font-label);
+  font-size: var(--label-size);
+  color: var(--on-surface-variant);
+  margin: 0 0 var(--space-sm);
+}
+.chart-canvas-wrap {
+  position: relative;
+  min-height: 210px;
+  width: 100%;
+}
+.chart-source {
+  font-family: var(--font-label);
+  font-size: var(--label-size);
+  color: var(--on-surface-variant);
+  margin-top: var(--space-xs);
+}
+
+/* Methodology Schematic Flow */
+.method-flow {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-sm);
+}
+.flow-step {
+  background: var(--background);
+  border: var(--card-border);
+  border-left: 3px solid var(--secondary);
+  border-radius: var(--rounded);
+  padding: var(--space-sm) var(--space-md);
+}
+.flow-step-gold {
+  border-left-color: var(--data-2);
+}
+.flow-step-green {
+  border-left-color: var(--positive);
+}
+.flow-kicker {
+  font-family: var(--font-label);
+  font-size: var(--label-size);
+  font-weight: 600;
+  text-transform: uppercase;
+  color: var(--secondary);
+  margin-bottom: 2px;
+}
+.flow-step-gold .flow-kicker { color: var(--tertiary); }
+.flow-step-green .flow-kicker { color: var(--positive); }
+
+/* Briefing Table */
+.table-wrap {
+  overflow-x: auto;
+  border: var(--card-border);
+  border-radius: var(--rounded-lg);
+  background: var(--surface-container-low);
+}
+.briefing-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.83rem;
+}
+.briefing-table th {
+  font-family: var(--font-label);
+  font-size: var(--label-size);
+  font-weight: 600;
+  text-transform: uppercase;
+  text-align: left;
+  letter-spacing: 0.04em;
+  background: var(--surface-container);
+  color: var(--on-surface);
+  padding: 0.45rem 0.55rem;
+  border-bottom: var(--section-rule);
+}
+.briefing-table td {
+  padding: 0.45rem 0.55rem;
+  border-bottom: 1px solid var(--outline-variant);
+  vertical-align: top;
+}
+.briefing-table tr:last-child td { border-bottom: none; }
+.num-col {
+  text-align: right;
+  font-family: var(--font-label);
+  font-variant-numeric: tabular-nums;
+}
+
+/* Stack Pills Grid */
+.stack-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-xs);
+}
+.stack-item {
+  background: var(--background);
+  border: var(--card-border);
+  border-radius: var(--rounded);
+  padding: var(--space-sm);
+}
+.stack-item strong {
+  display: block;
+  font-family: var(--font-label);
+  font-size: var(--label-size);
+  color: var(--secondary);
+}
+.stack-item span {
+  font-size: 0.82rem;
+  color: var(--on-surface-variant);
+}
+
+/* TRL 4 Module Cards + Interactive Inspector */
+.modules-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-sm);
+}
+.module-card {
+  background: var(--background);
+  border: var(--card-border);
+  border-radius: var(--rounded-lg);
+  padding: var(--space-sm) var(--space-md);
+  transition: border-color var(--dur-micro) var(--ease-out), background-color var(--dur-micro) var(--ease-out);
+}
+.module-card.is-inspected {
+  border-color: var(--secondary);
+  background: var(--secondary-wash);
+}
+.module-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--space-xs);
+  margin-bottom: var(--space-xs);
+}
+.module-title {
+  font-family: var(--font-headline);
+  font-weight: 600;
+  font-size: 0.98rem;
+  color: var(--on-surface);
+  margin: 0;
+}
+.module-badge {
+  font-family: var(--font-label);
+  font-size: var(--label-size);
+  font-weight: 600;
+  color: var(--positive);
+  background: var(--positive-wash);
+  padding: 0.1rem 0.4rem;
+  border-radius: var(--badge-radius);
+  flex-shrink: 0;
+}
+.inspect-btn {
+  margin-top: var(--space-xs);
+  font-family: var(--font-label);
+  font-size: var(--label-size);
+  color: var(--secondary);
+  background: transparent;
+  border: 1px solid var(--secondary);
+  border-radius: var(--rounded);
+  padding: 0.25rem 0.55rem;
+  min-height: 36px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-xs);
+}
+.inspect-btn:hover {
+  background: var(--secondary);
+  color: var(--on-primary);
+}
+.trl-telemetry-box {
+  background: var(--surface-container);
+  border: var(--card-border);
+  border-left: 3px solid var(--positive);
+  border-radius: var(--rounded);
+  padding: var(--space-sm) var(--space-md);
+  font-size: 0.85rem;
+}
+.trl-telemetry-label {
+  font-family: var(--font-label);
+  font-size: var(--label-size);
+  font-weight: 600;
+  text-transform: uppercase;
+  color: var(--positive);
+  margin-bottom: 2px;
+}
+
+/* Conclusions & APA References */
+.conclusion-item {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: var(--space-sm);
+  align-items: start;
+}
+.ref-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+}
+.ref-list li {
+  font-size: 0.8rem;
+  line-height: 1.45;
+  padding-left: 1.25rem;
+  text-indent: -1.25rem;
+  color: var(--on-surface-variant);
+}
+
+/* Poster Footer */
+.poster-footer {
+  margin-top: var(--space-xl);
+  padding-top: var(--space-md);
+  border-top: var(--section-rule);
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--space-sm);
+  font-family: var(--font-label);
+  font-size: var(--label-size);
+  color: var(--on-surface-variant);
+}
+
+/* Live Editing Visual Cues */
+.is-editor-active [data-edit-key] {
+  outline: var(--edit-ring);
+  outline-offset: 2px;
+  border-radius: var(--badge-radius);
+  background: color-mix(in srgb, var(--primary-container) 10%, transparent);
+  cursor: text;
+}
+.is-editor-active [data-edit-key]:focus {
+  outline: 2px solid var(--secondary);
+  background: var(--surface-container-low);
+}
+
+/* Back-to-home link in toolbar */
+.btn-home-link {
+  text-decoration: none;
+}
+
+/* Editor Authentication Dialog (Briefing style) */
+.auth-dialog {
+  width: min(440px, calc(100vw - 2rem));
+  padding: 0;
+  border: 1.5px solid var(--outline);
+  border-radius: var(--rounded-lg);
+  background: var(--surface-container-low);
+  color: var(--on-surface);
+  box-shadow: 0 18px 42px color-mix(in srgb, var(--on-surface) 22%, transparent);
+}
+.auth-dialog::backdrop {
+  background: color-mix(in srgb, var(--on-surface) 48%, transparent);
+  backdrop-filter: blur(2px);
+}
+.auth-dialog-inner {
+  padding: var(--space-lg);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+.auth-dialog-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: var(--space-sm);
+  border-bottom: var(--section-rule);
+  padding-bottom: var(--space-sm);
+}
+.auth-dialog-title {
+  font-family: var(--font-headline);
+  font-size: 1.25rem;
+  font-weight: 600;
+  letter-spacing: var(--heading-tracking);
+  color: var(--on-surface);
+  margin: 0;
+}
+.auth-dialog-sub {
+  font-size: 0.86rem;
+  color: var(--on-surface-variant);
+  margin: var(--space-xs) 0 0;
+  line-height: 1.45;
+}
+.auth-close-btn {
+  background: transparent;
+  border: 1px solid var(--outline-variant);
+  border-radius: var(--rounded);
+  color: var(--on-surface-variant);
+  min-width: 36px;
+  min-height: 36px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+.auth-close-btn:hover {
+  background: var(--surface-container);
+  color: var(--on-surface);
+  border-color: var(--outline);
+}
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+.password-input-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+.password-input-wrap input {
+  padding-right: 2.85rem;
+}
+.password-toggle-btn {
+  position: absolute;
+  right: 4px;
+  background: transparent;
+  border: none;
+  color: var(--on-surface-variant);
+  min-width: 36px;
+  min-height: 36px;
+  border-radius: var(--rounded);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+.password-toggle-btn:hover {
+  background: var(--surface-container);
+  color: var(--on-surface);
+}
+.auth-error {
+  font-size: 0.84rem;
+  line-height: 1.4;
+  padding: var(--space-sm) var(--space-md);
+  border-radius: var(--rounded);
+  background: color-mix(in srgb, var(--error) 10%, var(--surface-container-low));
+  border: 1px solid var(--error);
+  color: var(--error);
+}
+.auth-error[hidden] {
+  display: none;
+}
+.auth-dialog-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--space-sm);
+  padding-top: var(--space-xs);
+}
+.metrics-editor-head-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-sm);
+}
+
+/* Container queries for internal cards */
+.card-wrapper { container-type: inline-size; }
+@container (max-width: 340px) {
+  .stack-grid { grid-template-columns: 1fr; }
+}
+
+/* Responsive Breakpoints */
+@media (max-width: 1120px) {
+  .poster-grid:not(.is-single-col) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .poster-grid:not(.is-single-col) > .poster-col:nth-child(3) {
+    grid-column: 1 / -1;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-lg) var(--space-xl);
+    align-items: start;
+  }
+  .poster-grid:not(.is-single-col) > .poster-col:nth-child(3) > .poster-section:first-child {
+    grid-row: span 2;
+  }
+}
+@media (max-width: 780px) {
+  .poster-masthead {
+    grid-template-columns: 1fr;
+  }
+  .authors-band {
+    grid-template-columns: 1fr;
+  }
+  .kpi-strip {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .poster-grid,
+  .poster-grid.is-two-col,
+  .poster-grid:not(.is-single-col) > .poster-col:nth-child(3) {
+    grid-template-columns: 1fr;
+  }
+  .poster-grid:not(.is-single-col) > .poster-col:nth-child(3) > .poster-section:first-child {
+    grid-row: auto;
+  }
+}
+@media (max-width: 640px) {
+  .poster-outer {
+    padding: 0 var(--space-sm);
+    margin: var(--space-md) auto;
+  }
+  .poster-sheet {
+    padding: var(--space-md);
+  }
+  .kpi-strip {
+    grid-template-columns: 1fr;
+  }
+  .toolbar-wrap {
+    padding: var(--space-sm);
+  }
+}
+
+/* Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Print / Save PDF Styling */
+@media print {
+  @page {
+    size: landscape;
+    margin: 8mm;
+  }
+  html, body {
+    background: var(--surface-container-low);
+    font-size: 9.5pt;
+  }
+  .toolbar-wrap,
+  .metrics-editor-drawer,
+  .inspect-btn {
+    display: none !important;
+  }
+  .poster-outer {
+    max-width: 100%;
+    margin: 0;
+    padding: 0;
+  }
+  .poster-sheet {
+    border: none;
+    box-shadow: none;
+    padding: 0;
+  }
+  .poster-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+    gap: 1rem;
+  }
+  .poster-grid.is-two-col {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+  .poster-grid.is-two-col > .poster-col:nth-child(3) {
+    grid-column: 1 / -1 !important;
+    display: grid !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 1rem !important;
+  }
+  .poster-grid.is-single-col {
+    grid-template-columns: 1fr !important;
+  }
+  .auth-dialog {
+    display: none !important;
+  }
+  .kpi-strip {
+    grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+  }
+  .is-editor-active [data-edit-key] {
+    outline: none !important;
+    background: transparent !important;
+  }
+}
+</style>
+</head>
+<body>
+
+<nav class="toolbar-wrap" aria-label="Controles del póster científico">
+  <div class="toolbar-inner">
+    <div class="toolbar-brand">
+      <a href="index.html" class="btn btn-home-link" aria-label="Volver a la página principal de AquaMind">
+        <i data-lucide="arrow-left" width="15" height="15" aria-hidden="true"></i>
+        <span data-ui="backHomeBtn">Inicio</span>
+      </a>
+      <div class="seg-group" role="group" aria-label="Selector de idioma / Language switcher">
+        <button type="button" class="seg-btn" id="btn-lang-es" aria-pressed="true" onclick="setLanguage('es')">ES · Español</button>
+        <button type="button" class="seg-btn" id="btn-lang-en" aria-pressed="false" onclick="setLanguage('en')">EN · English</button>
+      </div>
+      <div class="seg-group" role="group" aria-label="Diseño de columnas / Layout columns">
+        <button type="button" class="seg-btn" id="btn-layout-poster" aria-pressed="true" onclick="setLayoutMode('poster')">
+          <i data-lucide="columns-3" width="15" height="15" aria-hidden="true"></i>
+          <span data-ui="layoutPoster">Póster (3 col)</span>
+        </button>
+        <button type="button" class="seg-btn" id="btn-layout-two-col" aria-pressed="false" onclick="setLayoutMode('two-col')">
+          <i data-lucide="columns-2" width="15" height="15" aria-hidden="true"></i>
+          <span data-ui="layoutTwoCol">2 Columnas</span>
+        </button>
+        <button type="button" class="seg-btn" id="btn-layout-reader" aria-pressed="false" onclick="setLayoutMode('reader')">
+          <i data-lucide="align-justify" width="15" height="15" aria-hidden="true"></i>
+          <span data-ui="layoutReader">Lectura (1 col)</span>
+        </button>
+      </div>
+      <span class="toolbar-status" id="save-status" aria-live="polite">Listo · Versión original</span>
+    </div>
+
+    <div class="toolbar-actions">
+      <button type="button" class="btn btn-accent" id="btn-edit-mode" aria-pressed="false" onclick="toggleEditorMode()">
+        <i data-lucide="lock" width="16" height="16" aria-hidden="true"></i>
+        <span data-ui="editBtn">Modo Editor</span>
+      </button>
+      <button type="button" class="btn" id="btn-reset-edits" onclick="handleResetEdits(this)" hidden>
+        <i data-lucide="rotate-ccw" width="16" height="16" aria-hidden="true"></i>
+        <span data-ui="resetBtn">Restablecer</span>
+      </button>
+      <button type="button" class="btn" onclick="exportPosterText()">
+        <i data-lucide="file-text" width="16" height="16" aria-hidden="true"></i>
+        <span data-ui="exportBtn">Exportar .txt</span>
+      </button>
+      <button type="button" class="btn btn-primary" onclick="printPoster()">
+        <i data-lucide="printer" width="16" height="16" aria-hidden="true"></i>
+        <span data-ui="printBtn">Imprimir / Guardar PDF</span>
+      </button>
+    </div>
+  </div>
+
+  <div class="metrics-editor-drawer" id="metrics-drawer" hidden>
+    <div class="metrics-editor-head">
+      <h2 class="metrics-editor-title" data-ui="metricsDrawerTitle">Editor en vivo de cifras diagnósticas y métricas de validación (actualiza gráficas y tarjetas)</h2>
+      <div class="metrics-editor-head-actions">
+        <span class="dossier-meta" data-ui="metricsDrawerHint">Haz clic sobre cualquier texto del póster para editarlo directamente</span>
+        <button type="button" class="btn" id="btn-logout-editor" onclick="logoutEditorSession()">
+          <i data-lucide="log-out" width="15" height="15" aria-hidden="true"></i>
+          <span data-ui="logoutBtn">Cerrar sesión</span>
+        </button>
+      </div>
+    </div>
+    <div class="metrics-input-grid">
+      <div class="field-group">
+        <label for="inp-pref" data-ui="lblPref">Preferencia digital Usme (%)</label>
+        <input type="number" id="inp-pref" min="0" max="100" value="93" oninput="updateChartMetric('pref', this.value)">
+      </div>
+      <div class="field-group">
+        <label for="inp-games" data-ui="lblGames">Afinidad por juegos (%)</label>
+        <input type="number" id="inp-games" min="0" max="100" value="87" oninput="updateChartMetric('games', this.value)">
+      </div>
+      <div class="field-group">
+        <label for="inp-partial" data-ui="lblPartial">Conocimiento parcial agua (%)</label>
+        <input type="number" id="inp-partial" min="0" max="100" value="60" oninput="updateChartMetric('partial', this.value)">
+      </div>
+      <div class="field-group">
+        <label for="inp-apps" data-ui="lblApps">Uso previo apps educativas (%)</label>
+        <input type="number" id="inp-apps" min="0" max="100" value="25" oninput="updateChartMetric('apps', this.value)">
+      </div>
+      <div class="field-group">
+        <label for="inp-stories" data-ui="lblStories">Historias de usuario totales (Jira)</label>
+        <input type="number" id="inp-stories" min="1" max="100" value="28" oninput="updateChartMetric('stories', this.value)">
+      </div>
+      <div class="field-group">
+        <label for="inp-trl" data-ui="lblTrl">Nivel de madurez tecnológica (TRL)</label>
+        <input type="number" id="inp-trl" min="1" max="9" value="4" oninput="updateChartMetric('trl', this.value)">
+      </div>
+    </div>
+  </div>
+</nav>
+
+<main class="poster-outer">
+  <article class="poster-sheet" id="poster-sheet">
+    <!-- Top Academic Dossier Bar -->
+    <div class="dossier-bar">
+      <div class="dossier-bar-left">
+        <span class="dossier-pill" data-edit-key="pillTag">FASE 5 · DIVULGACIÓN CIENTÍFICA · TRL 4</span>
+        <span class="dossier-meta" data-edit-key="courseMeta">UNAD · ECBTI · PROYECTO DE INGENIERÍA II (202337121) · GRUPO 202337121_176</span>
+      </div>
+      <span class="dossier-meta" data-edit-key="yearMeta">BOGOTÁ D.C. — LOCALIDAD DE USME · 2026</span>
+    </div>
+
+    <!-- Masthead -->
+    <header class="poster-masthead">
+      <div>
+        <h1 class="poster-title" data-edit-key="title">AquaMind: Aplicación Web Interactiva y Gamificada para el Fortalecimiento de la Educación Ambiental y el Cuidado del Agua en Educación Primaria</h1>
+        <p class="poster-standfirst" data-edit-key="standfirst">Laboratorio virtual Offline-First (PWA) diseñado bajo Marco Lógico, Scrum en Jira Software y principios de Ingeniería Humanitaria para instituciones educativas públicas de Usme (Bogotá).</p>
+      </div>
+      <div class="poster-emblem" aria-label="Emblema técnico AquaMind">
+        <svg viewBox="0 0 48 48" width="44" height="44" aria-hidden="true">
+          <path d="M24 5 C17 15, 10 22, 10 30 A14 14 0 0 0 38 30 C38 22, 31 15, 24 5 Z" fill="none" stroke="var(--secondary)" stroke-width="2.5"/>
+          <path d="M16 31 C19 28, 22 33, 25 30 C28 27, 30 31, 32 30" fill="none" stroke="var(--data-2)" stroke-width="2.5" stroke-linecap="round"/>
+          <circle cx="24" cy="22" r="2.2" fill="var(--secondary)"/>
+        </svg>
+        <span class="poster-emblem-code" data-edit-key="acronym">AQUAMIND</span>
+      </div>
+    </header>
+
+    <!-- Authors & Institutional Affiliation -->
+    <section class="authors-band" aria-label="Autores y filiación institucional">
+      <div>
+        <div class="authors-label" data-edit-key="authorsLabel">Autores y Dirección Académica</div>
+        <p class="authors-names" data-edit-key="authorsList">Francisco Barinas Parada¹ · Sergio Nicolás Bautista Franco¹ · Kevin Santiago Cucuma Fraile¹ · Fabián Ricardo Forero Gutiérrez¹ · Lizett Adriana Vanegas Barbosa¹</p>
+        <p class="affiliation-line" data-edit-key="tutorLine"><strong>Docente / Tutora:</strong> Ing. Angélica Marcela Calderón Valencia · <strong>¹Filiación:</strong> Programa de Ingeniería de Sistemas, Escuela de Ciencias Básicas, Tecnología e Ingeniería (ECBTI), Universidad Nacional Abierta y a Distancia (UNAD) — Zona Centro Bogotá Cundinamarca.</p>
+      </div>
+      <div>
+        <div class="meta-label" data-edit-key="linesLabel">Alineación Estratégica (ECBTI · OIR · ODS)</div>
+        <p class="affiliation-line" data-edit-key="researchLine"><strong>Línea:</strong> Desarrollo de software · <strong>Macrolínea:</strong> Educación y procesos de aprendizaje desde las ciencias fundamentales e ingeniería.</p>
+        <div class="research-tags">
+          <span class="tag-chip tag-chip-petrol" data-edit-key="oirTag">OIR: Ambiental, Tecnológica y Educación</span>
+          <span class="tag-chip tag-chip-gold" data-edit-key="ods6Tag">ODS 6: Agua Limpia y Saneamiento</span>
+          <span class="tag-chip" data-edit-key="ods4Tag">ODS 4: Educación de Calidad</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Headline KPI Strip -->
+    <section class="kpi-strip" aria-label="Indicadores clave del proyecto">
+      <div class="figure-card">
+        <div class="kpi-kicker" data-edit-key="kpi1Label">Diagnóstico Usme (n=30)</div>
+        <div class="value" id="kpi-pref-val" data-edit-key="kpi1Val">93%</div>
+        <div class="kpi-sub" data-edit-key="kpi1Sub">Estudiantes que prefieren aprender mediante juegos y herramientas digitales interactivas.</div>
+      </div>
+      <div class="figure-card">
+        <div class="kpi-kicker" data-edit-key="kpi2Label">Gestión Ágil en Jira</div>
+        <div class="value" id="kpi-stories-val" data-edit-key="kpi2Val">28 US / 6 Épicas</div>
+        <div class="kpi-sub" data-edit-key="kpi2Sub">Product Backlog priorizado con MoSCoW y criterios UAT verificados en laboratorio.</div>
+      </div>
+      <div class="figure-card">
+        <div class="kpi-kicker" data-edit-key="kpi3Label">Madurez Tecnológica</div>
+        <div class="value" id="kpi-trl-val" data-edit-key="kpi3Val">TRL 4 (100%)</div>
+        <div class="kpi-sub" data-edit-key="kpi3Sub">5 de 5 componentes del Producto Mínimo Viable validados en entorno controlado.</div>
+      </div>
+      <div class="figure-card">
+        <div class="kpi-kicker" data-edit-key="kpi4Label">Rendimiento y Privacidad</div>
+        <div class="value" data-edit-key="kpi4Val">&lt; 3 s · 0 Datos</div>
+        <div class="kpi-sub" data-edit-key="kpi4Sub">Carga optimizada Offline-First (PWA) y cumplimiento estricto de la Ley 1581 de 2012.</div>
+      </div>
+    </section>
+
+    <!-- 3-Column Academic Poster Body -->
+    <div class="poster-grid" id="poster-grid">
+
+      <!-- COLUMN 1: INTRODUCTION & PROBLEM -->
+      <div class="poster-col">
+        <section class="poster-section">
+          <div class="section-bar">
+            <span class="index-num">01</span>
+            <h2 class="section-heading" data-edit-key="sec1Title">Introducción y Problemática en Usme</h2>
+          </div>
+          <p class="section-lead" data-edit-key="sec1Lead">La enseñanza ambiental tradicional limita la apropiación de hábitos hídricos en la niñez de colegios públicos.</p>
+          <p class="poster-p" data-edit-key="sec1Body1">La localidad de Usme (sur de Bogotá) supera los 300.000 habitantes, con predominio de estratos socioeconómicos 1 y 2. Más del 93% de la población escolar asiste a instituciones educativas públicas distritales con restricciones en equipos de cómputo y conectividad intermitente.</p>
+          <p class="poster-p" data-edit-key="sec1Body2">El diagnóstico aplicado en campo (encuesta a 30 estudiantes de 6 a 10 años, entrevistas a 3 docentes de 1.º a 4.º y 1 coordinador académico, y observación directa en aula de 3.º) evidenció que la educación sobre el agua es 100% teórica y basada en cartillas impresas, generando pérdida de atención tras 15–20 minutos.</p>
+
+          <div class="chart-card">
+            <h3 class="chart-card-title" data-edit-key="chart1Title">Brecha metodológica y afinidad digital en Usme</h3>
+            <p class="chart-card-sub" data-edit-key="chart1Sub">Porcentaje de respuestas en diagnóstico aplicado (n = 30 estudiantes de primaria)</p>
+            <div class="chart-canvas-wrap">
+              <canvas id="chart-diagnostic" aria-label="Gráfica de diagnóstico en Usme"></canvas>
+            </div>
+            <div class="chart-source" data-edit-key="chart1Source">Fuente: Investigación aplicada del proyecto AquaMind (Fase 2, UNAD).</div>
+          </div>
+        </section>
+
+        <section class="poster-section">
+          <div class="section-bar">
+            <span class="index-num">02</span>
+            <h2 class="section-heading" data-edit-key="sec2Title">Propósito y Alcance del MVP</h2>
+          </div>
+          <p class="poster-p" data-edit-key="sec2Body">Bajo principios de Ingeniería Humanitaria, AquaMind transforma la formación pasiva en un laboratorio virtual lúdico sin costo de licencias ni instalaciones pesadas. El alcance se acotó a un MVP web ejecutable en navegadores estándar, excluyendo aplicaciones móviles nativas o analítica avanzada con IA.</p>
+          <div class="aside-box">
+            <div class="aside-box-title" data-edit-key="scopeBoxTitle">Hipótesis de Diseño Pedagógico</div>
+            <p class="poster-p" data-edit-key="scopeBoxBody">Una plataforma web interactiva ligera y gamificada permite elevar al menos en un 30% la apropiación conceptual sobre el cuidado del agua frente a metodologías exclusivamente teóricas, al responder al perfil visual y kinestésico de niños de 6 a 10 años.</p>
+          </div>
+        </section>
+      </div>
+
+      <!-- COLUMN 2: MATERIALS & METHODS -->
+      <div class="poster-col">
+        <section class="poster-section">
+          <div class="section-bar">
+            <span class="index-num">03</span>
+            <h2 class="section-heading" data-edit-key="sec3Title">Materiales y Métodos: MML + Scrum</h2>
+          </div>
+          <p class="section-lead" data-edit-key="sec3Lead">Integración secuencial entre planificación sistémica (Marco Lógico) y ejecución iterativa en Jira Software.</p>
+
+          <div class="method-flow">
+            <div class="flow-step">
+              <div class="flow-kicker" data-edit-key="mmlStepKicker">Etapa 1 · Metodología de Marco Lógico (MML)</div>
+              <p class="poster-p" data-edit-key="mmlStepBody">Análisis de involucrados (estudiantes, docentes, directivos, padres, Secretaría de Educación), árbol de problemas y diagrama Espina de Pescado, Estructura Analítica y Matriz de Marco Lógico (Fin, Propósito, 5 Componentes e Indicadores).</p>
+            </div>
+            <div class="flow-step flow-step-gold">
+              <div class="flow-kicker" data-edit-key="scrumStepKicker">Etapa 2 · Marco Ágil Scrum en Jira Software</div>
+              <p class="poster-p" data-edit-key="scrumStepBody">Operación en tablero Atlassian Jira (proyecto SCRUM): roles definidos (PO, SM y SDT), ceremonias de Sprint Planning, Daily Scrum y Refinamiento, priorización MoSCoW y control de incidencias técnicas (bugs) hasta 28 Historias de Usuario en 6 Épicas.</p>
+            </div>
+          </div>
+
+          <div class="table-wrap">
+            <table class="briefing-table" aria-label="Resumen de Épicas del Product Backlog">
+              <thead>
+                <tr>
+                  <th data-edit-key="thEpic">Épica</th>
+                  <th data-edit-key="thScope">Componente Funcional</th>
+                  <th class="num-col" data-edit-key="thUs">US</th>
+                  <th class="num-col" data-edit-key="thSp">SP</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>E1</strong></td>
+                  <td data-edit-key="e1Desc">Plataforma web accesible y responsiva</td>
+                  <td class="num-col">4</td>
+                  <td class="num-col">13</td>
+                </tr>
+                <tr>
+                  <td><strong>E2</strong></td>
+                  <td data-edit-key="e2Desc">Minijuego arcade «¡Atrapa las Gotas!»</td>
+                  <td class="num-col">4</td>
+                  <td class="num-col">13</td>
+                </tr>
+                <tr>
+                  <td><strong>E3</strong></td>
+                  <td data-edit-key="e3Desc">Evaluación formativa «Eco-Guardián»</td>
+                  <td class="num-col">4</td>
+                  <td class="num-col">8</td>
+                </tr>
+                <tr>
+                  <td><strong>E4</strong></td>
+                  <td data-edit-key="e4Desc">Temporizador de ducha y hábitos</td>
+                  <td class="num-col">4</td>
+                  <td class="num-col">8</td>
+                </tr>
+                <tr>
+                  <td><strong>E5</strong></td>
+                  <td data-edit-key="e5Desc">Videoteca y guía pedagógica PDF</td>
+                  <td class="num-col">3</td>
+                  <td class="num-col">5</td>
+                </tr>
+                <tr>
+                  <td><strong>E6</strong></td>
+                  <td data-edit-key="e6Desc">Persistencia local, QA y despliegue</td>
+                  <td class="num-col">9</td>
+                  <td class="num-col">34</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <section class="poster-section card-wrapper">
+          <div class="section-bar">
+            <span class="index-num">04</span>
+            <h2 class="section-heading" data-edit-key="sec4Title">Arquitectura Web y Ley 1581 de 2012</h2>
+          </div>
+          <div class="stack-grid">
+            <div class="stack-item">
+              <strong data-edit-key="st1Key">Núcleo Web Nativo</strong>
+              <span data-edit-key="st1Val">HTML5 (34,9%), JS ES6+ (33,6%) y CSS3 (31,5%), sin frameworks pesados.</span>
+            </div>
+            <div class="stack-item">
+              <strong data-edit-key="st2Key">Motor Gráfico y Audio</strong>
+              <span data-edit-key="st2Val">HTML5 Canvas API para el arcade y Web Audio API (sonido procedimental).</span>
+            </div>
+            <div class="stack-item">
+              <strong data-edit-key="st3Key">Offline-First / PWA</strong>
+              <span data-edit-key="st3Val">Operación con red inestable y guardado de puntajes en almacenamiento local del navegador.</span>
+            </div>
+            <div class="stack-item">
+              <strong data-edit-key="st4Key">Nube y Trazabilidad</strong>
+              <span data-edit-key="st4Val">Despliegue en Vercel (cuidadodelaguaproyectoing1.vercel.app) y Jira (aquamind.atlassian.net).</span>
+            </div>
+          </div>
+
+          <div class="aside-box">
+            <div class="aside-box-title" data-edit-key="privacyTitle">
+              <i data-lucide="shield-check" width="15" height="15" aria-hidden="true"></i>
+              <span>Protección de Datos de Menores (Ley 1581 de 2012)</span>
+            </div>
+            <p class="poster-p" data-edit-key="privacyBody">La plataforma opera sin registros previos, sin captura de nombres ni datos personales de niños de 6 a 10 años. Todo progreso y puntaje permanece exclusivamente en el dispositivo escolar mediante almacenamiento local, cumpliendo la normativa colombiana de protección de datos.</p>
+          </div>
+        </section>
+      </div>
+
+      <!-- COLUMN 3: RESULTS TRL 4, CONCLUSIONS & REFERENCES -->
+      <div class="poster-col">
+        <section class="poster-section">
+          <div class="section-bar">
+            <span class="index-num">05</span>
+            <h2 class="section-heading" data-edit-key="sec5Title">Resultados de Validación TRL 4</h2>
+          </div>
+          <p class="section-lead" data-edit-key="sec5Lead">Prototipo de alta fidelidad verificado en entorno simulado de laboratorio con 100% de sus módulos operativos.</p>
+
+          <div class="modules-grid">
+            <div class="module-card is-inspected" id="mod-card-gotas">
+              <div class="module-head">
+                <h3 class="module-title" data-edit-key="m1Title">1. Minijuego Arcade «¡Atrapa las Gotas!»</h3>
+                <span class="module-badge" data-edit-key="m1Badge">Canvas · Validado</span>
+              </div>
+              <p class="poster-p" data-edit-key="m1Desc">Mecánica interactiva con cubeta, gotas limpias vs. acciones de desperdicio, vidas, tiempo y puntaje. En laboratorio se depuró un bucle sonoro en móviles mediante Web Audio API.</p>
+              <button type="button" class="inspect-btn" onclick="inspectModule('gotas')" data-ui="inspectBtn">Ver telemetría TRL 4</button>
+            </div>
+
+            <div class="module-card" id="mod-card-quiz">
+              <div class="module-head">
+                <h3 class="module-title" data-edit-key="m2Title">2. Quiz Formativo «Eco-Guardián»</h3>
+                <span class="module-badge" data-edit-key="m2Badge">10 ítems · Validado</span>
+              </div>
+              <p class="poster-p" data-edit-key="m2Desc">Evaluación de 10 preguntas con retroalimentación pedagógica inmediata tras cada respuesta, cálculo de aciertos y medallas simbólicas de reconocimiento.</p>
+              <button type="button" class="inspect-btn" onclick="inspectModule('quiz')" data-ui="inspectBtn">Ver telemetría TRL 4</button>
+            </div>
+
+            <div class="module-card" id="mod-card-timer">
+              <div class="module-head">
+                <h3 class="module-title" data-edit-key="m3Title">3. Temporizador de Ducha y Retos (50–200 L)</h3>
+                <span class="module-badge" data-edit-key="m3Badge">PWA · Validado</span>
+              </div>
+              <p class="poster-p" data-edit-key="m3Desc">Cronómetro de 5 minutos (iniciar, pausar, reiniciar), 4 tarjetas ilustradas de consejos y compromisos semanales con umbrales de 50, 100, 150 y 200 litros.</p>
+              <button type="button" class="inspect-btn" onclick="inspectModule('timer')" data-ui="inspectBtn">Ver telemetría TRL 4</button>
+            </div>
+
+            <div class="module-card" id="mod-card-docs">
+              <div class="module-head">
+                <h3 class="module-title" data-edit-key="m4Title">4. Videoteca y Guía Pedagógica PDF</h3>
+                <span class="module-badge" data-edit-key="m4Badge">Docente · Validado</span>
+              </div>
+              <p class="poster-p" data-edit-key="m4Desc">Carrusel audiovisual verificado y guía didáctica descargable en PDF para apoyar la planeación de clases en aulas de básica primaria.</p>
+              <button type="button" class="inspect-btn" onclick="inspectModule('docs')" data-ui="inspectBtn">Ver telemetría TRL 4</button>
+            </div>
+          </div>
+
+          <div class="trl-telemetry-box" id="trl-telemetry-box" aria-live="polite">
+            <div class="trl-telemetry-label" id="trl-tele-title">Detalle técnico TRL 4 — ¡Atrapa las Gotas!</div>
+            <div id="trl-tele-body">Carga &lt; 3 s en equipos básicos · Historias US-05 a US-08 verificadas · Incidencia de bucle sonoro en pantallas táctiles resuelta y cerrada en Jira.</div>
+          </div>
+
+          <div class="chart-card">
+            <h3 class="chart-card-title" data-edit-key="chart2Title">Cobertura de Historias de Usuario por Épica (TRL 4)</h3>
+            <p class="chart-card-sub" data-edit-key="chart2Sub">Distribución de 28 Historias de Usuario verificadas en Jira Software (E1–E6)</p>
+            <div class="chart-canvas-wrap">
+              <canvas id="chart-trl" aria-label="Gráfica de cobertura por épica"></canvas>
+            </div>
+            <div class="chart-source" data-edit-key="chart2Source">Fuente: Tablero Scrum Jira AquaMind y Ficha Técnica de Prototipado (Fase 4).</div>
+          </div>
+        </section>
+
+        <section class="poster-section">
+          <div class="section-bar">
+            <span class="index-num">06</span>
+            <h2 class="section-heading" data-edit-key="sec6Title">Conclusiones y Proyección</h2>
+          </div>
+          <div class="conclusion-item">
+            <span class="index-num">C1</span>
+            <p class="poster-p" data-edit-key="conc1"><strong>Viabilidad técnica Offline-First:</strong> La arquitectura nativa (HTML5 Canvas, ES6+, Web Audio API y PWA) logra tiempos de carga inferiores a 3 segundos en hardware escolar limitado, superando barreras de conectividad en Usme.</p>
+          </div>
+          <div class="conclusion-item">
+            <span class="index-num">C2</span>
+            <p class="poster-p" data-edit-key="conc2"><strong>Rigor MML + Scrum en Jira:</strong> Articular la Matriz de Marco Lógico con 6 Épicas y 28 Historias de Usuario en Jira garantizó trazabilidad total desde las necesidades de aula hasta la depuración temprana de bugs.</p>
+          </div>
+          <div class="conclusion-item">
+            <span class="index-num">C3</span>
+            <p class="poster-p" data-edit-key="conc3"><strong>Impacto social y ruta a TRL 5:</strong> AquaMind materializa los ODS 4 y 6 bajo principios de Ingeniería Humanitaria y Ley 1581 de 2012, quedando listo para validación piloto con 100 estudiantes y directivos en Usme.</p>
+          </div>
+        </section>
+
+        <section class="poster-section">
+          <div class="section-bar">
+            <span class="index-num">07</span>
+            <h2 class="section-heading" data-edit-key="sec7Title">Referencias Bibliográficas (APA 7.0)</h2>
+          </div>
+          <ul class="ref-list">
+            <li data-edit-key="ref1">Bonilla, H. A. M., &amp; Gutiérrez, D. F. V. (2024). Desarrollo empresarial en la educación superior: un análisis de la relación entre la creatividad y la madurez tecnológica en emprendimientos universitarios. <em>Educatio Siglo XXI</em>, 42(1), 89–114.</li>
+            <li data-edit-key="ref2">Congreso de la República de Colombia. (2012). <em>Ley Estatutaria 1581 de 2012: Por la cual se dictan disposiciones generales para la protección de datos personales</em>. Diario Oficial 48.587.</li>
+            <li data-edit-key="ref3">Gómez, R. (2022). <em>Pasos para el diseño de un póster académico</em> [Objeto virtual de aprendizaje OVA]. Repositorio Institucional UNAD (repository.unad.edu.co/handle/10596/50648).</li>
+            <li data-edit-key="ref4">Hernández, C. D. (2024). <em>SCRUM: Its components, interactions and usefulness in projects</em> [Objeto virtual de aprendizaje OVA]. Repositorio Institucional UNAD (repository.unad.edu.co/handle/10596/60331).</li>
+            <li data-edit-key="ref5">Morán, M. (2024). <em>Agua y saneamiento — Desarrollo Sostenible</em>. Organización de las Naciones Unidas (un.org/sustainabledevelopment/es/water-and-sanitation/).</li>
+            <li data-edit-key="ref6">Moreno, L. M. (2025). <em>Validación y evaluación de prototipos</em> [Objeto virtual de aprendizaje OVA]. Repositorio Institucional UNAD (repository.unad.edu.co/handle/10596/73410).</li>
+            <li data-edit-key="ref7">Pierdant Pérez, M., Hernández Arteaga, A. A., Álvarez Pinedo, A., Patiño López, M. I., Ledezma Bautista, I., &amp; Gordillo Moscoso, A. A. (2019). Revisión sistemática del póster de investigación: ¿lo hemos hecho bien todo este tiempo? <em>Investigación en Educación Médica</em>, 8(30).</li>
+            <li data-edit-key="ref8">UNESCO. (2021). <em>Ingeniería para el desarrollo sostenible: resumen</em>. Organización de las Naciones Unidas para la Educación, la Ciencia y la Cultura.</li>
+          </ul>
+        </section>
+      </div>
+    </div>
+
+    <footer class="poster-footer">
+      <span data-edit-key="footerLeft">AquaMind · Repositorio abierto: github.com/Kscf27/Proyecto_ing1_cuidado_del_agua · Despliegue: cuidadodelaguaproyectoing1.vercel.app</span>
+      <span data-edit-key="footerRight">UNAD · ECBTI · Proyecto de Ingeniería II · Fase 5 (2026)</span>
+    </footer>
+  </article>
+</main>
+
+<!-- Editor Authentication Dialog -->
+<dialog id="editor-auth-dialog" class="auth-dialog" aria-labelledby="auth-dialog-title">
+  <div class="auth-dialog-inner">
+    <div class="auth-dialog-head">
+      <div>
+        <h2 class="auth-dialog-title" id="auth-dialog-title" data-ui="authTitle">Acceso al Modo Editor</h2>
+        <p class="auth-dialog-sub" data-ui="authSub">Ingresa las credenciales de administrador para editar textos y métricas del póster.</p>
+      </div>
+      <button type="button" class="auth-close-btn" onclick="closeAuthDialog()" aria-label="Cerrar ventana de acceso">
+        <i data-lucide="x" width="16" height="16" aria-hidden="true"></i>
+      </button>
+    </div>
+
+    <form id="editor-auth-form" class="auth-form" onsubmit="submitEditorAuth(event)" novalidate>
+      <div class="field-group">
+        <label for="auth-username" data-ui="authUserLabel">Usuario</label>
+        <input type="text" id="auth-username" name="username" autocomplete="username" required>
+      </div>
+
+      <div class="field-group">
+        <label for="auth-password" data-ui="authPassLabel">Contraseña</label>
+        <div class="password-input-wrap">
+          <input type="password" id="auth-password" name="password" autocomplete="current-password" required>
+          <button type="button" class="password-toggle-btn" id="btn-toggle-pass" onclick="togglePasswordVisibility()" aria-label="Mostrar u ocultar contraseña">
+            <i data-lucide="eye" width="16" height="16" aria-hidden="true"></i>
+          </button>
+        </div>
+      </div>
+
+      <div class="auth-error" id="auth-error-msg" role="alert" hidden></div>
+
+      <div class="auth-dialog-actions">
+        <button type="button" class="btn" onclick="closeAuthDialog()" data-ui="authCancelBtn">Cancelar</button>
+        <button type="submit" class="btn btn-primary" id="btn-auth-submit">
+          <i data-lucide="unlock" width="15" height="15" aria-hidden="true"></i>
+          <span data-ui="authSubmitBtn">Ingresar</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</dialog>
+
+<api-shim></api-shim>
+<script>
+const DEFAULT_CONTENT = {
+  es: {
+    pillTag: `FASE 5 · DIVULGACIÓN CIENTÍFICA · TRL 4`,
+    courseMeta: `UNAD · ECBTI · PROYECTO DE INGENIERÍA II (202337121) · GRUPO 202337121_176`,
+    yearMeta: `BOGOTÁ D.C. — LOCALIDAD DE USME · 2026`,
+    title: `AquaMind: Aplicación Web Interactiva y Gamificada para el Fortalecimiento de la Educación Ambiental y el Cuidado del Agua en Educación Primaria`,
+    standfirst: `Laboratorio virtual Offline-First (PWA) diseñado bajo Marco Lógico, Scrum en Jira Software y principios de Ingeniería Humanitaria para instituciones educativas públicas de Usme (Bogotá).`,
+    acronym: `AQUAMIND`,
+    authorsLabel: `Autores y Dirección Académica`,
+    authorsList: `Francisco Barinas Parada¹ · Sergio Nicolás Bautista Franco¹ · Kevin Santiago Cucuma Fraile¹ · Fabián Ricardo Forero Gutiérrez¹ · Lizett Adriana Vanegas Barbosa¹`,
+    tutorLine: `Docente / Tutora: Ing. Angélica Marcela Calderón Valencia · ¹Filiación: Programa de Ingeniería de Sistemas, Escuela de Ciencias Básicas, Tecnología e Ingeniería (ECBTI), Universidad Nacional Abierta y a Distancia (UNAD) — Zona Centro Bogotá Cundinamarca.`,
+    linesLabel: `Alineación Estratégica (ECBTI · OIR · ODS)`,
+    researchLine: `Línea: Desarrollo de software · Macrolínea: Educación y procesos de aprendizaje desde las ciencias fundamentales e ingeniería.`,
+    oirTag: `OIR: Ambiental, Tecnológica y Educación`,
+    ods6Tag: `ODS 6: Agua Limpia y Saneamiento`,
+    ods4Tag: `ODS 4: Educación de Calidad`,
+    kpi1Label: `Diagnóstico Usme (n=30)`,
+    kpi1Sub: `Estudiantes que prefieren aprender mediante juegos y herramientas digitales interactivas.`,
+    kpi2Label: `Gestión Ágil en Jira`,
+    kpi2Sub: `Product Backlog priorizado con MoSCoW y criterios UAT verificados en laboratorio.`,
+    kpi3Label: `Madurez Tecnológica`,
+    kpi3Sub: `5 de 5 componentes del Producto Mínimo Viable validados en entorno controlado.`,
+    kpi4Label: `Rendimiento y Privacidad`,
+    kpi4Val: `< 3 s · 0 Datos`,
+    kpi4Sub: `Carga optimizada Offline-First (PWA) y cumplimiento estricto de la Ley 1581 de 2012.`,
+    sec1Title: `Introducción y Problemática en Usme`,
+    sec1Lead: `La enseñanza ambiental tradicional limita la apropiación de hábitos hídricos en la niñez de colegios públicos.`,
+    sec1Body1: `La localidad de Usme (sur de Bogotá) supera los 300.000 habitantes, con predominio de estratos socioeconómicos 1 y 2. Más del 93% de la población escolar asiste a instituciones educativas públicas distritales con restricciones en equipos de cómputo y conectividad intermitente.`,
+    sec1Body2: `El diagnóstico aplicado en campo (encuesta a 30 estudiantes de 6 a 10 años, entrevistas a 3 docentes de 1.º a 4.º y 1 coordinador académico, y observación directa en aula de 3.º) evidenció que la educación sobre el agua es 100% teórica y basada en cartillas impresas, generando pérdida de atención tras 15–20 minutos.`,
+    chart1Title: `Brecha metodológica y afinidad digital en Usme`,
+    chart1Sub: `Porcentaje de respuestas en diagnóstico aplicado (n = 30 estudiantes de primaria)`,
+    chart1Source: `Fuente: Investigación aplicada del proyecto AquaMind (Fase 2, UNAD).`,
+    sec2Title: `Propósito y Alcance del MVP`,
+    sec2Body: `Bajo principios de Ingeniería Humanitaria, AquaMind transforma la formación pasiva en un laboratorio virtual lúdico sin costo de licencias ni instalaciones pesadas. El alcance se acotó a un MVP web ejecutable en navegadores estándar, excluyendo aplicaciones móviles nativas o analítica avanzada con IA.`,
+    scopeBoxTitle: `Hipótesis de Diseño Pedagógico`,
+    scopeBoxBody: `Una plataforma web interactiva ligera y gamificada permite elevar al menos en un 30% la apropiación conceptual sobre el cuidado del agua frente a metodologías exclusivamente teóricas, al responder al perfil visual y kinestésico de niños de 6 a 10 años.`,
+    sec3Title: `Materiales y Métodos: MML + Scrum`,
+    sec3Lead: `Integración secuencial entre planificación sistémica (Marco Lógico) y ejecución iterativa en Jira Software.`,
+    mmlStepKicker: `Etapa 1 · Metodología de Marco Lógico (MML)`,
+    mmlStepBody: `Análisis de involucrados (estudiantes, docentes, directivos, padres, Secretaría de Educación), árbol de problemas y diagrama Espina de Pescado, Estructura Analítica y Matriz de Marco Lógico (Fin, Propósito, 5 Componentes e Indicadores).`,
+    scrumStepKicker: `Etapa 2 · Marco Ágil Scrum en Jira Software`,
+    scrumStepBody: `Operación en tablero Atlassian Jira (proyecto SCRUM): roles definidos (PO, SM y SDT), ceremonias de Sprint Planning, Daily Scrum y Refinamiento, priorización MoSCoW y control de incidencias técnicas (bugs) hasta 28 Historias de Usuario en 6 Épicas.`,
+    thEpic: `Épica`,
+    thScope: `Componente Funcional`,
+    thUs: `US`,
+    thSp: `SP`,
+    e1Desc: `Plataforma web accesible y responsiva`,
+    e2Desc: `Minijuego arcade «¡Atrapa las Gotas!»`,
+    e3Desc: `Evaluación formativa «Eco-Guardián»`,
+    e4Desc: `Temporizador de ducha y hábitos`,
+    e5Desc: `Videoteca y guía pedagógica PDF`,
+    e6Desc: `Persistencia local, QA y despliegue`,
+    sec4Title: `Arquitectura Web y Ley 1581 de 2012`,
+    st1Key: `Núcleo Web Nativo`,
+    st1Val: `HTML5 (34,9%), JS ES6+ (33,6%) y CSS3 (31,5%), sin frameworks pesados.`,
+    st2Key: `Motor Gráfico y Audio`,
+    st2Val: `HTML5 Canvas API para el arcade y Web Audio API (sonido procedimental).`,
+    st3Key: `Offline-First / PWA`,
+    st3Val: `Operación con red inestable y guardado de puntajes en almacenamiento local del navegador.`,
+    st4Key: `Nube y Trazabilidad`,
+    st4Val: `Despliegue en Vercel (cuidadodelaguaproyectoing1.vercel.app) y Jira (aquamind.atlassian.net).`,
+    privacyTitle: `Protección de Datos de Menores (Ley 1581 de 2012)`,
+    privacyBody: `La plataforma opera sin registros previos, sin captura de nombres ni datos personales de niños de 6 a 10 años. Todo progreso y puntaje permanece exclusivamente en el dispositivo escolar mediante almacenamiento local, cumpliendo la normativa colombiana de protección de datos.`,
+    sec5Title: `Resultados de Validación TRL 4`,
+    sec5Lead: `Prototipo de alta fidelidad verificado en entorno simulado de laboratorio con 100% de sus módulos operativos.`,
+    m1Title: `1. Minijuego Arcade «¡Atrapa las Gotas!»`,
+    m1Badge: `Canvas · Validado`,
+    m1Desc: `Mecánica interactiva con cubeta, gotas limpias vs. acciones de desperdicio, vidas, tiempo y puntaje. En laboratorio se depuró un bucle sonoro en móviles mediante Web Audio API.`,
+    m2Title: `2. Quiz Formativo «Eco-Guardián»`,
+    m2Badge: `10 ítems · Validado`,
+    m2Desc: `Evaluación de 10 preguntas con retroalimentación pedagógica inmediata tras cada respuesta, cálculo de aciertos y medallas simbólicas de reconocimiento.`,
+    m3Title: `3. Temporizador de Ducha y Retos (50–200 L)`,
+    m3Badge: `PWA · Validado`,
+    m3Desc: `Cronómetro de 5 minutos (iniciar, pausar, reiniciar), 4 tarjetas ilustradas de consejos y compromisos semanales con umbrales de 50, 100, 150 y 200 litros.`,
+    m4Title: `4. Videoteca y Guía Pedagógica PDF`,
+    m4Badge: `Docente · Validado`,
+    m4Desc: `Carrusel audiovisual verificado y guía didáctica descargable en PDF para apoyar la planeación de clases en aulas de básica primaria.`,
+    chart2Title: `Cobertura de Historias de Usuario por Épica (TRL 4)`,
+    chart2Sub: `Distribución de 28 Historias de Usuario verificadas en Jira Software (E1–E6)`,
+    chart2Source: `Fuente: Tablero Scrum Jira AquaMind y Ficha Técnica de Prototipado (Fase 4).`,
+    sec6Title: `Conclusiones y Proyección`,
+    conc1: `Viabilidad técnica Offline-First: La arquitectura nativa (HTML5 Canvas, ES6+, Web Audio API y PWA) logra tiempos de carga inferiores a 3 segundos en hardware escolar limitado, superando barreras de conectividad en Usme.`,
+    conc2: `Rigor MML + Scrum en Jira: Articular la Matriz de Marco Lógico con 6 Épicas y 28 Historias de Usuario en Jira garantizó trazabilidad total desde las necesidades de aula hasta la depuración temprana de bugs.`,
+    conc3: `Impacto social y ruta a TRL 5: AquaMind materializa los ODS 4 y 6 bajo principios de Ingeniería Humanitaria y Ley 1581 de 2012, quedando listo para validación piloto con 100 estudiantes y directivos en Usme.`,
+    sec7Title: `Referencias Bibliográficas (APA 7.0)`,
+    ref1: `Bonilla, H. A. M., & Gutiérrez, D. F. V. (2024). Desarrollo empresarial en la educación superior: un análisis de la relación entre la creatividad y la madurez tecnológica en emprendimientos universitarios. Educatio Siglo XXI, 42(1), 89–114.`,
+    ref2: `Congreso de la República de Colombia. (2012). Ley Estatutaria 1581 de 2012: Por la cual se dictan disposiciones generales para la protección de datos personales. Diario Oficial 48.587.`,
+    ref3: `Gómez, R. (2022). Pasos para el diseño de un póster académico [Objeto virtual de aprendizaje OVA]. Repositorio Institucional UNAD (repository.unad.edu.co/handle/10596/50648).`,
+    ref4: `Hernández, C. D. (2024). SCRUM: Its components, interactions and usefulness in projects [Objeto virtual de aprendizaje OVA]. Repositorio Institucional UNAD (repository.unad.edu.co/handle/10596/60331).`,
+    ref5: `Morán, M. (2024). Agua y saneamiento — Desarrollo Sostenible. Organización de las Naciones Unidas (un.org/sustainabledevelopment/es/water-and-sanitation/).`,
+    ref6: `Moreno, L. M. (2025). Validación y evaluación de prototipos [Objeto virtual de aprendizaje OVA]. Repositorio Institucional UNAD (repository.unad.edu.co/handle/10596/73410).`,
+    ref7: `Pierdant Pérez, M., Hernández Arteaga, A. A., Álvarez Pinedo, A., Patiño López, M. I., Ledezma Bautista, I., & Gordillo Moscoso, A. A. (2019). Revisión sistemática del póster de investigación: ¿lo hemos hecho bien todo este tiempo? Investigación en Educación Médica, 8(30).`,
+    ref8: `UNESCO. (2021). Ingeniería para el desarrollo sostenible: resumen. Organización de las Naciones Unidas para la Educación, la Ciencia y la Cultura.`,
+    footerLeft: `AquaMind · Repositorio abierto: github.com/Kscf27/Proyecto_ing1_cuidado_del_agua · Despliegue: cuidadodelaguaproyectoing1.vercel.app`,
+    footerRight: `UNAD · ECBTI · Proyecto de Ingeniería II · Fase 5 (2026)`
+  },
+  en: {
+    pillTag: `PHASE 5 · SCIENTIFIC DISSEMINATION · TRL 4`,
+    courseMeta: `UNAD · ECBTI · ENGINEERING PROJECT II (202337121) · GROUP 202337121_176`,
+    yearMeta: `BOGOTÁ D.C. — USME DISTRICT · 2026`,
+    title: `AquaMind: Interactive and Gamified Web Application for Strengthening Environmental Education and Water Conservation in Primary Education`,
+    standfirst: `Offline-First Progressive Web App (PWA) virtual laboratory designed under Logical Framework, Scrum in Jira Software, and Humanitarian Engineering principles for public primary schools in Usme (Bogotá).`,
+    acronym: `AQUAMIND`,
+    authorsLabel: `Authors and Academic Supervision`,
+    authorsList: `Francisco Barinas Parada¹ · Sergio Nicolás Bautista Franco¹ · Kevin Santiago Cucuma Fraile¹ · Fabián Ricardo Forero Gutiérrez¹ · Lizett Adriana Vanegas Barbosa¹`,
+    tutorLine: `Advisor / Faculty: Eng. Angélica Marcela Calderón Valencia · ¹Affiliation: Systems Engineering Program, School of Basic Sciences, Technology and Engineering (ECBTI), Universidad Nacional Abierta y a Distancia (UNAD) — Bogotá Center Zone.`,
+    linesLabel: `Strategic Alignment (ECBTI · OIR · SDGs)`,
+    researchLine: `Research Line: Software Development · Macroline: Education and learning processes from fundamental sciences and engineering.`,
+    oirTag: `OIR: Environmental, Technological & Education`,
+    ods6Tag: `SDG 6: Clean Water and Sanitation`,
+    ods4Tag: `SDG 4: Quality Education`,
+    kpi1Label: `Usme Diagnostic (n=30)`,
+    kpi1Sub: `Primary students preferring game-based and interactive digital learning tools.`,
+    kpi2Label: `Agile Management in Jira`,
+    kpi2Sub: `Product Backlog prioritized via MoSCoW with laboratory-verified UAT criteria.`,
+    kpi3Label: `Technology Readiness`,
+    kpi3Sub: `5 out of 5 Minimum Viable Product components verified in controlled lab testing.`,
+    kpi4Label: `Performance & Privacy`,
+    kpi4Val: `< 3 s · 0 PII`,
+    kpi4Sub: `Lightweight Offline-First (PWA) execution with full Law 1581 of 2012 compliance.`,
+    sec1Title: `Introduction & Problem Statement in Usme`,
+    sec1Lead: `Traditional theoretical instruction limits sustainable water-saving habits among public primary school children.`,
+    sec1Body1: `The district of Usme (southern Bogotá) exceeds 300,000 inhabitants, predominantly in socioeconomic strata 1 and 2. Over 93% of school-aged children attend public district institutions facing hardware constraints and unstable internet connectivity.`,
+    sec1Body2: `Field diagnostics (survey of 30 students aged 6–10, interviews with 3 primary teachers and 1 academic coordinator, plus 3rd-grade classroom observation) revealed that water conservation teaching is 100% theoretical via printed booklets, with attention dropping after 15–20 minutes.`,
+    chart1Title: `Methodological Gap and Digital Affinity in Usme`,
+    chart1Sub: `Percentage of diagnostic responses (n = 30 primary school students)`,
+    chart1Source: `Source: AquaMind applied field research (Phase 2, UNAD).`,
+    sec2Title: `Purpose & MVP Scope`,
+    sec2Body: `Grounded in Humanitarian Engineering, AquaMind transforms passive teaching into a zero-cost, browser-native virtual laboratory without heavy installations. Scope covers a functional web MVP, explicitly excluding native mobile apps or AI-driven analytics.`,
+    scopeBoxTitle: `Pedagogical Design Hypothesis`,
+    scopeBoxBody: `A lightweight, gamified interactive web application can improve conceptual mastery of water conservation by at least 30% compared to purely theoretical methods by matching the visual and kinesthetic profile of children aged 6 to 10.`,
+    sec3Title: `Materials & Methods: LFA + Scrum`,
+    sec3Lead: `Sequential articulation between Logical Framework Approach (LFA) planning and iterative Scrum execution in Jira Software.`,
+    mmlStepKicker: `Stage 1 · Logical Framework Approach (LFA)`,
+    mmlStepBody: `Stakeholder analysis (students, teachers, principals, parents, Secretariat of Education), problem tree & Ishikawa Fishbone diagram, Analytical Structure, and Logical Framework Matrix (Goal, Purpose, 5 Components, Indicators).`,
+    scrumStepKicker: `Stage 2 · Agile Scrum Framework in Jira Software`,
+    scrumStepBody: `Cloud Atlassian Jira board (SCRUM project): defined roles (PO, SM, SDT), Sprint Planning, Daily Scrum, Backlog Refinement, MoSCoW prioritization, and bug lifecycle tracking across 28 User Stories in 6 Epics.`,
+    thEpic: `Epic`,
+    thScope: `Functional Component`,
+    thUs: `US`,
+    thSp: `SP`,
+    e1Desc: `Accessible & responsive web portal`,
+    e2Desc: `Arcade mini-game "Catch the Drops!"`,
+    e3Desc: `Formative quiz "Eco-Guardian"`,
+    e4Desc: `Shower timer & sustainable habits`,
+    e5Desc: `Video library & downloadable PDF guide`,
+    e6Desc: `Local persistence, QA & deployment`,
+    sec4Title: `Web Architecture & Law 1581 of 2012`,
+    st1Key: `Native Web Core`,
+    st1Val: `HTML5 (34.9%), JS ES6+ (33.6%), and CSS3 (31.5%) with zero heavy frameworks.`,
+    st2Key: `Graphics & Audio Engine`,
+    st2Val: `HTML5 Canvas API for arcade gameplay and Web Audio API procedural sound.`,
+    st3Key: `Offline-First / PWA`,
+    st3Val: `Resilient under unstable school networks with browser-local score persistence.`,
+    st4Key: `Cloud & Traceability`,
+    st4Val: `Hosted on Vercel (cuidadodelaguaproyectoing1.vercel.app) and tracked in Jira (aquamind.atlassian.net).`,
+    privacyTitle: `Minors Data Protection (Colombian Law 1581 of 2012)`,
+    privacyBody: `AquaMind operates without user sign-ups, names, or personal data collection from children aged 6–10. All scores and progress remain strictly inside the school browser via local storage, ensuring full compliance with personal data protection statutes.`,
+    sec5Title: `TRL 4 Laboratory Validation Results`,
+    sec5Lead: `High-fidelity prototype verified in simulated laboratory conditions with 100% of core modules operational.`,
+    m1Title: `1. Arcade Mini-Game "Catch the Drops!"`,
+    m1Badge: `Canvas · Verified`,
+    m1Desc: `Interactive bucket gameplay distinguishing clean drops from water-waste actions with lives, timer, and score. A mobile audio loop defect on Web Audio API was detected and resolved in Jira.`,
+    m2Title: `2. Formative Quiz "Eco-Guardian"`,
+    m2Badge: `10 items · Verified`,
+    m2Desc: `10-question assessment delivering immediate pedagogical feedback after each item, score calculation, and symbolic achievement badges.`,
+    m3Title: `3. Shower Timer & Commitments (50–200 L)`,
+    m3Badge: `PWA · Verified`,
+    m3Desc: `5-minute countdown timer (start, pause, reset), 4 illustrated water-saving tip cards, and weekly conservation pledges at 50, 100, 150, and 200 liter thresholds.`,
+    m4Title: `4. Video Library & Teacher PDF Guide`,
+    m4Badge: `Teacher · Verified`,
+    m4Desc: `Curated audiovisual carousel and downloadable PDF pedagogical guide supporting primary classroom lesson plans.`,
+    chart2Title: `User Story Coverage Across Epics (TRL 4)`,
+    chart2Sub: `Distribution of 28 verified User Stories in Jira Software (E1–E6)`,
+    chart2Source: `Source: AquaMind Jira Scrum Board and High-Fidelity Prototyping Sheet (Phase 4).`,
+    sec6Title: `Conclusions & Roadmap`,
+    conc1: `Offline-First Technical Feasibility: Native web standards (HTML5 Canvas, ES6+, Web Audio API, PWA) achieve < 3 s load times on low-spec school computers, overcoming Usme connectivity barriers.`,
+    conc2: `LFA + Jira Scrum Synergy: Linking the Logical Framework Matrix with 6 Epics and 28 User Stories in Jira ensured end-to-end traceability from classroom pain points to early bug resolution.`,
+    conc3: `Social Impact & TRL 5 Pathway: AquaMind operationalizes SDGs 4 and 6 under Humanitarian Engineering and Law 1581 of 2012, ready for an authorized 100-student pilot in Usme.`,
+    sec7Title: `References (APA 7th Ed.)`,
+    ref1: `Bonilla, H. A. M., & Gutiérrez, D. F. V. (2024). Desarrollo empresarial en la educación superior: un análisis de la relación entre la creatividad y la madurez tecnológica en emprendimientos universitarios. Educatio Siglo XXI, 42(1), 89–114.`,
+    ref2: `Congreso de la República de Colombia. (2012). Ley Estatutaria 1581 de 2012: General provisions for the protection of personal data. Diario Oficial 48.587.`,
+    ref3: `Gómez, R. (2022). Pasos para el diseño de un póster académico [Virtual Learning Object OVA]. UNAD Institutional Repository (repository.unad.edu.co/handle/10596/50648).`,
+    ref4: `Hernández, C. D. (2024). SCRUM: Its components, interactions and usefulness in projects [Virtual Learning Object OVA]. UNAD Institutional Repository (repository.unad.edu.co/handle/10596/60331).`,
+    ref5: `Morán, M. (2024). Water and sanitation — Sustainable Development. United Nations (un.org/sustainabledevelopment/es/water-and-sanitation/).`,
+    ref6: `Moreno, L. M. (2025). Validación y evaluación de prototipos [Virtual Learning Object OVA]. UNAD Institutional Repository (repository.unad.edu.co/handle/10596/73410).`,
+    ref7: `Pierdant Pérez, M., Hernández Arteaga, A. A., Álvarez Pinedo, A., Patiño López, M. I., Ledezma Bautista, I., & Gordillo Moscoso, A. A. (2019). Systematic review of the research poster: Have we been doing it right all along? Investigación en Educación Médica, 8(30).`,
+    ref8: `UNESCO. (2021). Engineering for sustainable development: Executive summary. United Nations Educational, Scientific and Cultural Organization.`,
+    footerLeft: `AquaMind · Open repository: github.com/Kscf27/Proyecto_ing1_cuidado_del_agua · Live build: cuidadodelaguaproyectoing1.vercel.app`,
+    footerRight: `UNAD · ECBTI · Engineering Project II · Phase 5 (2026)`
+  }
+};
+
+const UI_STRINGS = {
+  es: {
+    backHomeBtn: `Inicio`,
+    layoutPoster: `Póster (3 col)`,
+    layoutTwoCol: `2 Columnas`,
+    layoutReader: `Lectura (1 col)`,
+    editBtn: `Modo Editor`,
+    editBtnActive: `Salir de Editor`,
+    logoutBtn: `Cerrar sesión`,
+    resetBtn: `Restablecer`,
+    resetArm: `Confirmar restablecer`,
+    exportBtn: `Exportar .txt`,
+    printBtn: `Imprimir / Guardar PDF`,
+    inspectBtn: `Ver telemetría TRL 4`,
+    statusReady: `Listo · Versión verificada`,
+    statusEditing: `Editando en vivo · Auto-guardado`,
+    statusSaved: `Cambios guardados`,
+    statusReset: `Restablecido al original`,
+    metricsDrawerTitle: `Editor en vivo de cifras diagnósticas y métricas de validación (actualiza gráficas y tarjetas)`,
+    metricsDrawerHint: `Haz clic sobre cualquier texto del póster para editarlo directamente`,
+    lblPref: `Preferencia digital Usme (%)`,
+    lblGames: `Afinidad por juegos (%)`,
+    lblPartial: `Conocimiento parcial agua (%)`,
+    lblApps: `Uso previo apps educativas (%)`,
+    lblStories: `Historias de usuario totales (Jira)`,
+    lblTrl: `Nivel de madurez tecnológica (TRL)`,
+    authTitle: `Acceso al Modo Editor`,
+    authSub: `Ingresa las credenciales de administrador para editar textos y métricas del póster.`,
+    authUserLabel: `Usuario`,
+    authPassLabel: `Contraseña`,
+    authCancelBtn: `Cancelar`,
+    authSubmitBtn: `Ingresar`,
+    authSubmitting: `Verificando…`,
+    authErrMissing: `Ingresa usuario y contraseña para continuar.`,
+    authErrInvalid: `Usuario o contraseña incorrectos. Verifica tus credenciales.`,
+    authErrEnv: `Autenticación no configurada en Vercel (faltan las variables EDITOR_USER y EDITOR_PASSWORD).`,
+    authErrNetwork: `No se pudo conectar con /api/editor-auth. Ejecuta el proyecto en Vercel (o con "vercel dev") para validar las credenciales de forma segura en el servidor.`
+  },
+  en: {
+    backHomeBtn: `Home`,
+    layoutPoster: `Poster (3 col)`,
+    layoutTwoCol: `2 Columns`,
+    layoutReader: `Reader (1 col)`,
+    editBtn: `Edit Mode`,
+    editBtnActive: `Exit Editor`,
+    logoutBtn: `Sign out`,
+    resetBtn: `Reset`,
+    resetArm: `Confirm reset`,
+    exportBtn: `Export .txt`,
+    printBtn: `Print / Save PDF`,
+    inspectBtn: `View TRL 4 telemetry`,
+    statusReady: `Ready · Verified baseline`,
+    statusEditing: `Live editing · Auto-saved`,
+    statusSaved: `Changes saved`,
+    statusReset: `Restored to baseline`,
+    metricsDrawerTitle: `Live metrics editor for diagnostic & validation figures (updates charts and KPI cards)`,
+    metricsDrawerHint: `Click any text block inside the poster to edit it inline`,
+    lblPref: `Usme digital preference (%)`,
+    lblGames: `Digital game affinity (%)`,
+    lblPartial: `Partial water knowledge (%)`,
+    lblApps: `Prior educational app use (%)`,
+    lblStories: `Total User Stories (Jira)`,
+    lblTrl: `Technology Readiness Level (TRL)`,
+    authTitle: `Editor Mode Sign In`,
+    authSub: `Enter administrator credentials to edit poster copy and metrics.`,
+    authUserLabel: `Username`,
+    authPassLabel: `Password`,
+    authCancelBtn: `Cancel`,
+    authSubmitBtn: `Sign in`,
+    authSubmitting: `Verifying…`,
+    authErrMissing: `Please enter both username and password.`,
+    authErrInvalid: `Invalid username or password. Please try again.`,
+    authErrEnv: `Server authentication is not configured (missing EDITOR_USER and EDITOR_PASSWORD in Vercel).`,
+    authErrNetwork: `Could not reach /api/editor-auth. Deploy on Vercel (or run "vercel dev") to verify credentials securely on the server.`
+  }
+};
+
+const MODULE_TELEMETRY = {
+  es: {
+    gotas: {
+      title: `Detalle técnico TRL 4 — ¡Atrapa las Gotas!`,
+      body: `Carga < 3 s en equipos básicos · Historias US-05 a US-08 verificadas · Incidencia de bucle sonoro en pantallas táctiles resuelta y cerrada en Jira.`
+    },
+    quiz: {
+      title: `Detalle técnico TRL 4 — Quiz Eco-Guardián`,
+      body: `Banco de 10 preguntas validado (US-09 a US-12) · Retroalimentación inmediata y persistencia de puntaje en almacenamiento local sin datos personales.`
+    },
+    timer: {
+      title: `Detalle técnico TRL 4 — Temporizador de Ducha y Retos`,
+      body: `Cronómetro de 5 min con pausa/reinicio (US-13 a US-16) · Medallas simbólicas por ahorro de 50, 100, 150 y 200 L · Operativo en modo Offline-First.`
+    },
+    docs: {
+      title: `Detalle técnico TRL 4 — Videoteca y Guía Docente PDF`,
+      body: `Recursos audiovisuales verificados y guía PDF descargable (US-17 a US-19) · Compatibilidad validada en Chrome, Edge y Firefox en equipos escolares.`
+    }
+  },
+  en: {
+    gotas: {
+      title: `TRL 4 Technical Telemetry — Catch the Drops!`,
+      body: `Load time < 3 s on low-spec hardware · User Stories US-05 to US-08 verified · Mobile Web Audio loop defect resolved and closed in Jira.`
+    },
+    quiz: {
+      title: `TRL 4 Technical Telemetry — Eco-Guardian Quiz`,
+      body: `10-item question bank verified (US-09 to US-12) · Immediate feedback and browser-local score persistence without personal data capture.`
+    },
+    timer: {
+      title: `TRL 4 Technical Telemetry — Shower Timer & Pledges`,
+      body: `5-min timer with pause/reset (US-13 to US-16) · Symbolic conservation badges at 50, 100, 150, and 200 L · Verified under Offline-First PWA mode.`
+    },
+    docs: {
+      title: `TRL 4 Technical Telemetry — Video Library & Teacher PDF`,
+      body: `Verified audiovisual carousel and downloadable PDF guide (US-17 to US-19) · Cross-browser validation across Chrome, Edge, and Firefox.`
+    }
+  }
+};
+
+let appState = {
+  lang: 'es',
+  layout: 'poster',
+  editorActive: false,
+  inspectedModule: 'gotas',
+  metrics: {
+    pref: 93,
+    games: 87,
+    partial: 60,
+    apps: 25,
+    stories: 28,
+    trl: 4
+  },
+  edits: {
+    es: {},
+    en: {}
+  }
+};
+
+const LOCAL_STORAGE_KEY = 'aquamind_poster_state_v1';
+let isEditorAuthenticated = false;
+let diagnosticChart = null;
+let trlChart = null;
+let saveDebounceTimer = null;
+
+function readCssToken(name) {
+  return getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+}
+
+function applyContentToDom() {
+  const lang = appState.lang;
+  document.documentElement.lang = lang;
+  const baseDict = DEFAULT_CONTENT[lang];
+  const editDict = appState.edits[lang] || {};
+
+  const editNodes = document.querySelectorAll('[data-edit-key]');
+  editNodes.forEach(function (el) {
+    const key = el.getAttribute('data-edit-key');
+    if (!key) return;
+    if (Object.prototype.hasOwnProperty.call(editDict, key)) {
+      el.textContent = editDict[key];
+    } else if (Object.prototype.hasOwnProperty.call(baseDict, key)) {
+      el.textContent = baseDict[key];
+    }
+  });
+
+  // Apply dynamic numeric metrics unless manually overridden in text
+  const m = appState.metrics;
+  const kpiPref = document.getElementById('kpi-pref-val');
+  if (kpiPref && !Object.prototype.hasOwnProperty.call(editDict, 'kpi1Val')) {
+    kpiPref.textContent = `${m.pref}%`;
+  }
+  const kpiStories = document.getElementById('kpi-stories-val');
+  if (kpiStories && !Object.prototype.hasOwnProperty.call(editDict, 'kpi2Val')) {
+    kpiStories.textContent = lang === 'es' ? `${m.stories} US / 6 Épicas` : `${m.stories} US / 6 Epics`;
+  }
+  const kpiTrl = document.getElementById('kpi-trl-val');
+  if (kpiTrl && !Object.prototype.hasOwnProperty.call(editDict, 'kpi3Val')) {
+    kpiTrl.textContent = `TRL ${m.trl} (100%)`;
+  }
+
+  // Sync metric inputs
+  const inpMap = {
+    'inp-pref': m.pref,
+    'inp-games': m.games,
+    'inp-partial': m.partial,
+    'inp-apps': m.apps,
+    'inp-stories': m.stories,
+    'inp-trl': m.trl
+  };
+  Object.keys(inpMap).forEach(function (id) {
+    const inputEl = document.getElementById(id);
+    if (inputEl) inputEl.value = String(inpMap[id]);
+  });
+
+  // Update UI labels
+  const ui = UI_STRINGS[lang];
+  document.querySelectorAll('[data-ui]').forEach(function (el) {
+    const uiKey = el.getAttribute('data-ui');
+    if (uiKey && ui[uiKey]) {
+      if (uiKey === 'editBtn' && appState.editorActive) {
+        el.textContent = ui.editBtnActive;
+      } else {
+        el.textContent = ui[uiKey];
+      }
+    }
+  });
+
+  // Update active buttons
+  const btnEs = document.getElementById('btn-lang-es');
+  const btnEn = document.getElementById('btn-lang-en');
+  if (btnEs) btnEs.setAttribute('aria-pressed', lang === 'es' ? 'true' : 'false');
+  if (btnEn) btnEn.setAttribute('aria-pressed', lang === 'en' ? 'true' : 'false');
+
+  updateTelemetryBox();
+  updateStatusBadge();
+  renderCharts();
+}
+
+function updateTelemetryBox() {
+  const mod = appState.inspectedModule || 'gotas';
+  const lang = appState.lang;
+  const info = MODULE_TELEMETRY[lang][mod];
+  const titleEl = document.getElementById('trl-tele-title');
+  const bodyEl = document.getElementById('trl-tele-body');
+  if (titleEl && info) titleEl.textContent = info.title;
+  if (bodyEl && info) bodyEl.textContent = info.body;
+
+  ['gotas', 'quiz', 'timer', 'docs'].forEach(function (id) {
+    const card = document.getElementById(`mod-card-${id}`);
+    if (card) {
+      if (id === mod) card.classList.add('is-inspected');
+      else card.classList.remove('is-inspected');
+    }
+  });
+}
+
+function updateStatusBadge(customMsg) {
+  const badge = document.getElementById('save-status');
+  if (!badge) return;
+  const ui = UI_STRINGS[appState.lang];
+  if (customMsg) {
+    badge.textContent = customMsg;
+  } else {
+    badge.textContent = appState.editorActive ? ui.statusEditing : ui.statusReady;
+  }
+  if (appState.editorActive) badge.classList.add('is-editing');
+  else badge.classList.remove('is-editing');
+}
+
+function applyEditorState() {
+  const sheet = document.getElementById('poster-sheet');
+  const drawer = document.getElementById('metrics-drawer');
+  const editBtn = document.getElementById('btn-edit-mode');
+  const resetBtn = document.getElementById('btn-reset-edits');
+  const ui = UI_STRINGS[appState.lang];
+
+  if (sheet) {
+    if (appState.editorActive) sheet.classList.add('is-editor-active');
+    else sheet.classList.remove('is-editor-active');
+  }
+  if (drawer) drawer.hidden = !appState.editorActive;
+  if (resetBtn) resetBtn.hidden = !appState.editorActive;
+  if (editBtn) {
+    editBtn.setAttribute('aria-pressed', appState.editorActive ? 'true' : 'false');
+    const span = editBtn.querySelector('[data-ui="editBtn"]');
+    if (span) span.textContent = appState.editorActive ? ui.editBtnActive : ui.editBtn;
+  }
+
+  document.querySelectorAll('[data-edit-key]').forEach(function (el) {
+    el.setAttribute('contenteditable', appState.editorActive ? 'true' : 'false');
+  });
+
+  updateStatusBadge();
+}
+
+function applyLayoutMode() {
+  const grid = document.getElementById('poster-grid');
+  const btnPoster = document.getElementById('btn-layout-poster');
+  const btnTwoCol = document.getElementById('btn-layout-two-col');
+  const btnReader = document.getElementById('btn-layout-reader');
+  if (grid) {
+    grid.classList.remove('is-two-col', 'is-single-col');
+    if (appState.layout === 'two-col') grid.classList.add('is-two-col');
+    else if (appState.layout === 'reader') grid.classList.add('is-single-col');
+  }
+  if (btnPoster) btnPoster.setAttribute('aria-pressed', appState.layout === 'poster' ? 'true' : 'false');
+  if (btnTwoCol) btnTwoCol.setAttribute('aria-pressed', appState.layout === 'two-col' ? 'true' : 'false');
+  if (btnReader) btnReader.setAttribute('aria-pressed', appState.layout === 'reader' ? 'true' : 'false');
+
+  requestAnimationFrame(function () {
+    if (diagnosticChart) diagnosticChart.resize();
+    if (trlChart) trlChart.resize();
+  });
+}
+
+function renderCharts() {
+  if (typeof Chart === 'undefined') return;
+  const c1 = readCssToken('--data-1');
+  const c2 = readCssToken('--data-2');
+  const c3 = readCssToken('--data-3');
+  const cCtx = readCssToken('--data-context');
+  const cText = readCssToken('--on-surface');
+  const cMuted = readCssToken('--on-surface-variant');
+  const cGrid = readCssToken('--outline-variant');
+  const fontMono = readCssToken('--font-label');
+
+  const isEs = appState.lang === 'es';
+  const m = appState.metrics;
+
+  // Chart 1: Usme Diagnostic
+  const ctx1 = document.getElementById('chart-diagnostic');
+  if (ctx1) {
+    if (diagnosticChart) diagnosticChart.destroy();
+    diagnosticChart = new Chart(ctx1, {
+      type: 'bar',
+      data: {
+        labels: isEs
+          ? [`Prefiere juegos`, `Gusta juegos digitales`, `Conocimiento parcial`, `Uso previo de apps`]
+          : [`Prefer game learning`, `Like digital games`, `Partial water knowledge`, `Prior app usage`],
+        datasets: [{
+          label: isEs ? `Porcentaje (%)` : `Percentage (%)`,
+          data: [m.pref, m.games, m.partial, m.apps],
+          backgroundColor: [c1, c1, c2, cCtx],
+          borderRadius: 2,
+          barThickness: 20
+        }]
+      },
+      options: {
+        indexAxis: 'y',
+        responsive: true,
+        maintainAspectRatio: false,
+        animation: { duration: 250 },
+        plugins: {
+          legend: { display: false },
+          tooltip: {
+            callbacks: {
+              label: function (ctx) { return `${ctx.parsed.x}%`; }
+            }
+          }
+        },
+        scales: {
+          x: {
+            min: 0,
+            max: 100,
+            grid: { color: cGrid },
+            ticks: {
+              color: cMuted,
+              font: { family: fontMono, size: 11 },
+              callback: function (v) { return `${v}%`; }
+            }
+          },
+          y: {
+            grid: { display: false },
+            ticks: {
+              color: cText,
+              font: { family: fontMono, size: 11 }
+            }
+          }
+        }
+      }
+    });
+  }
+
+  // Chart 2: Epics & Stories Verified in TRL 4
+  const ctx2 = document.getElementById('chart-trl');
+  if (ctx2) {
+    if (trlChart) trlChart.destroy();
+    const baseCounts = [4, 4, 4, 4, 3, 9]; // sum = 28
+    const baseSum = 28;
+    const scaleFactor = m.stories / baseSum;
+    const adjusted = baseCounts.map(function (n, idx) {
+      if (idx < 5) return Math.max(1, Math.round(n * scaleFactor));
+      const prevSum = baseCounts.slice(0, 5).reduce(function (acc, val) {
+        return acc + Math.max(1, Math.round(val * scaleFactor));
+      }, 0);
+      return Math.max(1, m.stories - prevSum);
+    });
+
+    trlChart = new Chart(ctx2, {
+      type: 'bar',
+      data: {
+        labels: isEs
+          ? [`E1 Web`, `E2 Arcade`, `E3 Quiz`, `E4 Hábitos`, `E5 Guía`, `E6 QA/Pub`]
+          : [`E1 Web`, `E2 Arcade`, `E3 Quiz`, `E4 Habits`, `E5 Guide`, `E6 QA/Pub`],
+        datasets: [{
+          label: isEs ? `Historias verificadas` : `Verified User Stories`,
+          data: adjusted,
+          backgroundColor: [c1, c2, c1, c3, c1, c2],
+          borderRadius: 2,
+          barThickness: 24
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        animation: { duration: 250 },
+        plugins: {
+          legend: { display: false },
+          tooltip: {
+            callbacks: {
+              label: function (ctx) {
+                return isEs ? `${ctx.parsed.y} Historias (100% TRL 4)` : `${ctx.parsed.y} Stories (100% TRL 4)`;
+              }
+            }
+          }
+        },
+        scales: {
+          y: {
+            beginAtZero: true,
+            suggestedMax: 10,
+            grid: { color: cGrid },
+            ticks: {
+              stepSize: 2,
+              color: cMuted,
+              font: { family: fontMono, size: 11 }
+            }
+          },
+          x: {
+            grid: { display: false },
+            ticks: {
+              color: cText,
+              font: { family: fontMono, size: 11 }
+            }
+          }
+        }
+      }
+    });
+  }
+}
+
+async function persistState() {
+  const safeState = {
+    lang: appState.lang,
+    layout: appState.layout,
+    inspectedModule: appState.inspectedModule,
+    metrics: appState.metrics,
+    edits: appState.edits
+  };
+  try {
+    localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(safeState));
+    updateStatusBadge(UI_STRINGS[appState.lang].statusSaved);
+  } catch (err) {
+    // Ignore storage quota / privacy mode errors
+  }
+  if (window.notebookAppApi && typeof window.notebookAppApi.setAppState === 'function') {
+    try {
+      await window.notebookAppApi.setAppState(safeState);
+    } catch (err) {
+      // Silent fallback if host unavailable
+    }
+  }
+}
+
+function scheduleSave() {
+  clearTimeout(saveDebounceTimer);
+  saveDebounceTimer = setTimeout(function () {
+    persistState();
+  }, 300);
+}
+
+/* Server-backed Editor Authentication (Vercel Serverless /api/editor-auth) */
+async function checkEditorSession() {
+  try {
+    const res = await fetch('/api/editor-auth', {
+      method: 'GET',
+      credentials: 'same-origin',
+      headers: { Accept: 'application/json' }
+    });
+    if (!res.ok) return false;
+    const data = await res.json();
+    isEditorAuthenticated = Boolean(data && data.authenticated);
+    return isEditorAuthenticated;
+  } catch (err) {
+    isEditorAuthenticated = false;
+    return false;
+  }
+}
+
+function showAuthError(msg) {
+  const errEl = document.getElementById('auth-error-msg');
+  if (!errEl) return;
+  if (msg) {
+    errEl.textContent = msg;
+    errEl.hidden = false;
+  } else {
+    errEl.textContent = '';
+    errEl.hidden = true;
+  }
+}
+
+function openAuthDialog() {
+  const dialog = document.getElementById('editor-auth-dialog');
+  const form = document.getElementById('editor-auth-form');
+  const userInput = document.getElementById('auth-username');
+  const passInput = document.getElementById('auth-password');
+  if (!dialog) return;
+  if (form) form.reset();
+  if (passInput) passInput.type = 'password';
+  showAuthError('');
+  if (typeof dialog.showModal === 'function') {
+    dialog.showModal();
+  } else {
+    dialog.setAttribute('open', 'open');
+  }
+  if (userInput) userInput.focus();
+}
+
+function closeAuthDialog() {
+  const dialog = document.getElementById('editor-auth-dialog');
+  if (!dialog) return;
+  if (typeof dialog.close === 'function') {
+    dialog.close();
+  } else {
+    dialog.removeAttribute('open');
+  }
+}
+
+function togglePasswordVisibility() {
+  const passInput = document.getElementById('auth-password');
+  if (!passInput) return;
+  passInput.type = passInput.type === 'password' ? 'text' : 'password';
+}
+
+async function submitEditorAuth(evt) {
+  evt.preventDefault();
+  const ui = UI_STRINGS[appState.lang];
+  const userInput = document.getElementById('auth-username');
+  const passInput = document.getElementById('auth-password');
+  const submitBtn = document.getElementById('btn-auth-submit');
+  const submitLabel = submitBtn ? submitBtn.querySelector('[data-ui="authSubmitBtn"]') : null;
+
+  const username = userInput ? userInput.value.trim() : '';
+  const password = passInput ? passInput.value : '';
+
+  if (!username || !password) {
+    showAuthError(ui.authErrMissing);
+    return;
+  }
+
+  showAuthError('');
+  if (submitBtn) submitBtn.disabled = true;
+  if (submitLabel) submitLabel.textContent = ui.authSubmitting;
+
+  try {
+    const res = await fetch('/api/editor-auth', {
+      method: 'POST',
+      credentials: 'same-origin',
+      headers: {
+        'Content-Type': 'application/json',
+        Accept: 'application/json'
+      },
+      body: JSON.stringify({ username, password })
+    });
+
+    const data = await res.json().catch(function () { return {}; });
+
+    if (res.ok && data.authenticated) {
+      isEditorAuthenticated = true;
+      appState.editorActive = true;
+      if (passInput) passInput.value = '';
+      closeAuthDialog();
+      applyEditorState();
+    } else if (res.status === 503 || data.code === 'ENV_NOT_CONFIGURED') {
+      showAuthError(ui.authErrEnv);
+    } else if (res.status === 401) {
+      showAuthError(ui.authErrInvalid);
+      if (passInput) {
+        passInput.value = '';
+        passInput.focus();
+      }
+    } else {
+      showAuthError(ui.authErrNetwork);
+    }
+  } catch (err) {
+    showAuthError(ui.authErrNetwork);
+  } finally {
+    if (submitBtn) submitBtn.disabled = false;
+    if (submitLabel) submitLabel.textContent = ui.authSubmitBtn;
+  }
+}
+
+async function logoutEditorSession() {
+  try {
+    await fetch('/api/editor-auth', {
+      method: 'DELETE',
+      credentials: 'same-origin'
+    });
+  } catch (err) {
+    // Proceed to lock UI locally regardless
+  }
+  isEditorAuthenticated = false;
+  appState.editorActive = false;
+  applyEditorState();
+}
+
+/* Hoisted interactive handlers */
+function setLanguage(lang) {
+  if (lang !== 'es' && lang !== 'en') return;
+  appState.lang = lang;
+  applyContentToDom();
+  scheduleSave();
+}
+
+function setLayoutMode(mode) {
+  if (mode !== 'poster' && mode !== 'two-col' && mode !== 'reader') return;
+  appState.layout = mode;
+  applyLayoutMode();
+  scheduleSave();
+}
+
+async function toggleEditorMode() {
+  if (appState.editorActive) {
+    appState.editorActive = false;
+    applyEditorState();
+    return;
+  }
+  if (!isEditorAuthenticated) {
+    const activeSession = await checkEditorSession();
+    if (!activeSession) {
+      openAuthDialog();
+      return;
+    }
+  }
+  appState.editorActive = true;
+  applyEditorState();
+}
+
+function inspectModule(modKey) {
+  appState.inspectedModule = modKey;
+  updateTelemetryBox();
+  scheduleSave();
+}
+
+function updateChartMetric(key, rawVal) {
+  const num = Number(rawVal);
+  if (Number.isNaN(num)) return;
+  if (key === 'trl') {
+    appState.metrics[key] = Math.min(9, Math.max(1, Math.round(num)));
+  } else {
+    appState.metrics[key] = Math.min(100, Math.max(0, Math.round(num)));
+  }
+  applyContentToDom();
+  scheduleSave();
+}
+
+function handleResetEdits(btn) {
+  const ui = UI_STRINGS[appState.lang];
+  if (!btn) return;
+  if (btn.dataset.armed !== 'true') {
+    btn.dataset.armed = 'true';
+    btn.classList.add('btn-danger-armed');
+    const span = btn.querySelector('[data-ui="resetBtn"]');
+    if (span) span.textContent = ui.resetArm;
+    setTimeout(function () {
+      if (btn.dataset.armed === 'true') {
+        btn.dataset.armed = 'false';
+        btn.classList.remove('btn-danger-armed');
+        const sp = btn.querySelector('[data-ui="resetBtn"]');
+        if (sp) sp.textContent = UI_STRINGS[appState.lang].resetBtn;
+      }
+    }, 4000);
+    return;
+  }
+
+  btn.dataset.armed = 'false';
+  btn.classList.remove('btn-danger-armed');
+  const span = btn.querySelector('[data-ui="resetBtn"]');
+  if (span) span.textContent = ui.resetBtn;
+
+  appState.edits = { es: {}, en: {} };
+  appState.metrics = { pref: 93, games: 87, partial: 60, apps: 25, stories: 28, trl: 4 };
+  applyContentToDom();
+  updateStatusBadge(ui.statusReset);
+  persistState();
+}
+
+function printPoster() {
+  window.print();
+}
+
+function exportPosterText() {
+  const lang = appState.lang;
+  const lines = [];
+  document.querySelectorAll('#poster-sheet [data-edit-key]').forEach(function (el) {
+    const key = el.getAttribute('data-edit-key');
+    lines.push(`[${key}] ${el.textContent.trim()}`);
+  });
+  const payload = `AQUAMIND — FASE 5 SCIENTIFIC POSTER (${lang.toUpperCase()})\n==================================================\n\n${lines.join('\n\n')}`;
+  const filename = `AquaMind_Poster_${lang.toUpperCase()}.txt`;
+  if (window.notebookAppApi && typeof window.notebookAppApi.triggerFileDownload === 'function') {
+    window.notebookAppApi.triggerFileDownload({
+      content: payload,
+      contentType: 'text/plain',
+      encoding: 'UTF-8',
+      filename: filename
+    });
+    return;
+  }
+  const blob = new Blob([payload], { type: 'text/plain;charset=utf-8' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = filename;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  setTimeout(function () { URL.revokeObjectURL(url); }, 1000);
+}
+
+function attachInlineEditingListeners() {
+  const sheet = document.getElementById('poster-sheet');
+  if (!sheet) return;
+  sheet.addEventListener('input', function (evt) {
+    if (!appState.editorActive || !isEditorAuthenticated) return;
+    const target = evt.target;
+    if (!target || !target.hasAttribute('data-edit-key')) return;
+    const key = target.getAttribute('data-edit-key');
+    if (!key) return;
+    const lang = appState.lang;
+    if (!appState.edits[lang]) appState.edits[lang] = {};
+    appState.edits[lang][key] = target.textContent;
+    scheduleSave();
+  });
+}
+
+function hydrateSavedState(saved) {
+  if (!saved || typeof saved !== 'object') return;
+  if (saved.lang === 'es' || saved.lang === 'en') appState.lang = saved.lang;
+  if (saved.layout === 'poster' || saved.layout === 'two-col' || saved.layout === 'reader') appState.layout = saved.layout;
+  if (saved.inspectedModule) appState.inspectedModule = saved.inspectedModule;
+  if (saved.metrics && typeof saved.metrics === 'object') {
+    appState.metrics = Object.assign({}, appState.metrics, saved.metrics);
+  }
+  if (saved.edits && typeof saved.edits === 'object') {
+    appState.edits = {
+      es: Object.assign({}, saved.edits.es || {}),
+      en: Object.assign({}, saved.edits.en || {})
+    };
+  }
+}
+
+document.addEventListener('DOMContentLoaded', async function () {
+  if (window.lucide && typeof window.lucide.createIcons === 'function') {
+    window.lucide.createIcons();
+  }
+
+  try {
+    const rawLocal = localStorage.getItem(LOCAL_STORAGE_KEY);
+    if (rawLocal) hydrateSavedState(JSON.parse(rawLocal));
+  } catch (err) {
+    // Ignore invalid localStorage data
+  }
+
+  if (window.notebookAppApi && typeof window.notebookAppApi.getAppState === 'function') {
+    try {
+      const saved = await window.notebookAppApi.getAppState();
+      hydrateSavedState(saved);
+    } catch (err) {
+      // Proceed with verified defaults
+    }
+  }
+
+  // Editor mode stays locked until server session is verified
+  appState.editorActive = false;
+  await checkEditorSession();
+
+  attachInlineEditingListeners();
+  applyContentToDom();
+  applyLayoutMode();
+  applyEditorState();
+
+  if (window.notebookAppApi && typeof window.notebookAppApi.notifyAppReady === 'function') {
+    window.notebookAppApi.notifyAppReady();
+  }
+});
+</script>
+</body>
+</html>

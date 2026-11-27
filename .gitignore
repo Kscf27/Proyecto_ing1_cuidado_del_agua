@@ -1,0 +1,8 @@
+# Archivos de entorno y secretos locales (nunca subir a Git)
+.env
+.env.local
+.env.*.local
+
+# Vercel y dependencias locales
+.vercel
+node_modules

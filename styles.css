@@ -703,6 +703,14 @@ body {
     margin: 10px 0 25px;
 }
 
+.recursos-actions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 14px;
+}
+
 .btn-download {
     display: inline-flex;
     align-items: center;
@@ -729,6 +737,34 @@ body {
 .btn-download .btn-icon {
     font-size: 1.4rem;
     animation: bounceDown 1.5s infinite;
+}
+
+.btn-poster-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    background: linear-gradient(135deg, var(--primary-dark), var(--primary-color));
+    color: white;
+    padding: 16px 30px;
+    text-decoration: none;
+    border-radius: var(--border-radius-pill);
+    font-family: var(--font-heading);
+    font-weight: 700;
+    font-size: 1.1rem;
+    box-shadow: 0 6px 18px rgba(1, 87, 155, 0.3);
+    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    border: 3px solid white;
+}
+
+.btn-poster-link:hover {
+    transform: translateY(-4px) scale(1.05);
+    box-shadow: 0 10px 25px rgba(1, 87, 155, 0.42);
+    background: linear-gradient(135deg, #003c71, var(--primary-dark));
+}
+
+.btn-poster-link .btn-icon {
+    font-size: 1.3rem;
 }
 
 @keyframes bounceDown {
@@ -800,7 +836,7 @@ body {
 /* ==========================================================================
    RESPONSIVE DESIGN (MEDIA QUERIES)
    ========================================================================== */
-@media (max-width: 900px) {
+@media (max-width: 1080px) {
     .menu-icon {
         display: flex;
     }
@@ -871,7 +907,8 @@ body {
         padding: 24px 12px;
     }
 
-    .btn-download {
+    .btn-download,
+    .btn-poster-link {
         font-size: 1.05rem;
         padding: 14px 22px;
         width: 100%;
