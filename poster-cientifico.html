@@ -497,7 +497,7 @@ header { position: static !important; }
 .poster-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: var(--space-xl);
+  gap: var(--space-lg) var(--space-xl);
   padding-top: var(--space-lg);
   align-items: start;
 }
@@ -506,13 +506,9 @@ header { position: static !important; }
 }
 .poster-grid.is-two-col > .poster-col:nth-child(3) {
   grid-column: 1 / -1;
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: var(--space-lg) var(--space-xl);
-  align-items: start;
 }
-.poster-grid.is-two-col > .poster-col:nth-child(3) > .poster-section:first-child {
-  grid-row: span 2;
+.poster-grid.is-two-col > .poster-col:nth-child(3) .modules-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 .poster-grid.is-single-col {
   grid-template-columns: minmax(0, 860px);
@@ -522,6 +518,19 @@ header { position: static !important; }
 .poster-col {
   display: flex;
   flex-direction: column;
+  gap: var(--space-lg);
+}
+.poster-bottom-band {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: minmax(0, 1.75fr) minmax(0, 1fr);
+  gap: var(--space-xl);
+  padding-top: var(--space-lg);
+  border-top: var(--card-border);
+  align-items: start;
+}
+.poster-grid.is-single-col .poster-bottom-band {
+  grid-template-columns: 1fr;
   gap: var(--space-lg);
 }
 
@@ -818,6 +827,7 @@ header { position: static !important; }
   padding-left: 1.25rem;
   text-indent: -1.25rem;
   color: var(--on-surface-variant);
+  overflow-wrap: anywhere;
 }
 
 /* Poster Footer */
@@ -982,13 +992,9 @@ header { position: static !important; }
   }
   .poster-grid:not(.is-single-col) > .poster-col:nth-child(3) {
     grid-column: 1 / -1;
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: var(--space-lg) var(--space-xl);
-    align-items: start;
   }
-  .poster-grid:not(.is-single-col) > .poster-col:nth-child(3) > .poster-section:first-child {
-    grid-row: span 2;
+  .poster-grid:not(.is-single-col) > .poster-col:nth-child(3) .modules-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 @media (max-width: 780px) {
@@ -1003,11 +1009,10 @@ header { position: static !important; }
   }
   .poster-grid,
   .poster-grid.is-two-col,
-  .poster-grid:not(.is-single-col) > .poster-col:nth-child(3) {
+  .poster-bottom-band,
+  .poster-grid.is-two-col > .poster-col:nth-child(3) .modules-grid,
+  .poster-grid:not(.is-single-col) > .poster-col:nth-child(3) .modules-grid {
     grid-template-columns: 1fr;
-  }
-  .poster-grid:not(.is-single-col) > .poster-col:nth-child(3) > .poster-section:first-child {
-    grid-row: auto;
   }
 }
 @media (max-width: 640px) {
@@ -1069,11 +1074,19 @@ header { position: static !important; }
   }
   .poster-grid.is-two-col > .poster-col:nth-child(3) {
     grid-column: 1 / -1 !important;
-    display: grid !important;
+  }
+  .poster-grid.is-two-col > .poster-col:nth-child(3) .modules-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+  .poster-bottom-band {
+    grid-column: 1 / -1 !important;
+    grid-template-columns: minmax(0, 1.75fr) minmax(0, 1fr) !important;
     gap: 1rem !important;
   }
   .poster-grid.is-single-col {
+    grid-template-columns: 1fr !important;
+  }
+  .poster-grid.is-single-col .poster-bottom-band {
     grid-template-columns: 1fr !important;
   }
   .auth-dialog {
@@ -1452,7 +1465,10 @@ header { position: static !important; }
             <div class="chart-source" data-edit-key="chart2Source">Fuente: Tablero Scrum Jira AquaMind y Ficha Técnica de Prototipado (Fase 4).</div>
           </div>
         </section>
+      </div>
 
+      <!-- BOTTOM SYNTHESIS BAND: CONCLUSIONS & REFERENCES -->
+      <div class="poster-bottom-band">
         <section class="poster-section">
           <div class="section-bar">
             <span class="index-num">06</span>
@@ -1478,14 +1494,8 @@ header { position: static !important; }
             <h2 class="section-heading" data-edit-key="sec7Title">Referencias Bibliográficas (APA 7.0)</h2>
           </div>
           <ul class="ref-list">
-            <li data-edit-key="ref1">Bonilla, H. A. M., &amp; Gutiérrez, D. F. V. (2024). Desarrollo empresarial en la educación superior: un análisis de la relación entre la creatividad y la madurez tecnológica en emprendimientos universitarios. <em>Educatio Siglo XXI</em>, 42(1), 89–114.</li>
-            <li data-edit-key="ref2">Congreso de la República de Colombia. (2012). <em>Ley Estatutaria 1581 de 2012: Por la cual se dictan disposiciones generales para la protección de datos personales</em>. Diario Oficial 48.587.</li>
-            <li data-edit-key="ref3">Gómez, R. (2022). <em>Pasos para el diseño de un póster académico</em> [Objeto virtual de aprendizaje OVA]. Repositorio Institucional UNAD (repository.unad.edu.co/handle/10596/50648).</li>
-            <li data-edit-key="ref4">Hernández, C. D. (2024). <em>SCRUM: Its components, interactions and usefulness in projects</em> [Objeto virtual de aprendizaje OVA]. Repositorio Institucional UNAD (repository.unad.edu.co/handle/10596/60331).</li>
-            <li data-edit-key="ref5">Morán, M. (2024). <em>Agua y saneamiento — Desarrollo Sostenible</em>. Organización de las Naciones Unidas (un.org/sustainabledevelopment/es/water-and-sanitation/).</li>
-            <li data-edit-key="ref6">Moreno, L. M. (2025). <em>Validación y evaluación de prototipos</em> [Objeto virtual de aprendizaje OVA]. Repositorio Institucional UNAD (repository.unad.edu.co/handle/10596/73410).</li>
-            <li data-edit-key="ref7">Pierdant Pérez, M., Hernández Arteaga, A. A., Álvarez Pinedo, A., Patiño López, M. I., Ledezma Bautista, I., &amp; Gordillo Moscoso, A. A. (2019). Revisión sistemática del póster de investigación: ¿lo hemos hecho bien todo este tiempo? <em>Investigación en Educación Médica</em>, 8(30).</li>
-            <li data-edit-key="ref8">UNESCO. (2021). <em>Ingeniería para el desarrollo sostenible: resumen</em>. Organización de las Naciones Unidas para la Educación, la Ciencia y la Cultura.</li>
+            <li data-edit-key="ref1">Morán, M. (2024, January 26). Agua y saneamiento - Desarrollo Sostenible. Desarrollo Sostenible. https://www.un.org/sustainabledevelopment/es/water-and-sanitation/</li>
+            <li data-edit-key="ref2">UNESCO. (2021). Ingeniería para el desarrollo sostenible: resumen https://unesdoc.unesco.org/ark:/48223/pf0000375634_spa</li>
           </ul>
         </section>
       </div>
@@ -1627,14 +1637,8 @@ const DEFAULT_CONTENT = {
     conc2: `Rigor MML + Scrum en Jira: Articular la Matriz de Marco Lógico con 6 Épicas y 28 Historias de Usuario en Jira garantizó trazabilidad total desde las necesidades de aula hasta la depuración temprana de bugs.`,
     conc3: `Impacto social y ruta a TRL 5: AquaMind materializa los ODS 4 y 6 bajo principios de Ingeniería Humanitaria y Ley 1581 de 2012, quedando listo para validación piloto con 100 estudiantes y directivos en Usme.`,
     sec7Title: `Referencias Bibliográficas (APA 7.0)`,
-    ref1: `Bonilla, H. A. M., & Gutiérrez, D. F. V. (2024). Desarrollo empresarial en la educación superior: un análisis de la relación entre la creatividad y la madurez tecnológica en emprendimientos universitarios. Educatio Siglo XXI, 42(1), 89–114.`,
-    ref2: `Congreso de la República de Colombia. (2012). Ley Estatutaria 1581 de 2012: Por la cual se dictan disposiciones generales para la protección de datos personales. Diario Oficial 48.587.`,
-    ref3: `Gómez, R. (2022). Pasos para el diseño de un póster académico [Objeto virtual de aprendizaje OVA]. Repositorio Institucional UNAD (repository.unad.edu.co/handle/10596/50648).`,
-    ref4: `Hernández, C. D. (2024). SCRUM: Its components, interactions and usefulness in projects [Objeto virtual de aprendizaje OVA]. Repositorio Institucional UNAD (repository.unad.edu.co/handle/10596/60331).`,
-    ref5: `Morán, M. (2024). Agua y saneamiento — Desarrollo Sostenible. Organización de las Naciones Unidas (un.org/sustainabledevelopment/es/water-and-sanitation/).`,
-    ref6: `Moreno, L. M. (2025). Validación y evaluación de prototipos [Objeto virtual de aprendizaje OVA]. Repositorio Institucional UNAD (repository.unad.edu.co/handle/10596/73410).`,
-    ref7: `Pierdant Pérez, M., Hernández Arteaga, A. A., Álvarez Pinedo, A., Patiño López, M. I., Ledezma Bautista, I., & Gordillo Moscoso, A. A. (2019). Revisión sistemática del póster de investigación: ¿lo hemos hecho bien todo este tiempo? Investigación en Educación Médica, 8(30).`,
-    ref8: `UNESCO. (2021). Ingeniería para el desarrollo sostenible: resumen. Organización de las Naciones Unidas para la Educación, la Ciencia y la Cultura.`,
+    ref1: `Morán, M. (2024, January 26). Agua y saneamiento - Desarrollo Sostenible. Desarrollo Sostenible. https://www.un.org/sustainabledevelopment/es/water-and-sanitation/`,
+    ref2: `UNESCO. (2021). Ingeniería para el desarrollo sostenible: resumen https://unesdoc.unesco.org/ark:/48223/pf0000375634_spa`,
     footerLeft: `AquaMind · Repositorio abierto: github.com/Kscf27/Proyecto_ing1_cuidado_del_agua · Despliegue: cuidadodelaguaproyectoing1.vercel.app`,
     footerRight: `UNAD · ECBTI · Proyecto de Ingeniería II · Fase 5 (2026)`
   },
@@ -1722,14 +1726,8 @@ const DEFAULT_CONTENT = {
     conc2: `LFA + Jira Scrum Synergy: Linking the Logical Framework Matrix with 6 Epics and 28 User Stories in Jira ensured end-to-end traceability from classroom pain points to early bug resolution.`,
     conc3: `Social Impact & TRL 5 Pathway: AquaMind operationalizes SDGs 4 and 6 under Humanitarian Engineering and Law 1581 of 2012, ready for an authorized 100-student pilot in Usme.`,
     sec7Title: `References (APA 7th Ed.)`,
-    ref1: `Bonilla, H. A. M., & Gutiérrez, D. F. V. (2024). Desarrollo empresarial en la educación superior: un análisis de la relación entre la creatividad y la madurez tecnológica en emprendimientos universitarios. Educatio Siglo XXI, 42(1), 89–114.`,
-    ref2: `Congreso de la República de Colombia. (2012). Ley Estatutaria 1581 de 2012: General provisions for the protection of personal data. Diario Oficial 48.587.`,
-    ref3: `Gómez, R. (2022). Pasos para el diseño de un póster académico [Virtual Learning Object OVA]. UNAD Institutional Repository (repository.unad.edu.co/handle/10596/50648).`,
-    ref4: `Hernández, C. D. (2024). SCRUM: Its components, interactions and usefulness in projects [Virtual Learning Object OVA]. UNAD Institutional Repository (repository.unad.edu.co/handle/10596/60331).`,
-    ref5: `Morán, M. (2024). Water and sanitation — Sustainable Development. United Nations (un.org/sustainabledevelopment/es/water-and-sanitation/).`,
-    ref6: `Moreno, L. M. (2025). Validación y evaluación de prototipos [Virtual Learning Object OVA]. UNAD Institutional Repository (repository.unad.edu.co/handle/10596/73410).`,
-    ref7: `Pierdant Pérez, M., Hernández Arteaga, A. A., Álvarez Pinedo, A., Patiño López, M. I., Ledezma Bautista, I., & Gordillo Moscoso, A. A. (2019). Systematic review of the research poster: Have we been doing it right all along? Investigación en Educación Médica, 8(30).`,
-    ref8: `UNESCO. (2021). Engineering for sustainable development: Executive summary. United Nations Educational, Scientific and Cultural Organization.`,
+    ref1: `Morán, M. (2024, January 26). Agua y saneamiento - Desarrollo Sostenible. Desarrollo Sostenible. https://www.un.org/sustainabledevelopment/es/water-and-sanitation/`,
+    ref2: `UNESCO. (2021). Ingeniería para el desarrollo sostenible: resumen https://unesdoc.unesco.org/ark:/48223/pf0000375634_spa`,
     footerLeft: `AquaMind · Open repository: github.com/Kscf27/Proyecto_ing1_cuidado_del_agua · Live build: cuidadodelaguaproyectoing1.vercel.app`,
     footerRight: `UNAD · ECBTI · Engineering Project II · Phase 5 (2026)`
   }
