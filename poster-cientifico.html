@@ -717,16 +717,22 @@ header { position: static !important; }
   border: var(--card-border);
   border-radius: var(--rounded);
   padding: var(--space-sm);
+  min-width: 0;
+  overflow-wrap: anywhere;
 }
 .stack-item strong {
   display: block;
   font-family: var(--font-label);
   font-size: var(--label-size);
   color: var(--secondary);
+  margin-bottom: 2px;
+  overflow-wrap: anywhere;
 }
 .stack-item span {
+  display: block;
   font-size: 0.82rem;
   color: var(--on-surface-variant);
+  overflow-wrap: anywhere;
 }
 
 /* TRL 4 Module Cards + Interactive Inspector */
@@ -1137,7 +1143,7 @@ header { position: static !important; }
         <i data-lucide="lock" width="16" height="16" aria-hidden="true"></i>
         <span data-ui="editBtn">Modo Editor</span>
       </button>
-      <button type="button" class="btn" id="btn-reset-edits" onclick="handleResetEdits(this)" hidden>
+      <button type="button" class="btn" id="btn-reset-edits" onclick="handleResetEdits()">
         <i data-lucide="rotate-ccw" width="16" height="16" aria-hidden="true"></i>
         <span data-ui="resetBtn">Restablecer</span>
       </button>
@@ -1761,6 +1767,9 @@ const UI_STRINGS = {
     lblTrl: `Nivel de madurez tecnológica (TRL)`,
     authTitle: `Acceso al Modo Editor`,
     authSub: `Ingresa las credenciales de administrador para editar textos y métricas del póster.`,
+    authResetTitle: `Confirmar restablecimiento`,
+    authResetSub: `Ingresa usuario y contraseña de administrador para restablecer el póster a su versión original.`,
+    authResetSubmitBtn: `Confirmar restablecer`,
     authUserLabel: `Usuario`,
     authPassLabel: `Contraseña`,
     authCancelBtn: `Cancelar`,
@@ -1798,6 +1807,9 @@ const UI_STRINGS = {
     lblTrl: `Technology Readiness Level (TRL)`,
     authTitle: `Editor Mode Sign In`,
     authSub: `Enter administrator credentials to edit poster copy and metrics.`,
+    authResetTitle: `Confirm Poster Reset`,
+    authResetSub: `Enter administrator username and password to restore the poster to its original baseline.`,
+    authResetSubmitBtn: `Confirm reset`,
     authUserLabel: `Username`,
     authPassLabel: `Password`,
     authCancelBtn: `Cancel`,
@@ -1870,6 +1882,7 @@ let appState = {
 
 const LOCAL_STORAGE_KEY = 'aquamind_poster_state_v1';
 let isEditorAuthenticated = false;
+let pendingAuthAction = 'editor';
 let diagnosticChart = null;
 let trlChart = null;
 let saveDebounceTimer = null;
@@ -1983,7 +1996,6 @@ function applyEditorState() {
   const sheet = document.getElementById('poster-sheet');
   const drawer = document.getElementById('metrics-drawer');
   const editBtn = document.getElementById('btn-edit-mode');
-  const resetBtn = document.getElementById('btn-reset-edits');
   const ui = UI_STRINGS[appState.lang];
 
   if (sheet) {
@@ -1991,7 +2003,6 @@ function applyEditorState() {
     else sheet.classList.remove('is-editor-active');
   }
   if (drawer) drawer.hidden = !appState.editorActive;
-  if (resetBtn) resetBtn.hidden = !appState.editorActive;
   if (editBtn) {
     editBtn.setAttribute('aria-pressed', appState.editorActive ? 'true' : 'false');
     const span = editBtn.querySelector('[data-ui="editBtn"]');
@@ -2220,14 +2231,22 @@ function showAuthError(msg) {
   }
 }
 
-function openAuthDialog() {
+function openAuthDialog(action) {
+  pendingAuthAction = action === 'reset' ? 'reset' : 'editor';
+  const ui = UI_STRINGS[appState.lang];
   const dialog = document.getElementById('editor-auth-dialog');
   const form = document.getElementById('editor-auth-form');
   const userInput = document.getElementById('auth-username');
   const passInput = document.getElementById('auth-password');
+  const titleEl = document.getElementById('auth-dialog-title');
+  const subEl = dialog ? dialog.querySelector('[data-ui="authSub"]') : null;
+  const submitLabel = dialog ? dialog.querySelector('[data-ui="authSubmitBtn"]') : null;
   if (!dialog) return;
   if (form) form.reset();
   if (passInput) passInput.type = 'password';
+  if (titleEl) titleEl.textContent = pendingAuthAction === 'reset' ? ui.authResetTitle : ui.authTitle;
+  if (subEl) subEl.textContent = pendingAuthAction === 'reset' ? ui.authResetSub : ui.authSub;
+  if (submitLabel) submitLabel.textContent = pendingAuthAction === 'reset' ? ui.authResetSubmitBtn : ui.authSubmitBtn;
   showAuthError('');
   if (typeof dialog.showModal === 'function') {
     dialog.showModal();
@@ -2251,6 +2270,15 @@ function togglePasswordVisibility() {
   const passInput = document.getElementById('auth-password');
   if (!passInput) return;
   passInput.type = passInput.type === 'password' ? 'text' : 'password';
+}
+
+function executePosterReset() {
+  const ui = UI_STRINGS[appState.lang];
+  appState.edits = { es: {}, en: {} };
+  appState.metrics = { pref: 93, games: 87, partial: 60, apps: 25, stories: 28, trl: 4 };
+  applyContentToDom();
+  updateStatusBadge(ui.statusReset);
+  persistState();
 }
 
 async function submitEditorAuth(evt) {
@@ -2288,10 +2316,15 @@ async function submitEditorAuth(evt) {
 
     if (res.ok && data.authenticated) {
       isEditorAuthenticated = true;
-      appState.editorActive = true;
       if (passInput) passInput.value = '';
+      const actionToRun = pendingAuthAction;
       closeAuthDialog();
-      applyEditorState();
+      if (actionToRun === 'reset') {
+        executePosterReset();
+      } else {
+        appState.editorActive = true;
+        applyEditorState();
+      }
     } else if (res.status === 503 || data.code === 'ENV_NOT_CONFIGURED') {
       showAuthError(ui.authErrEnv);
     } else if (res.status === 401) {
@@ -2307,7 +2340,9 @@ async function submitEditorAuth(evt) {
     showAuthError(ui.authErrNetwork);
   } finally {
     if (submitBtn) submitBtn.disabled = false;
-    if (submitLabel) submitLabel.textContent = ui.authSubmitBtn;
+    if (submitLabel) {
+      submitLabel.textContent = pendingAuthAction === 'reset' ? ui.authResetSubmitBtn : ui.authSubmitBtn;
+    }
   }
 }
 
@@ -2375,35 +2410,8 @@ function updateChartMetric(key, rawVal) {
   scheduleSave();
 }
 
-function handleResetEdits(btn) {
-  const ui = UI_STRINGS[appState.lang];
-  if (!btn) return;
-  if (btn.dataset.armed !== 'true') {
-    btn.dataset.armed = 'true';
-    btn.classList.add('btn-danger-armed');
-    const span = btn.querySelector('[data-ui="resetBtn"]');
-    if (span) span.textContent = ui.resetArm;
-    setTimeout(function () {
-      if (btn.dataset.armed === 'true') {
-        btn.dataset.armed = 'false';
-        btn.classList.remove('btn-danger-armed');
-        const sp = btn.querySelector('[data-ui="resetBtn"]');
-        if (sp) sp.textContent = UI_STRINGS[appState.lang].resetBtn;
-      }
-    }, 4000);
-    return;
-  }
-
-  btn.dataset.armed = 'false';
-  btn.classList.remove('btn-danger-armed');
-  const span = btn.querySelector('[data-ui="resetBtn"]');
-  if (span) span.textContent = ui.resetBtn;
-
-  appState.edits = { es: {}, en: {} };
-  appState.metrics = { pref: 93, games: 87, partial: 60, apps: 25, stories: 28, trl: 4 };
-  applyContentToDom();
-  updateStatusBadge(ui.statusReset);
-  persistState();
+function handleResetEdits() {
+  openAuthDialog('reset');
 }
 
 function printPoster() {
